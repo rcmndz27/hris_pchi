@@ -113,13 +113,13 @@ $stmtan->execute();
 $resultan = $stmtan->fetch();    
 
 //LATES TODAY
-$queryp = 'EXEC hrissys_test.dbo.xp_attendance_portal_late_admin';
+$queryp = 'EXEC dbo.xp_attendance_portal_late_admin';
 $stmtp =$connL->prepare($queryp);
 $stmtp->execute();
 $resultp = $stmtp->fetch();    
 
 //SCHED TODAY
-$queryy = 'EXEC hrissys_test.dbo.xp_attendance_portal_schedtoday';
+$queryy = 'EXEC dbo.xp_attendance_portal_schedtoday';
 $stmty =$connL->prepare($queryy);
 $stmty->execute();
 $resulty = $stmty->fetch();       

@@ -62,7 +62,7 @@ Class OvertimeAdjList{
                 <td>' . $result['description']. '</td>
                 <td>' . substr(hash('sha256', $result['amount']),50). '</td>                
                 <td>' . $result['remarks']. '</td>';
-                echo'<td><button type="button" class="btn btn-info" onclick="editOtAdjModal('.$empcd.','.$otadjdate.','.$descript.','.$amnt.','.$remark.','.$incdecr.')">
+                echo'<td><button type="button" class="btn btn-info btn-sm" onclick="editOtAdjModal('.$empcd.','.$otadjdate.','.$descript.','.$amnt.','.$remark.','.$incdecr.')">
                                 <i class="fas fa-edit"></i> UPDATE
                             </button></td>';
                 

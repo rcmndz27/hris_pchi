@@ -34,10 +34,11 @@
     $marital_status = $_POST["marital_status"];
     $emp_pic_loc = $_POST["emp_pic"];
     $rowid = $_POST["rowid"];    
+    $emp_id = $_POST["emp_id"];    
 
     if ($action == 1)
     {
-        UpdateEmployeeLevel($department,$position,$location,$emp_type,$emp_level,$work_sched_type,$minimum_wage,$pay_type,$emp_status,$reporting_to,$lastname,$firstname,$middlename,$emailaddress,$telno,$celno,$emp_address,$emp_address2,$sss_no,$phil_no,$pagibig_no,$tin_no,$datehired,$birthdate,$birthplace,$sex,$marital_status,$emp_pic_loc,$rowid);
+        UpdateEmployeeLevel($department,$position,$location,$emp_type,$emp_level,$work_sched_type,$minimum_wage,$pay_type,$emp_status,$reporting_to,$lastname,$firstname,$middlename,$emailaddress,$telno,$celno,$emp_address,$emp_address2,$sss_no,$phil_no,$pagibig_no,$tin_no,$datehired,$birthdate,$birthplace,$sex,$marital_status,$emp_pic_loc,$rowid,$emp_id);
     }
 
 

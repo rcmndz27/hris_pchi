@@ -85,7 +85,7 @@ $(function(){
 
         var cutoff = $('#ddcutoff').children("option:selected").val();
         var det = cutoff.split(" - ");
-        var empCode = 'OBN'+$('#empCode').val();
+        var empCode = 'PCHI'+$('#empCode').val();
  
         param = {
           Action: "GetRepLeave",
@@ -201,7 +201,7 @@ $(function(){
 
         var cutoff = $('#ddcutoff').children("option:selected").val();
         var det = cutoff.split(" - ");
-        var empCode = 'OBN'+$('#empCode').val();
+        var empCode = 'PCHI'+$('#empCode').val();
  
         param = {
           Action: "GetRepOt",
@@ -313,7 +313,7 @@ function XLSXExportWfhRep(){
 
         var cutoff = $('#ddcutoff').children("option:selected").val();
         var det = cutoff.split(" - ");
-        var empCode = 'OBN'+$('#empCode').val();
+        var empCode = 'PCHI'+$('#empCode').val();
  
         param = {
           Action: "GetRepWfh",
@@ -425,7 +425,7 @@ function XLSXExportObRep(){
 
         var cutoff = $('#ddcutoff').children("option:selected").val();
         var det = cutoff.split(" - ");
-        var empCode = 'OBN'+$('#empCode').val();
+        var empCode = 'PCHI'+$('#empCode').val();
  
         param = {
           Action: "GetRepOb",
@@ -536,7 +536,7 @@ function XLSXExportDtrcRep(){
 
         var cutoff = $('#ddcutoff').children("option:selected").val();
         var det = cutoff.split(" - ");
-        var empCode = 'OBN'+$('#empCode').val();
+        var empCode = 'PCHI'+$('#empCode').val();
  
         param = {
           Action: "GetRepDtrc",

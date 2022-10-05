@@ -136,7 +136,7 @@
                     <label for="status" class="col-form-label pad">NAME:</label><div class="col-md-3">';
                     $dd->GenerateSingleRepDropDown("empCode",$mf->GetAttEmployeeNamesRep("allemprepnames",$empCode));
                     echo '</div>
-                    <button type="submit" id="searchLeaveRep" class="btn btn-warning"><i class="fas fa-search-plus"></i> GENERATE
+                    <button type="submit" id="searchLeaveRep" class="btn btn-secondary"><i class="fas fa-search-plus"></i> GENERATE
                     </button>';
                 }else{
                     echo '
@@ -149,7 +149,7 @@
                             <option value="4">CANCELLED</option>
                         </select>
                     </div>
-                    <button type="submit" id="searchLeaveApp" class="btn btn-warning"><i class="fas fa-search-plus"></i> GENERATE
+                    <button type="submit" id="searchLeaveApp" class="btn btn-secondary"><i class="fas fa-search-plus"></i> GENERATE
                     </button>';
                 }
             ?>                    

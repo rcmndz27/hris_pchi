@@ -11,7 +11,6 @@ Class NewHireAccess{
                 <div class="col-lg-8">
                 </div>                               
                 <div class="col-lg-4">        
-                    <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search..." title="Type in employee name"> 
                         </div>                     
                 </div>  
         <table id="allEmpList" class="table empp table-striped table-sm">
@@ -36,7 +35,7 @@ Class NewHireAccess{
         $result = $stmt->fetch();
         if($result){
             do { 
-                $fullname =  $result['lastname'].','.$result['firstname'].' '.substr($result['middlename'],0,1).'.';
+                $fullname =  $result['lastname'].','.$result['firstname'];
                 $empcd = "'".$result['emp_code']."'";
                 $emppicloc = "'".$result['emp_pic_loc']."'";
                  $day[] = $result;
@@ -49,7 +48,7 @@ Class NewHireAccess{
                 <td>' . $result['location'] . '</td>
                 <td>' . $result['emp_type'] . '</td>
                 <td>' . $result['emp_status'] . '</td>';
-                echo '<td><button type="button" class="btn btn-info btn-sm" onclick="viewEmpModal('.$empcd.','.$emppicloc.')" title="View Employee Profile"><i class="fas fa-binoculars"></i>
+                echo '<td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewEmpModal('.$empcd.','.$emppicloc.')" title="View Employee Profile"><i class="fas fa-binoculars"></i>
                             </button><button type="button" class="btn btn-warning btn-sm" onclick="updateEmpModal('.$empcd.')" title="Update Employee Profile">
                                 <i class="fas fa-edit"></i>
                             </button></td>
@@ -99,6 +98,7 @@ Class NewHireAccess{
                         document.getElementById('birthplace').value = nameD[i][33];
                         document.getElementById('sex').value = nameD[i][28];
                         document.getElementById('marital_status').value = nameD[i][29];  
+                        document.getElementById('emp_id').value = nameD[i][98];  
                         console.log(nameD[i][89]) ;
                         if(nameD[i][89] == 4){
                             document.getElementById('reporting_to').disabled = true;

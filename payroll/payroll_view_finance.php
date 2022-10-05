@@ -30,13 +30,13 @@ else
     $rto = $r['ptmax'];
     $rfrom = $r['pfmax'];
 
-    $queryp = 'EXEC hrissys_test.dbo.xp_pending_forms :date_from,:date_to';
+    $queryp = 'EXEC dbo.xp_pending_forms :date_from,:date_to';
     $stmtp =$connL->prepare($queryp);
     $paramp = array(":date_from" => $rfrom,":date_to" => $rto);
     $stmtp->execute($paramp);
     $resultp = $stmtp->fetch();  
 
-    $querypf = 'EXEC hrissys_test.dbo.xp_pending_forms :date_from,:date_to';
+    $querypf = 'EXEC dbo.xp_pending_forms :date_from,:date_to';
     $stmtpf =$connL->prepare($querypf);
     $parampf = array(":date_from" => $rfrom,":date_to" => $rto);
     $stmtpf->execute($parampf);
@@ -100,7 +100,7 @@ else
             <i class="fas fa-search-plus"></i> GENERATE                      
         </button>
         &nbsp;&nbsp;
-        <button type="button" class="btn btn-warning" id="usersEntry"><i class="fas fa-plus-circle"></i> ADD USER </button>
+        <button type="button" class="btn btn-secondary" id="usersEntry"><i class="fas fa-plus-circle"></i> ADD USER </button>
         &nbsp;&nbsp;
 
         <?php 
@@ -426,9 +426,9 @@ else
             </tbody>
             <tfoot>
                 <tr>".
-                    "<td class='text-right bg-success'><b>Total</b></td>".
-                    "<td class='bg-success'><b>" . $totalPendings . "</b></td>".
-                    "<td class='bg-success'><b></b></td>".
+                    "<td class='text-right bg-secondary'><b>Total</b></td>".
+                    "<td class='bg-secondary'><b>" . $totalPendings . "</b></td>".
+                    "<td class='bg-secondary'><b></b></td>".
                 "</tr>
             </tfoot>
         </table>";

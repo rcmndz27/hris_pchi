@@ -30,13 +30,13 @@ else
     $rto = $r['ptmax'];
     $rfrom = $r['pfmax'];
 
-    $queryp = 'EXEC hrissys_test.dbo.xp_pending_forms :date_from,:date_to';
+    $queryp = 'EXEC dbo.xp_pending_forms :date_from,:date_to';
     $stmtp =$connL->prepare($queryp);
     $paramp = array(":date_from" => $rfrom,":date_to" => $rto);
     $stmtp->execute($paramp);
     $resultp = $stmtp->fetch();  
 
-    $querypf = 'EXEC hrissys_test.dbo.xp_pending_forms :date_from,:date_to';
+    $querypf = 'EXEC dbo.xp_pending_forms :date_from,:date_to';
     $stmtpf =$connL->prepare($querypf);
     $parampf = array(":date_from" => $rfrom,":date_to" => $rto);
     $stmtpf->execute($parampf);

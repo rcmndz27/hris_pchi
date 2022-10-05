@@ -60,7 +60,7 @@ Class ApplicantList{
                 <td>' . ucwords($result['jobpos2']) . '</td>
                 <td id="st'.$result['rowid'].'">' . ucwords($result['status']) . '</td>';
                 if($result['status'] == 'Inactive'){
-                echo '<td id="upd'.$result['rowid'].'"><button type="button" class="btn btn-info" onclick="verifyEntryModal('.$result['rowid'].','.$fullname.')">
+                echo '<td id="upd'.$result['rowid'].'"><button type="button" class="btn btn-info btn-sm" onclick="verifyEntryModal('.$result['rowid'].','.$fullname.')">
                                 <i class="fas fa-user-check"></i> VERIFY
                             </button></td>';
                 }else if($result['status'] == 'Active'){

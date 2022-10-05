@@ -95,12 +95,12 @@ require '../vendor/autoload.php';
                     echo"<button type='button' class='btnView atch'><a title='Attachment' href='../uploads/".$result['medicalfile']."' style='color:#ffff;font-weight:bold;'  
                                 target='popup' onclick='window.open('../uploads/".$result['medicalfile']."' ','popup','width=600,height=600,scrollbars=no,resizable=no'); return false;'><i class='fas fa-paperclip'></i></a></button>";  
                 }  
-                if($result['approval'] == 'OBN20000205' and $logEmpCode == 'OBN20000205')  {         
+                if($result['approval'] == 'PCHI20000205' and $logEmpCode == 'PCHI20000205')  {         
                 echo'
                     <button class="btn btn-success btnApproved" id="'.$result['emp_code'].' '.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-check"></i></button><button id="empcode" value="'.$result['emp_code'].'" hidden></button>
                     <button class="btn btn-danger btnRejectd" id="'.$result['emp_code'].' '.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-times"></i></button><button id="empcode" value="'.$result['emp_code'].'" hidden></button>
                     </td>';
-                }else if($result['approval'] == $logEmpCode and $logEmpCode <> 'OBN20000205' ){
+                }else if($result['approval'] == $logEmpCode and $logEmpCode <> 'PCHI20000205' ){
                     echo'
                     <button class="btn btn-success btnApproved" id="'.$result['emp_code'].' '.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-check"></i></button><button id="empcode" value="'.$result['emp_code'].'" hidden></button>
                     <button class="btn btn-danger btnRejectd" id="'.$result['emp_code'].' '.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-times"></i></button><button id="empcode" value="'.$result['emp_code'].'" hidden></button>
@@ -516,14 +516,14 @@ require '../vendor/autoload.php';
         $mail->Body    = '<h1>Hi '.$nrequester.' </b>,</h1>Your leave request #'.$rowid.' has been approved.<br><br>
                         <h2>From: '.$napprover.' <br><br></h2>
                         <h2>Check the request in :
-                        <a href="http://124.6.185.87:6868/leave/leaveApplication_view.php">Leave Request List</a> 
+                        <a href="http://124.6.185.87:4200/hris_pchi/leave/leaveApplication_view.php">Leave Request List</a> 
                         <br><br></h2>
 
                         Thank you for using our application! <br>
                         Regards, <br>
                         Human Resource Information System <br> <br>
 
-                        <h6>If you are having trouble clicking the "Leave Request List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/leave/leaveApplication_view.php <h6>
+                        <h6>If you are having trouble clicking the "Leave Request List" button, copy and paste the URL below into your web browser: http://124.6.185.87:4200/hris_pchi/leave/leaveApplication_view.php <h6>
                        ';
             $mail->send();
             // echo 'Message has been sent';
@@ -607,14 +607,14 @@ require '../vendor/autoload.php';
                         <h2>From: '.$napprover.' <br></h2>
                         <h2>Reject reason: '.$remarks.' <br><br></h2>
                         <h2>Check the request in :
-                        <a href="http://124.6.185.87:6868/leave/leaveApplication_view.php">Leave Request List</a> 
+                        <a href="http://124.6.185.87:4200/hris_pchi/leave/leaveApplication_view.php">Leave Request List</a> 
                         <br><br></h2>
 
                         Thank you for using our application! <br><br>
                         Regards, <br>
                         Human Resource Information System <br> <br>
 
-                        <h6>If you are having trouble clicking the "Leave Request List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/leave/leaveApplication_view.php <h6>
+                        <h6>If you are having trouble clicking the "Leave Request List" button, copy and paste the URL below into your web browser: http://124.6.185.87:4200/hris_pchi/leave/leaveApplication_view.php <h6>
                        ';
             $mail->send();
             // echo 'Message has been sent';
@@ -630,7 +630,7 @@ require '../vendor/autoload.php';
         global $connL;
 
         $cmd = $connL->prepare("UPDATE dbo.tr_leave SET approval = :approval  where rowid = :rowid");
-        $cmd->bindValue('approval','OBN20000205');         
+        $cmd->bindValue('approval','PCHI20000205');         
         $cmd->bindValue('rowid',$rowid);                           
         $cmd->execute();
 
@@ -691,14 +691,14 @@ require '../vendor/autoload.php';
                         <h2>From: '.$napprover.' <br><br></h2>
     
                         <h2>Check the request in :
-                        <a href="http://124.6.185.87:6868/leave/leaveApproval_view.php">Leave Approval List</a> 
+                        <a href="http://124.6.185.87:4200/hris_pchi/leave/leaveApproval_view.php">Leave Approval List</a> 
                         <br><br></h2>
 
                         Thank you for using our application! <br><br>
                         Regards, <br>
                         Human Resource Information System <br> <br>
 
-                        <h6>If you are having trouble clicking the "Leave Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/leave/leaveApproval_view.php <h6>
+                        <h6>If you are having trouble clicking the "Leave Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:4200/hris_pchi/leave/leaveApproval_view.php <h6>
                        ';
             $mail->send();
             // echo 'Message has been sent';

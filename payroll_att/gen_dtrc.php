@@ -6,7 +6,7 @@ function GenDtrc($eMplogName,$pyrollco_from,$pyrollco_to){
            
     global $connL;
 
-    $cmd = $connL->prepare('EXEC hrissys_test.dbo.GenerateDTRCToAttendance :pay_from,:pay_to,:eMplogName');
+    $cmd = $connL->prepare('EXEC dbo.GenerateDTRCToAttendance :pay_from,:pay_to,:eMplogName');
     $cmd->bindValue(':pay_from',$pyrollco_from);
     $cmd->bindValue(':pay_to',$pyrollco_to);
     $cmd->bindValue(':eMplogName',$eMplogName);

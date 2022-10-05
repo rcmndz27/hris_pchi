@@ -75,7 +75,7 @@ do {
 
 echo"<table id='payslipsList'><thead>
 <tr>
-<th colspan='6' style='text-align:center;'><img src='../img/obanana.png' style='height:50px;'></th>
+<th colspan='6' style='text-align:center;'><img src='../img/pchi-logo.png' style='height:50px;'></th>
 </tr>
 <tr>
 <th colspan='3'>NAME: ".$r['name']." </th>

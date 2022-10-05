@@ -22,7 +22,7 @@ if (!empty($_POST['loginSubmit']))
     $stmt->execute($param);
     $r = $stmt->fetch();
 
-    $userid = isset($r['userid']) ? $r['userid'] : 'OBN00000';
+    $userid = isset($r['userid']) ? $r['userid'] : 'PCHI00000';
     $password = $_POST['password'];
 
     $date1 = date("Y-m-d");
@@ -87,7 +87,7 @@ if (empty($_SESSION['userid'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Obanana | Web Portal</title>
+    <title>PCHI | Timekeeping</title>
     <noscript><h3>Please enable Javascript in order to use this form.</h3><meta HTTP-EQUIV='refresh' content=0; url='JavascriptNotEnabled.php'></noscript>
     
     <meta charset='utf-8'>
@@ -97,7 +97,7 @@ if (empty($_SESSION['userid'])) {
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
 <meta http-equiv='pragma' content='no-cache'>
-<link type='image/x-png' rel='icon' href='img/ob_icon.png'>
+<link type='image/x-png' rel='icon' href='img/pchi-logo.png'>
 <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 <link rel='stylesheet' href='css/login_caru.css'>
 <link rel='stylesheet' href='css/login.css'>
@@ -107,7 +107,7 @@ if (empty($_SESSION['userid'])) {
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <script type='text/javascript' src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src='js/script.js'></script>
+<!-- <script type="text/javascript" src='js/script.js'></script> -->
 <style type="text/css">    
 .loader {
             position: fixed;
@@ -131,7 +131,7 @@ if (empty($_SESSION['userid'])) {
         <div class="card-header text-center">
             
             <a href="#" class="h5">
-            <img class="mb-2 img-fluid mx-auto d-block newoblogo" src="img/obfinallogo.png" alt="">    
+            <img class="mb-2 img-fluid mx-auto d-block newoblogo" src="img/pchi-logo.png" alt="">    
             <b>Human Resource Information System</b> </a>
         </div>
         <div class="card-body">

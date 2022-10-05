@@ -12,13 +12,10 @@ if($newempent->{"Action"} == "InsertNewEmpEnt")
 {
 
     $emp_code = $newempent->{"emp_code"};
+    $emp_id = $newempent->{"emp_id"};    
     $emp_pic_loc = $newempent->{"emp_pic_loc"};
-    // $preffieldwork = $newempent->{"preffieldwork"};
-    // $preffieldwork1 = $newempent->{"preffieldwork1"};
     $positiontitle = $newempent->{"positiontitle"};
-    // $positiontitle1 = $newempent->{"positiontitle1"};
-    // $reason_position = $newempent->{"reason_position"};
-    // $expected_salary = $newempent->{"expected_salary"};
+    $department = $newempent->{"department"};
     $howtoapply = $newempent->{"howtoapply"};
     $referredby = $newempent->{"referredby"};
     $firstname = $newempent->{"firstname"};
@@ -36,9 +33,6 @@ if($newempent->{"Action"} == "InsertNewEmpEnt")
     $birthdate = $newempent->{"birthdate"};
     $birthplace = $newempent->{"birthplace"};
     $nationality = $newempent->{"nationality"};
-    // $residence_certno = $newempent->{"residence_certno"};
-    // $residence_certdate = $newempent->{"residence_certdate"};
-    // $residence_certplace = $newempent->{"residence_certplace"};
     $tin_no = $newempent->{"tin_no"};
     $sss_no = $newempent->{"sss_no"};
     $phil_no = $newempent->{"phil_no"};
@@ -66,16 +60,6 @@ if($newempent->{"Action"} == "InsertNewEmpEnt")
     $contactpersonname = $newempent->{"contactpersonname"};
     $contactpersonno = $newempent->{"contactpersonno"};
     $contactpersonaddress = $newempent->{"contactpersonaddress"};
-    // $legalconvictioncharge = $newempent->{"legalconvictioncharge"};
-    // $legalconvictiondate = $newempent->{"legalconvictiondate"};
-    // $legalconvictionwhere = $newempent->{"legalconvictionwhere"};
-    // $legalconviction = $newempent->{"legalconviction"};
-    // $civilcase = $newempent->{"civilcase"};
-    // $arrconname = $newempent->{"conname"};
-    // $arrconoccupation = $newempent->{"conoccupation"};
-    // $arrconcompany = $newempent->{"concompany"};
-    // $arrconconviction = $newempent->{"conconviction"};
-    // $rightsemployee = $newempent->{"rightsemployee"};
     $arrschoolfrom = $newempent->{"schoolfrom"};
     $arrschoolto = $newempent->{"schoolto"};
     $arrschoolname = $newempent->{"schoolname"};
@@ -93,7 +77,7 @@ if($newempent->{"Action"} == "InsertNewEmpEnt")
     $arrduties = $newempent->{"duties"};
     $arrreasonforleaving = $newempent->{"reasonforleaving"}; 
    
-    $newEmpEnt->InsertNewEmpEnt($emp_code,$emp_pic_loc,$positiontitle,$howtoapply,$referredby,$firstname,$middlename,$lastname,$maidenname,$emp_address,$emp_address2,$telno,$telno1,$celno,$celno1,$emailaddress,$emailaddress1,$birthdate,$birthplace,$nationality,$tin_no,$sss_no,$phil_no,$pagibig_no,$tax_status,$married_dependents,$sex,$marital_status,$spousename,$spousebirthdate,$spouseoccupation,$spousecompany,$fathername,$fatheroccupation,$fatherbirthdate,$mothername,$motheroccupation,$motherbirthdate,$companyrelatives,$contactpersonname,$contactpersonno,$contactpersonaddress);
+    $newEmpEnt->InsertNewEmpEnt($emp_code,$emp_id,$emp_pic_loc,$positiontitle,$department,$howtoapply,$referredby,$firstname,$middlename,$lastname,$maidenname,$emp_address,$emp_address2,$telno,$telno1,$celno,$celno1,$emailaddress,$emailaddress1,$birthdate,$birthplace,$nationality,$tin_no,$sss_no,$phil_no,$pagibig_no,$tax_status,$married_dependents,$sex,$marital_status,$spousename,$spousebirthdate,$spouseoccupation,$spousecompany,$fathername,$fatheroccupation,$fatherbirthdate,$mothername,$motheroccupation,$motherbirthdate,$companyrelatives,$contactpersonname,$contactpersonno,$contactpersonaddress);
 
     foreach($arrdepname as $key => $value){
             $depname = $value;
@@ -110,14 +94,6 @@ if($newempent->{"Action"} == "InsertNewEmpEnt")
         $newEmpEnt->InsertNewEmpSib($sibname,$sibrelationship,$firstname,$middlename,$lastname);
     }
 
-    // foreach($arrconname as $key => $value){
-    //         $conname = $value;
-    //         $conoccupation = $arrconoccupation[$key];
-    //         $concompany = $arrconcompany[$key];
-    //         $conconviction = $arrconconviction[$key];
-
-    //     $newEmpEnt->InsertNewEmpCon($conname,$conoccupation,$concompany,$conconviction,$firstname,$middlename,$lastname);
-    // }
 
     foreach($arrschoolname as $key => $value){
             $schoolname = $value;

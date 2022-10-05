@@ -4,7 +4,7 @@
     {
             global $connL;
 
-            $query_pay = $connL->prepare('EXEC hrissys_test.dbo.payroll_summary :period_from, :period_to , :location, :emp_code');
+            $query_pay = $connL->prepare('EXEC dbo.payroll_summary :period_from, :period_to , :location, :emp_code');
             $query_pay->bindValue(':period_from',$pfrom);
             $query_pay->bindValue(':period_to',$pto);
             $query_pay->bindValue(':location','Makati');
@@ -32,7 +32,7 @@
     {
             global $connL;
 
-            $query_pay = $connL->prepare('EXEC hrissys_test.dbo.payroll_summary_30th :period_from, :period_to , :period_from30, :period_to30 , :location, :emp_code');
+            $query_pay = $connL->prepare('EXEC dbo.payroll_summary_30th :period_from, :period_to , :period_from30, :period_to30 , :location, :emp_code');
             $query_pay->bindValue(':period_from',$pfrom);
             $query_pay->bindValue(':period_to',$pto);
             $query_pay->bindValue(':period_from30',$pfrom30);

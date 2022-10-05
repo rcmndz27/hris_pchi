@@ -64,7 +64,7 @@
 
 
                 <div class="col-md-2 d-flex">
-                        <button type="button" id="search" class="btn btn-warning" onclick="filterAtt()">
+                        <button type="button" id="search" class="btn btn-secondary" onclick="filterAtt()">
                             <i class="fas fa-search-plus"></i>GENERATE                       
                         </button>
                         <a href='javascript:generatePDF()'><img src="../img/expdf.png" height="40" class="pdfimg" id='expdf'></a>                        
@@ -90,7 +90,7 @@
         $('#expdf').show();
         document.getElementById("myDiv").style.display="block";
         var url = "../payslip/payslips_process.php";
-        var dt = 'OBN'+$('#emppay').val();
+        var dt = 'PCHI'+$('#emppay').val();
         var cutoff = $('#ddcutoff').children("option:selected").val();
         var data = cutoff.split(" - ");
         $('#expdf').show();

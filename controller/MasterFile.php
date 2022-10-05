@@ -396,7 +396,7 @@
                 $data = [];
                
 
-                $sql = $connL->prepare(@"SELECT rowid,position FROM dbo.mf_position ORDER by rowid ASC");
+                $sql = $connL->prepare(@"SELECT rowid,position FROM dbo.mf_position ORDER by position ASC");
                 $sql->execute();
 
                 if ($type == "jobpos")

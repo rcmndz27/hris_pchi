@@ -65,7 +65,7 @@ Class LeaveBalanceList{
                 <td id="fl'.$result['emp_code'].'">' . $result['earned_fl']. '</td>                
                 <td id="slb'.$result['emp_code'].'">' . $result['earned_sl_bank']. '</td>
                 <td id="st'.$result['emp_code'].'">'.$result['status'].'</td>';
-                echo'<td><button type="button" class="btn btn-info" onclick="editLvBalModal('.$empcd.','.$empnm.')">
+                echo'<td><button type="button" class="btn btn-info btn-sm" onclick="editLvBalModal('.$empcd.','.$empnm.')">
                                 <i class="fas fa-edit"></i> UPDATE
                             </button></td>';                
                 

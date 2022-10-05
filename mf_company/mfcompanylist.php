@@ -52,7 +52,7 @@ Class MfcompanyList{
                 <td id="cc'.$result['rowid'].'">' . $result['code']. '</td>
                 <td id="cn'.$result['rowid'].'">' . $result['descs']. '</td>
                 <td id="st'.$result['rowid'].'">' . $result['status']. '</td>';
-                echo'<td><button type="button" class="btn btn-info" 
+                echo'<td><button type="button" class="btn btn-info btn-sm" 
                 onclick="editMfcompanyModal('.$rowd.','.$cde.')">
                                 <i class="fas fa-edit"></i> UPDATE
                             </button></td>';

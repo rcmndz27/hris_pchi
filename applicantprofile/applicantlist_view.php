@@ -52,7 +52,7 @@
     <div class="pt-3">
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-warning" id="applicantEntry"><i class="fas fa-user-plus"></i> ADD NEW APPLICANT </button>
+                <button type="button" class="btn btn-secondary" id="applicantEntry"><i class="fas fa-user-plus"></i> ADD NEW APPLICANT </button>
             </div>
         </div>
         <div class="row">
@@ -540,7 +540,7 @@
                             if(status == 'Active'){
                                 document.getElementById('upd'+rowid).innerHTML = '<button type="button" class="uptv" onclick="updateEntryModal('+rowid+','+appname+')"><i class="fas fa-edit"></i> UPDATE</button>';
                             }else{
-                                document.getElementById('upd'+rowid).innerHTML = '<button type="button" class="btn btn-info" onclick="verifyEntryModal('+rowid+','+appname+')"><i class="fas fa-user-check"></i> VERIFY</button>'; 
+                                document.getElementById('upd'+rowid).innerHTML = '<button type="button" class="btn btn-info btn-sm" onclick="verifyEntryModal('+rowid+','+appname+')"><i class="fas fa-user-check"></i> VERIFY</button>'; 
                             }
                             });                                     
 

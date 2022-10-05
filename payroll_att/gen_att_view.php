@@ -100,7 +100,7 @@ else
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <button type="button" id="search" class="btn btn-warning" onclick="genAttPay();">
+                                        <button type="button" id="search" class="btn btn-secondary" onclick="genAttPay();">
                                             <i class="fas fa-search-plus"></i>GENERATE                       
                                         </button> 
                                     </div>
@@ -129,7 +129,7 @@ else
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <button type="button" id="search" class="btn btn-warning" onclick="genWfhPay();">
+                                    <button type="button" id="search" class="btn btn-secondary" onclick="genWfhPay();">
                                         <i class="fas fa-search-plus"></i>GENERATE                       
                                     </button> 
                                 </div>
@@ -159,7 +159,7 @@ else
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <button type="button" id="search" class="btn btn-warning" onclick="genObPay();">
+                                    <button type="button" id="search" class="btn btn-secondary" onclick="genObPay();">
                                         <i class="fas fa-search-plus"></i>GENERATE                       
                                     </button> 
                                 </div>
@@ -189,7 +189,7 @@ else
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <button type="button" id="search" class="btn btn-warning" onclick="genDtrcPay();">
+                                    <button type="button" id="search" class="btn btn-secondary" onclick="genDtrcPay();">
                                         <i class="fas fa-search-plus"></i>GENERATE                       
                                     </button> 
                                 </div>
@@ -219,7 +219,7 @@ else
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <button type="button" id="search" class="btn btn-warning" onclick="genLeavePay();">
+                                    <button type="button" id="search" class="btn btn-secondary" onclick="genLeavePay();">
                                         <i class="fas fa-search-plus"></i>GENERATE                       
                                     </button> 
                                 </div>
@@ -249,7 +249,7 @@ else
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <button type="button" id="search" class="btn btn-warning" onclick="genOtPay();">
+                                        <button type="button" id="search" class="btn btn-secondary" onclick="genOtPay();">
                                             <i class="fas fa-search-plus"></i>GENERATE                       
                                         </button> 
                                     </div>
@@ -270,7 +270,7 @@ else
                             <div class="form-row">
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <button type="button" id="search" class="btn btn-warning" onclick="genDTR();">
+                                            <button type="button" id="search" class="btn btn-secondary" onclick="genDTR();">
                                                 <i class="fas fa-search-plus"></i>GENERATE                       
                                             </button> 
                                         </div>

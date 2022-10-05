@@ -356,7 +356,7 @@ public function GetAllOtRepHistory($date_from,$date_to,$empCode){
     public function InsertAppliedOtApp($empCode,$empReportingTo,$otDate,$otStartDtime,$otEndDtime,$remarks,$e_req,$n_req,$e_appr,$n_appr){
 
         global $connL;
-
+     
         if($otStartDtime > $otEndDtime){
             $fixed_date = date('m-d-Y',strtotime($otDate)).' 22:00:00';
             $otenddate1 = date('Y-m-d', strtotime($otDate. ' + 1 day'));
@@ -395,64 +395,16 @@ public function GetAllOtRepHistory($date_from,$date_to,$empCode){
         $daydate = date_format($date,"l");
         $wdays = array('Monday','Tuesday','Wednesday','Thursday','Friday');
 
-
-// $resquery = "SELECT * FROM tr_overtime WHERE ot_date = :otDate and emp_code = :empCode and status = 1 and ot_type = 'Rest Day Pay'";
-//         $resparam = array(':empCode' => $empCode,':otDate' => '2022-10-08');
-//         $resstmt =$connL->prepare($resquery);
-//         $resstmt->execute($resparam);
-//         $resresult = $resstmt->fetch();
-//         $res_ot = round($resresult['ot_req_hrs']);
-//         $res_start = $resresult['ot_start_dtime'];
-//         $res_end = $resresult['ot_end_dtime'];
-//         $res_id = $resresult['rowid'];
-//         $resdot = round($resresult['ot_req_hrs']-1);
-
-//     if($res_ot > 9){
-//         $rot_start = date('m-d-Y H:i:s', strtotime($res_start));
-//         $rot_send = date('m-d-Y H:i:s',strtotime('+9 hour',strtotime($res_start)));
-//         $rot_tend = date('m-d-Y H:i:s', strtotime($res_end));
-//         $rot_10 = date('m-d-Y 22:00:00', strtotime($otDate));
-//         $rot_dts = date('H:i', strtotime($rot_send));
-//         $rot_dte = date('H:i', strtotime($rot_tend));
-//         $base_res = 9;
-//         $totalres = $res_ot - $base_res;
-
-//         echo $rot_10;
-//         echo  "\r\n";
-//         exit();
-  
-
-//     }else{
-//         if($res_ot > 5){
-//             $cmd = $connL->prepare("UPDATE dbo.tr_overtime SET ot_req_hrs = :base_res 
-//                 where rowid = :res_id");
-//             $cmd->bindValue('base_res',$resdot);
-//             $cmd->bindValue('res_id',$res_id);
-//             $cmd->execute();   
-//         }else{
-
-//         }
-
-//     }      
-
-//     exit();
-        // echo $vdate;
-        // echo  "\r\n";
-        // echo $otsd_d;
-        // echo  "\r\n";
-        // echo $otend_d;
-        // echo  "\r\n";
-        // echo $otsd_dt;
-        // echo  "\r\n";
-        // echo $otend_dt;
-        // echo  "\r\n";
         // echo $otEndDtime;
+        // echo  "\r\n";
         // echo  "\r\n";
         // echo  $total_fxs;
         // echo  "\r\n";
         // echo  $total_fxe; 
+           
 
     if(($otsd_dt < '22:00' and $otsd_dt > '06:00') and ($otend_dt > '22:00' or $otend_dt < '06:00') and in_array($daydate,$wdays)){
+
         // echo 'night diff with insert and update';
         //  exit();
 
@@ -573,52 +525,94 @@ public function GetAllOtRepHistory($date_from,$date_to,$empCode){
 
     }
 
-// $resquery = "SELECT * FROM tr_overtime WHERE ot_date = :otDate and emp_code = :empCode and status = 1 and ot_type = 'Rest Day Pay'";
-//         $resparam = array(':empCode' => $empCode,':otDate' => $otDate);
-//         $resstmt =$connL->prepare($resquery);
-//         $resstmt->execute($resparam);
-//         $resresult = $resstmt->fetch();
-//         $res_ot = round($resresult['ot_req_hrs']);
-//         $res_start = $resresult['ot_start_dtime'];
-//         $res_end = $resresult['ot_end_dtime'];
-//         $res_id = $resresult['rowid'];
-//         $resdot = round($resresult['ot_req_hrs']-1);
 
-//     if($res_ot > 9){
-//         $rot_start = date('m-d-Y H:i:s', strtotime($res_start));
-//         $rot_send = date('m-d-Y H:i:s',strtotime('+9 hour',strtotime($res_start)));
-//         $rot_tend = date('m-d-Y H:i:s', strtotime($res_end));
-//         $rot_10 = date('m-d-Y 22:00:00', strtotime($otDate));
-//         $rot_dts = date('H:i', strtotime($rot_send)); //5pm
-//         $rot_dte = date('H:i', strtotime($rot_tend)); //11pm
-//         $base_res = 9;
-//         $totalres = $res_ot - $base_res;
+    $resquery = "SELECT * FROM tr_overtime WHERE ot_date = :otDate and emp_code = :empCode and status = 1 and ot_type like '%Rest Day%'";
+    $resparam = array(':empCode' => $empCode,':otDate' => $otDate);
+    $resstmt =$connL->prepare($resquery);
+    $resstmt->execute($resparam);
+    $resresult = $resstmt->fetch();
+    $res_ot = round($resresult['ot_req_hrs']);
+    $res_date = $resresult['ot_date'];
+    $res_start = $resresult['ot_start_dtime'];
+    $res_end = $resresult['ot_end_dtime'];
+    $res_id = $resresult['rowid'];
+    $rot_start = date('m-d-Y H:i:s', strtotime($res_start));
+    $rot_end = date('m-d-Y H:i:s', strtotime($res_end));
+    $rot_10pm = date('m-d-Y 22:00:00', strtotime($res_date));
+    $hi_start = date('H:i', strtotime($res_start));
+    $hi_end = date('H:i', strtotime($res_end));  
+  
 
-
-//         $cmd = $connL->prepare("UPDATE dbo.tr_overtime SET ot_end_dtime = :rot_send,ot_req_hrs = :base_res 
-//             where rowid = :res_id");
-//         $cmd->bindValue('base_res',$base_res);
-//         $cmd->bindValue('rot_send',$rot_sendrot_send);
-//         $cmd->bindValue('res_id',$res_id);
-//         $cmd->execute();            
-    
-            
-
-//     }else{
-//         if($res_ot > 5){
-//             $cmd = $connL->prepare("UPDATE dbo.tr_overtime SET ot_req_hrs = :base_res 
-//                 where rowid = :res_id");
-//             $cmd->bindValue('base_res',$resdot);
-//             $cmd->bindValue('res_id',$res_id);
-//             $cmd->execute();   
-//         }else{
-
-//         }
-
-//     }        
-    
+    if($hi_start > $hi_end){
+        $hienddate1 = date('Y-m-d', strtotime($res_date. ' + 1 day')); 
+        $hi_stmp = $res_date.'T'.$hi_start;
+        $hi_etmp = $hienddate1.'T'.$hi_end; 
+        $hi10_tmp = $otDate.'T22:00';    
+        $fxhistart = strtotime($hi_stmp);
+        $fxhiend = strtotime($hi_etmp);  
+        $fxhi10 = strtotime($hi10_tmp); 
+        $totfxhi = round(($fxhiend - $fxhistart)/3600,2);   
+        $totfxs = round(($fxhi10 - $fxhistart)/3600,2);
+        $totfxe = round(($fxhiend - $fxhi10)/3600,2);       
+    }else{
+        $hi_stmp = $res_date.'T'.$hi_start;
+        $hi_etmp = $res_date.'T'.$hi_end;
+        $hi10_tmp = $otDate.'T22:00';
+        $fxhistart = strtotime($hi_stmp);
+        $fxhiend = strtotime($hi_etmp);
+        $fxhi10 = strtotime($hi10_tmp);        
+        $totfxhi = round(($fxhiend - $fxhistart)/3600,2);   
+        $totfxs = round(($fxhi10 - $fxhistart)/3600,2);
+        $totfxe = round(($fxhiend - $fxhi10)/3600,2);   
+    }    
 
 
+    if(($hi_start < '22:00' and $hi_start > '06:00') and ($hi_end > '22:00' or $hi_end < '06:00')){
+
+        $cmdui = $connL->prepare("UPDATE dbo.tr_overtime SET ot_end_dtime = :rot_10pm,ot_req_hrs = :totfxs 
+            where rowid = :res_id");
+        $cmdui->bindValue('rot_10pm',$rot_10pm);
+        $cmdui->bindValue('totfxs',$totfxs);
+        $cmdui->bindValue('res_id',$res_id);
+        $cmdui->execute();     
+
+
+        $queryUI = "INSERT INTO tr_overtime (emp_code,ot_date,datefiled,reporting_to,ot_start_dtime,ot_end_dtime,ot_req_hrs,remarks,audituser, auditdate) 
+        VALUES(:emp_code,:otDate,:datefiled,:empReportingTo,:otStartDtime,:otEndDtime,:otReqHrs,:remarks,:audituser,:auditdate) ";
+
+        $stmtUI =$connL->prepare($queryUI);
+
+        $paramUI = array(
+        ":emp_code"=> $empCode,
+        ":otDate" => $res_date,
+        ":datefiled"=>date('m-d-Y'),
+        ":empReportingTo" => $empReportingTo,
+        ":otStartDtime" => $rot_10pm,
+        ":otEndDtime"=> $rot_end,
+        ":otReqHrs"=> $totfxe,
+        ":remarks"=> $remarks,
+        ":audituser" => $empCode,
+        ":auditdate"=>date('m-d-Y H:i:s')
+        );
+
+        $resultUI = $stmtUI->execute($paramUI);
+        echo $resultUI;      
+
+        $query_payUI = $connL->prepare('EXEC hrissys_test.dbo.GenerateOTRNDNType :ot_date,:empCode,:res_id');
+        $query_payUI->bindValue(':ot_date',$otDate);
+        $query_payUI->bindValue(':empCode',$empCode);
+        $query_payUI->bindValue(':res_id',$res_id);
+        $query_payUI->execute();                   
+                
+    }else if(($hi_start >= '22:00' or $hi_start < '06:00') and ($hi_end >= '22:00' or $hi_end < '06:00')){
+
+        $query_payio = $connL->prepare('EXEC hrissys_test.dbo.GenerateOTRNDType :res_id');
+        $query_payio->bindValue(':res_id',$res_id);
+        $query_payio->execute(); 
+
+    }else{
+        // echo 'as is';
+    }    
 
 
         $squery = "SELECT lastname+', '+firstname as [fullname] FROM employee_profile WHERE emp_code = :empCode";
@@ -677,14 +671,14 @@ public function GetAllOtRepHistory($date_from,$date_to,$empCode){
         $mail->Body    = '<h1>Hi '.$napprover.' </b>,</h1>An employee has requested a overtime(#'.$rst['maxid'].').<br><br>
                         <h2>From: '.$nrequester.' <br><br></h2>
                         <h2>Check the request in :
-                        <a href="http://124.6.185.87:6868/overtime/overtime-approval-view.php">Overtime Approval List</a> 
+                        <a href="http://124.6.185.87:4200/hris_pchi/overtime/overtime-approval-view.php">Overtime Approval List</a> 
                         <br><br></h2>
 
                         Thank you for using our application! <br>
                         Regards, <br>
                         Human Resource Information System <br> <br>
 
-                        <h6>If you are having trouble clicking the "Overtime Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/overtime/overtime-approval-view.php <h6>
+                        <h6>If you are having trouble clicking the "Overtime Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:4200/hris_pchi/overtime/overtime-approval-view.php <h6>
                        ';
             $mail->send();
             // echo 'Message has been sent';

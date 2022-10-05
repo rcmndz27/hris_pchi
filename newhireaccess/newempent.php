@@ -3,22 +3,23 @@
 
 Class NewEmpEnt{
 
-public function InsertNewEmpEnt($emp_code,$emp_pic_loc,$positiontitle,$howtoapply,$referredby,$firstname,$middlename,$lastname,$maidenname,$emp_address,$emp_address2,$telno,$telno1,$celno,$celno1,$emailaddress,$emailaddress1,$birthdate,$birthplace,$nationality,$tin_no,$sss_no,$phil_no,$pagibig_no,$tax_status,$married_dependents,$sex,$marital_status,$spousename,$spousebirthdate,$spouseoccupation,$spousecompany,$fathername,$fatheroccupation,$fatherbirthdate,$mothername,$motheroccupation,$motherbirthdate,$companyrelatives,$contactpersonname,$contactpersonno,$contactpersonaddress)
-    {
-        global $connL;
+public function InsertNewEmpEnt($emp_code,$emp_id,$emp_pic_loc,$positiontitle,$department,$howtoapply,$referredby,$firstname,$middlename,$lastname,$maidenname,$emp_address,$emp_address2,$telno,$telno1,$celno,$celno1,$emailaddress,$emailaddress1,$birthdate,$birthplace,$nationality,$tin_no,$sss_no,$phil_no,$pagibig_no,$tax_status,$married_dependents,$sex,$marital_status,$spousename,$spousebirthdate,$spouseoccupation,$spousecompany,$fathername,$fatheroccupation,$fatherbirthdate,$mothername,$motheroccupation,$motherbirthdate,$companyrelatives,$contactpersonname,$contactpersonno,$contactpersonaddress)
+{
+global $connL;
 
-    $query = "INSERT INTO employee_profile (emp_code,badgeno,emp_pic_loc,position,positiontitle,howtoapply,referredby,firstname,middlename,lastname,maidenname,emp_address,emp_address2,telno,telno1,celno,celno1,emailaddress,emailaddress1,birthdate,birthplace,nationality,tin_no,sss_no,phil_no,pagibig_no,tax_status,married_dependents,sex,marital_status,spousename,spousebirthdate,spouseoccupation,spousecompany,fathername,fatheroccupation,fatherbirthdate,mothername,motheroccupation,motherbirthdate,companyrelatives,contactpersonname,contactpersonno,contactpersonaddress,datehired,audituser,auditdate) 
+$query = "INSERT INTO employee_profile (emp_code,badgeno,emp_id,emp_pic_loc,position,department,howtoapply,referredby,firstname,middlename,lastname,maidenname,emp_address,emp_address2,telno,telno1,celno,celno1,emailaddress,emailaddress1,birthdate,birthplace,nationality,tin_no,sss_no,phil_no,pagibig_no,tax_status,married_dependents,sex,marital_status,spousename,spousebirthdate,spouseoccupation,spousecompany,fathername,fatheroccupation,fatherbirthdate,mothername,motheroccupation,motherbirthdate,companyrelatives,contactpersonname,contactpersonno,contactpersonaddress,datehired,reporting_to,audituser,auditdate) 
 
-        VALUES(:emp_code,:badgeno,:emp_pic_loc,:position,:positiontitle,:howtoapply,:referredby,:firstname,:middlename,:lastname,:maidenname,:emp_address,:emp_address2,:telno,:telno1,:celno,:celno1,:emailaddress,:emailaddress1,:birthdate,:birthplace,:nationality,:tin_no,:sss_no,:phil_no,:pagibig_no,:tax_status,:married_dependents,:sex,:marital_status,:spousename,:spousebirthdate,:spouseoccupation,:spousecompany,:fathername,:fatheroccupation,:fatherbirthdate,:mothername,:motheroccupation,:motherbirthdate,:companyrelatives,:contactpersonname,:contactpersonno,:contactpersonaddress,:datehired,:audituser,:auditdate)";
+VALUES(:emp_code,:badgeno,:emp_id,:emp_pic_loc,:position,:department,:howtoapply,:referredby,:firstname,:middlename,:lastname,:maidenname,:emp_address,:emp_address2,:telno,:telno1,:celno,:celno1,:emailaddress,:emailaddress1,:birthdate,:birthplace,:nationality,:tin_no,:sss_no,:phil_no,:pagibig_no,:tax_status,:married_dependents,:sex,:marital_status,:spousename,:spousebirthdate,:spouseoccupation,:spousecompany,:fathername,:fatheroccupation,:fatherbirthdate,:mothername,:motheroccupation,:motherbirthdate,:companyrelatives,:contactpersonname,:contactpersonno,:contactpersonaddress,:datehired,:reporting_to,:audituser,:auditdate)";
 
                 $stmt =$connL->prepare($query);
 
                 $param = array(   
-                ":emp_code"=> 'OBN'."".$emp_code,
+                ":emp_code"=> 'PCH'."".$emp_code,
                 ":badgeno"=> $emp_code,
+                ":emp_id"=> $emp_id,
                 ":emp_pic_loc"=> $emp_pic_loc,
                 ":position"=> $positiontitle,
-                ":positiontitle"=> $positiontitle,
+                ":department"=> $department,
                 ":howtoapply"=> $howtoapply,
                 ":referredby"=> $referredby,
                 ":firstname"=> $firstname,
@@ -36,9 +37,6 @@ public function InsertNewEmpEnt($emp_code,$emp_pic_loc,$positiontitle,$howtoappl
                 ":birthdate"=> $birthdate,
                 ":birthplace"=> $birthplace,
                 ":nationality"=> $nationality,
-                // ":residence_certno"=> $residence_certno,
-                // ":residence_certdate"=> $residence_certdate,
-                // ":residence_certplace"=> $residence_certplace,
                 ":tin_no"=> $tin_no,
                 ":sss_no"=> $sss_no,
                 ":phil_no"=> $phil_no,
@@ -61,13 +59,8 @@ public function InsertNewEmpEnt($emp_code,$emp_pic_loc,$positiontitle,$howtoappl
                 ":contactpersonname"=> $contactpersonname,
                 ":contactpersonno"=> $contactpersonno,
                 ":contactpersonaddress"=> $contactpersonaddress,
-                // ":legalconvictioncharge"=> $legalconvictioncharge,
-                // ":legalconvictiondate"=> $legalconvictiondate,
-                // ":legalconvictionwhere"=> $legalconvictionwhere,
-                // ":legalconviction"=> $legalconviction,
-                // ":civilcase"=> $civilcase,
-                ":datehired"=> null,  
-                // ":rightsemployee"=> $rightsemployee,  
+                ":datehired"=> null,
+                ":reporting_to"=> $emp_code,   
                 ":audituser" => substr($firstname,0,1)."".substr($middlename,0,1)."".$lastname,
                 ":auditdate"=>date('m-d-Y H:i:s')                                          
                 );

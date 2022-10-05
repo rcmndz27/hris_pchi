@@ -51,7 +51,7 @@ Class BankList{
                 <td id="bc'.$result['rowid'].'">'.$result['descsb'].'</td>
                 <td id="bn'.$result['rowid'].'">'.$result['descsb_name'].'</td>
                 <td id="st'.$result['rowid'].'">'.$result['status']. '</td>';
-                echo'<td><button type="button"class="btn btn-info" 
+                echo'<td><button type="button"class="btn btn-info btn-sm" 
                 onclick="editBankModal('.$rowd.','.$dscsb.')">
                                 <i class="fas fa-edit"></i> UPDATE
                             </button></td>';

@@ -57,7 +57,7 @@ else
     </div>
 
     <div class="col-md-3 d-flex">
-        <button type="button" id="search" class="btn btn-warning" onclick="genePayrl()" ><i class="fas fa-search-plus"></i>GENERATE                    
+        <button type="button" id="search" class="btn btn-secondary" onclick="genePayrl()" ><i class="fas fa-search-plus"></i>GENERATE                    
         </button>
         <a href='javascript:generatePDF()'><img src="../img/expdf.png" height="40" class="pdfimg" id='expdf'></a>
     </div>

@@ -16,7 +16,7 @@ body {
   background-size: cover;
   background-color: #ffff;
   font-family: 'Dosis', sans-serif;
-  background-image:  url('../img/loginbg.jpg');
+  background-image:  url('../img/loginbg.png');
 }
 
 .debtn btn-info {
@@ -52,23 +52,23 @@ body {
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 .btn-login {
-  color: #1f2d3d;
-  background-color: #ffaa00;
-  border-color: #ffaa00;
+  color: #ffffff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
   box-shadow: none;
 }
 
 .btn-login:hover {
-  color: #1f2d3d;
-  background-color: #e0a800;
-  border-color: #d39e00;
+  color: #ffffff;
+  background-color: #7fa2d6;
+  border-color: #7fa2d6;
 }
 
 .btn-login:focus,
 .btn-login.focus {
   color: #1f2d3d;
-  background-color: #e0a800;
-  border-color: #d39e00;
+  background-color: #7fa2d6;
+  border-color: #7fa2d6;
   box-shadow: 0 0 0 0 rgba(221, 171, 15, 0.5);
 }
 
@@ -83,8 +83,8 @@ body {
 .btn-login:not(:disabled):not(.disabled).active,
 .show > .btn-login.dropdown-toggle {
   color: #1f2d3d;
-  background-color: #d39e00;
-  border-color: #c69500;
+  background-color: #7fa2d6;
+  border-color: #7fa2d6;
 }
 
 .btn-login:not(:disabled):not(.disabled):active:focus,
@@ -95,15 +95,15 @@ body {
 
 .btn-login-emp {
   color: #1f2d3d;
-  background-color: #fbec1e;
-  border-color: #fbec1e;
+  background-color: #7fa2d6;
+  border-color: #7fa2d6;
   box-shadow: none;
 }
 
 .btn-login-emp:hover {
   color: #1f2d3d;
-  background-color: #e1d41b;
-  border-color: #c8bc18;
+  background-color: #7fa2d6;
+  border-color: #7fa2d6;
 }
 
 .btn-login-emp:focus,
@@ -323,5 +323,5 @@ body {
 
 .card-header a {
   text-decoration: none;
-  color: #ffaa00;
+  color: #0d6efd;
 }

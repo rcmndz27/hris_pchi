@@ -6,12 +6,12 @@ function GenOt($eMplogName,$pyrollco_from,$pyrollco_to){
            
     global $connL;
 
-    $cmd2 = $connL->prepare('EXEC hrissys_test.dbo.GenerateActualOtRendered :pay_from,:pay_to');
+    $cmd2 = $connL->prepare('EXEC dbo.GenerateActualOtRendered :pay_from,:pay_to');
     $cmd2->bindValue(':pay_from',$pyrollco_from);
     $cmd2->bindValue(':pay_to',$pyrollco_to);
     $cmd2->execute();
 
-    $cmd = $connL->prepare('EXEC hrissys_test.dbo.GenerateOTToAttendance :pay_from,:pay_to');
+    $cmd = $connL->prepare('EXEC dbo.GenerateOTToAttendance :pay_from,:pay_to');
     $cmd->bindValue(':pay_from',$pyrollco_from);
     $cmd->bindValue(':pay_to',$pyrollco_to);
     $cmd->execute();

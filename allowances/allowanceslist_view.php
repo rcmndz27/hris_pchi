@@ -48,7 +48,7 @@
     <div class="pt-3">
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-warning" id="allowancesEntry"><i class="fas fa-plus-circle"></i> ADD NEW EMPLOYEE ALLOWANCE</button>
+                <button type="button" class="btn btn-secondary" id="allowancesEntry"><i class="fas fa-plus-circle"></i> ADD NEW EMPLOYEE ALLOWANCE</button>
             </div>
         </div>
         <div class="row">

@@ -80,7 +80,7 @@ Class MfpositionList{
                 echo'
                 </td>                
                 <td id="st'.$result['rowid'].'">'.$result['status'].'</td>';
-                echo'<td><button type="button" class="btn btn-info" 
+                echo'<td><button type="button" class="btn btn-info btn-sm" 
                 onclick="editMfpositionModal('.$rowd.','.$pstn.')">
                                 <i class="fas fa-edit"></i> UPDATE
                             </button></td>';

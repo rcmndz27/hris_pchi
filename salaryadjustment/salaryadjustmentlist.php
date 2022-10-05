@@ -68,7 +68,7 @@ Class SalaryAdjList{
                 <td>' . $result['description']. '</td>
                 <td>' . $result['amount'].'</td>                
                 <td>' . $result['remarks']. '</td>';
-                echo'<td><button type="button" class="btn btn-info" onclick="editSalAdjModal('.$empcd.','.$percutoff.','.$descript.','.$amnt.','.$remark.','.$incdecr.')">
+                echo'<td><button type="button" class="btn btn-info btn-sm" onclick="editSalAdjModal('.$empcd.','.$percutoff.','.$descript.','.$amnt.','.$remark.','.$incdecr.')">
                                 <i class="fas fa-edit"></i> UPDATE
                             </button></td>';
                 

@@ -4,13 +4,13 @@
                                   right: 0;
                                   z-index: 1;
                                   height: 25px;
-                                  background-color: #ba3f02;
+                                  background-color: #0d6efd;
                                    color: #ffff; 
                                 }
                         </style>
 
                   <div class="fixed-bottom text-center footers">
-                        <label for="">Copyright &copy; <?php echo date("Y");?> Obanana : </label>
+                        <label for="">Copyright &copy; <?php echo date("Y");?> PCHI : </label>
                         <label for="">All Rights Reserved. </label>
                   </div>
 

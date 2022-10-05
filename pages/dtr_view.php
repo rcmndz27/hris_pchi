@@ -45,7 +45,7 @@
                 <input type="date" id="dateTo" class="form-control" name="dateTo" value="<?php echo date('Y-m-d'); ?>" onkeydown="return false">
             </div>
             <div class="col-md-2">
-                <button type="submit" id="search" class="btn btn-warning" ><i class="fas fa-search-plus"></i> GENERATE
+                <button type="submit" id="search" class="btn btn-secondary" ><i class="fas fa-search-plus"></i> GENERATE
                 </button>
             </div>
         </div>

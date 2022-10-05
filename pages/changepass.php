@@ -144,7 +144,7 @@
           </div>
 
                       <button id="empCode" value="<?php echo $result['emp_code']; ?>" hidden></button>
-                      <button type="button" class="chngpass" id="Submit" onclick="chngPass();"><i class="fas fa-key"></i> Change Password</button>
+                      <button type="button" class="btn btn-secondary" id="Submit" onclick="chngPass();"><i class="fas fa-key"></i> Change Password</button>
                   </section>
                 </div>
               </div>

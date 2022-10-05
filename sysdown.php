@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Obanana | Web Portal</title>
+    <title>PCHI | Timekeeping</title>
     <noscript><h3>Please enable Javascript in order to use this form.</h3><meta HTTP-EQUIV='refresh' content=0; url='JavascriptNotEnabled.php'></noscript>
     
     <meta charset='utf-8'>
@@ -11,7 +11,7 @@
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
 <meta http-equiv='pragma' content='no-cache'>
-<link type='image/x-png' rel='icon' href='img/ob_icon.png'>
+<link type='image/x-png' rel='icon' href='img/pchi-logo.png'>
 <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 <link rel='stylesheet' href='css/login_caru.css'>
 <link rel='stylesheet' href='css/login.css'>
@@ -32,7 +32,7 @@
         <div class="card-header text-center">
             
             <a href="#" class="h5">
-            <img class="mb-2 img-fluid mx-auto d-block newoblogo" src="img/obfinallogo.png" alt="">    
+            <img class="mb-2 img-fluid mx-auto d-block newoblogo" src="img/pchi-logo.png" alt="">    
             <b>Human Resource Information System</b> </a>
         </div>
         <div class="card-body">

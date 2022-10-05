@@ -13,7 +13,7 @@ public function InsertUsersAtt($bdno,$name,$pfrom,$pto,$loct,$logname)
                 $stmt =$connL->prepare($query);
 
                 $param = array(
-                    ":company"=> 'OBN',
+                    ":company"=> 'PCHI',
                     ":badge_no" => $bdno,
                     ":employee" => $name,
                     ":location"=> $loct,

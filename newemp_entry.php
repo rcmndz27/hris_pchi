@@ -23,13 +23,13 @@ else
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Obanana | HRIS Portal</title>
+    <title>PCHI | HRIS Portal</title>
 
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link type='image/x-png' rel='icon' href='../img/ob_icon.png'>
+  <link type='image/x-png' rel='icon' href='../img/pchi-logo.png'>
   <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
           <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -65,7 +65,7 @@ else
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
-      <img src='../img/obanana.png'alt="" class="ob_logo"/>
+      <img src='../img/pchi-logo.png'alt="" class="ob_logo"/>
       <nav id="navbar" class="navbar">
           <ul>
                 <li><a class="nav-link active" href="#"><i class="fas fa-users fa-fw"></i>  &nbsp;NEW EMPLOYEE</a></li>

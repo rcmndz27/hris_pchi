@@ -27,7 +27,7 @@
         $cmp = $resulty['company'];
         $subemp = strlen($cmp);
         
-        $query = 'EXEC hrissys_test.dbo.xp_attendance_portal :emp_code,:startDate,:endDate';
+        $query = 'EXEC dbo.xp_attendance_portal :emp_code,:startDate,:endDate';
         $param = array(":emp_code" => substr($empcode,$subemp), ":startDate" => $dateStart, ":endDate" => $dateEnd );
         $stmt =$connL->prepare($query);
         $stmt->execute($param);
@@ -90,12 +90,12 @@
 
                     echo "<tfoot>
                             <tr>".
-                                "<td colspan='3' class='text-right bg-success'><b>Total</b></td>".
-                                "<td class='bg-success'><b>" . $totalWork . "</b></td>".
-                                "<td class='bg-success'><b>" . $totalLate . "</b></td>".
-                                "<td class='bg-success'><b>" . $totalUndertime . "</b></td>".
-                                "<td class='bg-success'><b>" . $totalOvertime . "</b></td>".
-                                "<td class='bg-success'><b></b></td>".
+                                "<td colspan='3' class='text-right bg-secondary'><b>Total</b></td>".
+                                "<td class='bg-secondary'><b>" . $totalWork . "</b></td>".
+                                "<td class='bg-secondary'><b>" . $totalLate . "</b></td>".
+                                "<td class='bg-secondary'><b>" . $totalUndertime . "</b></td>".
+                                "<td class='bg-secondary'><b>" . $totalOvertime . "</b></td>".
+                                "<td class='bg-secondary'><b></b></td>".
                             "</tr>
                         </tfoot>";
                 }else { 

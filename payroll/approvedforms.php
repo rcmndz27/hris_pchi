@@ -20,7 +20,7 @@
         </thead>
         <tbody>';
 
-        $query = "EXEC hrissys_test.dbo.timekeeping_viewapprovedforms :emp_code,:pay_from,:pay_to";
+        $query = "EXEC dbo.timekeeping_viewapprovedforms :emp_code,:pay_from,:pay_to";
         $param = array(':emp_code' => $emp_code,':pay_from' => $dateFrom,':pay_to' => $dateTo);
         $stmt =$connL->prepare($query);
         $stmt->execute($param);

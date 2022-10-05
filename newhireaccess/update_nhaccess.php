@@ -1,6 +1,6 @@
 <?php 
 
-    function UpdateEmployeeLevel($department,$position,$location,$emp_type,$emp_level,$work_sched_type,$minimum_wage,$pay_type,$emp_status,$reporting_to,$lastname,$firstname,$middlename,$emailaddress,$telno,$celno,$emp_address,$emp_address2,$sss_no,$phil_no,$pagibig_no,$tin_no,$datehired,$birthdate,$birthplace,$sex,$marital_status,$emp_pic_loc,$rowid)
+    function UpdateEmployeeLevel($department,$position,$location,$emp_type,$emp_level,$work_sched_type,$minimum_wage,$pay_type,$emp_status,$reporting_to,$lastname,$firstname,$middlename,$emailaddress,$telno,$celno,$emp_address,$emp_address2,$sss_no,$phil_no,$pagibig_no,$tin_no,$datehired,$birthdate,$birthplace,$sex,$marital_status,$emp_pic_loc,$rowid,$emp_id)
     {
             global $connL;
 
@@ -78,7 +78,8 @@
                 pay_type = :pay_type,
                 emp_status = :emp_status,
                 reporting_to = :reporting_to,
-                emp_pic_loc = :emp_pic_loc
+                emp_pic_loc = :emp_pic_loc,
+                emp_id = :emp_id
                 where emp_code = :emp_code ");
 
             $cmd->bindValue('lastname',$lastname);
@@ -110,6 +111,7 @@
             $cmd->bindValue('reporting_to',$reporting_to);
             $cmd->bindValue('emp_pic_loc',$emp_pic_loc);
             $cmd->bindValue('emp_code', $rowid);
+            $cmd->bindValue('emp_id', $emp_id);
             $cmd->execute();
 
    

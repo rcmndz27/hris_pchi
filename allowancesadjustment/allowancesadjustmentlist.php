@@ -62,7 +62,7 @@ Class AllowancesAdjList{
                 <td>' . $result['description']. '</td>
                 <td>' . substr(hash('sha256', $result['amount']),50). '</td>                
                 <td>' . $result['remarks']. '</td>';
-                echo'<td><button type="button" class="btn btn-info" onclick="editAllAdjModal('.$empcd.','.$aladjdate.','.$descript.','.$amnt.','.$remark.','.$incdecr.')">
+                echo'<td><button type="button" class="btn btn-info btn-sm" onclick="editAllAdjModal('.$empcd.','.$aladjdate.','.$descript.','.$amnt.','.$remark.','.$incdecr.')">
                                 <i class="fas fa-edit"></i> UPDATE
                             </button></td>';
                 

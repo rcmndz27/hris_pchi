@@ -121,8 +121,8 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="control-label" for="amount">Payment Rate<span class="req">*</span></label>
-                                        <input type="text" class="form-control inputtext" name="amount"
-                                            id="amount" onkeypress="return onlyNumberKey(event)" placeholder="000000.00" maxlength="15">
+                                        <input type="number" class="form-control inputtext" name="amount"
+                                            id="amount" placeholder="000000.00" maxlength="15">
                                     </div>
                                 </div> 
 

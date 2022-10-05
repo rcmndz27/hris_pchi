@@ -6,7 +6,7 @@ function GenAttendance($eMplogName,$pyrollco_from,$pyrollco_to){
            
     global $connL;
 
-    $cmd = $connL->prepare('EXEC hrissys_test.dbo.insert_xp_attendance_portal :emp_name,:pay_from,:pay_to');
+    $cmd = $connL->prepare('EXEC dbo.insert_xp_attendance_portal :emp_name,:pay_from,:pay_to');
     $cmd->bindValue(':emp_name',$eMplogName);
     $cmd->bindValue(':pay_from',$pyrollco_from);
     $cmd->bindValue(':pay_to',$pyrollco_to);

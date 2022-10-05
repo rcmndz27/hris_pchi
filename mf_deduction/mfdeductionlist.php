@@ -52,7 +52,7 @@ Class MfdeductionList{
                 <td id="dc'.$result['rowid'].'">' . $result['deduction_code']. '</td>
                 <td id="dn'.$result['rowid'].'">' . $result['deduction_name']. '</td>
                 <td id="st'.$result['rowid'].'">' . $result['status']. '</td>';
-                echo'<td><button type="button" class="btn btn-info" 
+                echo'<td><button type="button" class="btn btn-info btn-sm" 
                 onclick="editMfdeductionModal('.$rowd.','.$deductioncode.')">
                                 <i class="fas fa-edit"></i> UPDATE
                             </button></td>';

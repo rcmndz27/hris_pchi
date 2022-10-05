@@ -32,10 +32,10 @@ $pdf->Ln(2);
            
 global $connL;
 
-$cmd = $connL->prepare('EXEC hrissys_test.dbo.payslip_summary :date_start, :date_end ,:emp_code');
+$cmd = $connL->prepare('EXEC dbo.payslip_summary :date_start, :date_end ,:emp_code');
 $cmd->bindValue(':date_start','04/08/2022');
 $cmd->bindValue(':date_end','04/22/2022');
-$cmd->bindValue(':emp_code','OBN21000508');
+$cmd->bindValue(':emp_code','PCHI21000508');
 $cmd->execute();
 $r = $cmd->fetch();
 
@@ -44,7 +44,7 @@ if($r){
 
                 $html ="<table id='payslipsList'><thead>
                     <tr>
-                        <th colspan='6' style='text-align:center;'><img src='../img/obanana.png' style='height:50px;'></th>
+                        <th colspan='6' style='text-align:center;'><img src='../img/pchi-logo.png' style='height:50px;'></th>
                         <button id='showpay' value='ok' hidden></button>
                     </tr>
                     <tr>

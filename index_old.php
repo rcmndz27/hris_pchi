@@ -91,7 +91,7 @@ if (empty($_SESSION['userid'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Obanana | HRIS Portal</title>
+    <title>PCHI | HRIS Portal</title>
     <noscript><h3>Please enable Javascript in order to use this form.</h3><meta HTTP-EQUIV='refresh' content=0; url='JavascriptNotEnabled.php'></noscript>
     
     <meta charset='utf-8'>
@@ -102,7 +102,7 @@ if (empty($_SESSION['userid'])) {
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
 
-    <link type='image/x-png' rel='icon' href='img/ob_icon.png'>
+    <link type='image/x-png' rel='icon' href='img/pchi-logo.png'>
     <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel='stylesheet' href='css/login.css'>
 
@@ -359,7 +359,7 @@ ul{
         <form class="container" method="post" action="" name="login">
             <div class="row">
                 <div class="col">
-                    <img class="mb-4 img-fluid mx-auto d-block" src="img/obanana.png" alt="">
+                    <img class="mb-4 img-fluid mx-auto d-block" src="img/pchi-logo.png" alt="">
                 </div>
             </div>
             <div class="row">

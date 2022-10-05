@@ -148,7 +148,7 @@
 
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-warning" id="applyOvertime"><i class="fas fa-plus-circle"></i> APPLY OVERTIME</button>
+                <button type="button" class="btn btn-secondary" id="applyOvertime"><i class="fas fa-plus-circle"></i> APPLY OVERTIME</button>
             </div>
         </div>
 

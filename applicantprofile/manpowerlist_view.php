@@ -48,7 +48,7 @@
 
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-warning" id="manpowerEntry"><i class="fas fa-users"></i> ADD NEW MANPOWER REQUEST </button>
+                <button type="button" class="btn btn-secondary" id="manpowerEntry"><i class="fas fa-users"></i> ADD NEW MANPOWER REQUEST </button>
             </div>
         </div>
 

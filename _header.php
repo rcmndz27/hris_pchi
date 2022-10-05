@@ -124,13 +124,13 @@ else
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Obanana</title>
+    <title>PCHI</title>
 
   <meta content="" name="description">
   <meta content="" name="keywords">
 
 <!-- Favicons -->
-<link type='image/x-png' rel='icon' href='../img/ob_icon.png'>
+<link type='image/x-png' rel='icon' href='../img/pchi-logo.png'>
 <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 <link href="../css/bootstrap-icons.css" rel="stylesheet" />
 <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -164,7 +164,7 @@ rel="stylesheet">
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
-      <img src='../img/obanana.png'alt="" class="ob_logo"/>
+      <img src='../img/pchi-logo.png'alt="" class="ob_logo"/>
       <nav id="navbar" class="navbar">
           <ul>
       <?php 

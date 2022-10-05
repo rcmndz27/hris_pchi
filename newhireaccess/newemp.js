@@ -42,6 +42,7 @@ $(function(){
         inputValues = [
             $('#emp_code'),
             $('#positiontitle'),  
+            $('#department'),  
             $('#firstname'),
             $('#lastname'),
             $('#emp_address'),
@@ -54,16 +55,6 @@ $(function(){
             $('#nationality'),
             $('#sex'),
             $('#marital_status')                      
-            // $('#empimgpic'),
-            // $('#telno'),            
-            // $('#reason_position'),
-            // $('#expected_salary'),
-            // $('#preffieldwork'),
-            // $('#preffieldwork1'),
-            // $('#positiontitle1'),
-            // $('#howtoapply'),
-            // $('#contactpersonname'),
-            // $('#contactpersonno')
         ];
 
         var result = (CheckInputValue(inputValues) === '0') ? true : false;
@@ -308,13 +299,10 @@ $(function(){
             param = {
                 'Action': 'InsertNewEmpEnt',
                 "emp_code": $('#emp_code').val(),
-                "emp_pic_loc": empImgFile,
-                // 'preffieldwork': $('#preffieldwork').val(),
-                // 'preffieldwork1': $('#preffieldwork1').val(),
+                "emp_id": $('#emp_id').val(),
+                "emp_pic_loc": 'nophoto.png',
                 'positiontitle': $('#positiontitle').val(),
-                // 'positiontitle1': $('#positiontitle1').val(),  
-                // 'reason_position': $('#reason_position').val(),
-                // 'expected_salary': $('#expected_salary').val(),  
+                'department': $('#department').val(),
                 'howtoapply': $( "#howtoapply option:selected" ).text(),
                 'referredby': $('#referredby').val(),                                
                 'firstname': $('#firstname').val(),
@@ -332,9 +320,6 @@ $(function(){
                 'birthdate':$( "#birthdate" ).val(),                       
                 'birthplace':$( "#birthplace" ).val(),
                 'nationality':$( "#nationality" ).val(),
-                // 'residence_certno':$( "#residence_certno" ).val(),
-                // 'residence_certdate':$( "#residence_certdate" ).val(),
-                // 'residence_certplace':$( "#residence_certplace" ).val(),
                 'tin_no':$( "#tin_no" ).val(),
                 'sss_no':$( "#sss_no" ).val(),
                 'phil_no':$( "#phil_no" ).val(),
@@ -363,16 +348,6 @@ $(function(){
                 'contactpersonname':$( "#contactpersonname" ).val(),
                 'contactpersonno':$( "#contactpersonno" ).val(),
                 'contactpersonaddress':$( "#contactpersonaddress" ).val(),
-                // 'legalconvictioncharge':$( "#legalconvictioncharge" ).val(),
-                // 'legalconvictiondate':$( "#legalconvictiondate" ).val(),
-                // 'legalconvictionwhere':$( "#legalconvictionwhere" ).val(),
-                // 'legalconviction':$( "#legalconviction" ).val(),
-                // 'civilcase':$( "#civilcase" ).val(),
-                // 'conname': $("input[name='conname[]']").map(function(){return $(this).val();}).get(),
-                // 'conoccupation': $("input[name='conoccupation[]']").map(function(){return $(this).val();}).get(),
-                // 'concompany': $("input[name='concompany[]']").map(function(){return $(this).val();}).get(),
-                // 'conconviction': $("input[name='conconviction[]']").map(function(){return $(this).val();}).get(),                                
-                // 'rightsemployee':$( "#rightsemployee" ).val(),
                 'schoolfrom': $("input[name='schoolfrom[]']").map(function(){return $(this).val();}).get(),
                 'schoolto': $("input[name='schoolto[]']").map(function(){return $(this).val();}).get(),
                 'schoolname': $("input[name='schoolname[]']").map(function(){return $(this).val();}).get(),
@@ -396,76 +371,81 @@ $(function(){
 
             // console.log(param);
             // return false;
-            
-            var files = document.getElementById("empimgpic").files;
 
-                   if(files.length > 0 ){
+                 swal({
+                      title: "Are you sure you want to submit this employee details?",
+                      text: "Please make sure all information are true and correct.",
+                      icon: "success",
+                      buttons: true,
+                      dangerMode: true,
+                    })
+                    .then((newEmp) => {
+                      if (newEmp) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '../newhireaccess/newempent_process.php',
+                                    data: {
+                                        data: param
+                                    },
+                                    success: function (result) {                                            
+                                        console.log('success: ' + result);
+                                        swal({
+                                        title: "Success!", 
+                                        text: "Successfully added new employee details!", 
+                                        type: "success",
+                                        icon: "success",
+                                        }).then(function() {
+                                            location.href = '../newhireaccess/newhireaccess_view.php';
+                                        });
+                                    },
+                                    error: function (result) {
+                                        console.log('error: ' + result);
+                                    }
+                                }); //ajax
+                      } else {
+                        swal({text:"You cancel the submission of your applicant details!",icon:"error"});
+                      }
+                    });
 
-                      var formData = new FormData();
-                      formData.append("file", files[0]);
 
-                      var xhttp = new XMLHttpRequest();
-
-                      // Set POST method and ajax file path
-                      xhttp.open("POST", "newemp_uploadajaxfile.php", true);
-
-                      // call on request changes state
-                      xhttp.onreadystatechange = function() {
-                         if (this.readyState == 4 && this.status == 200) {
-
-                           var response = this.responseText;
-                           if(response == 1){
-                               swal({
-                                  title: "Are you sure you want to submit this employee details?",
-                                  text: "Please make sure all information are true and correct.",
-                                  icon: "success",
-                                  buttons: true,
-                                  dangerMode: true,
-                                })
-                                .then((newEmp) => {
-                                  if (newEmp) {
-                                            $.ajax({
-                                                type: 'POST',
-                                                url: '../newhireaccess/newempent_process.php',
-                                                data: {
-                                                    data: param
-                                                },
-                                                success: function (result) {                                            
-                                                    console.log('success: ' + result);
-                                                    swal({
-                                                    title: "Success!", 
-                                                    text: "Successfully added new employee details!", 
-                                                    type: "success",
-                                                    icon: "success",
-                                                    }).then(function() {
-                                                        location.href = '../index.php';
-                                                    });
-                                                },
-                                                error: function (result) {
-                                                    // console.log('error: ' + result);
-                                                }
-                                            }); //ajax
-                                  } else {
-                                    swal({text:"You cancel the submission of your applicant details!",icon:"error"});
-                                  }
-                                });
-                           }else{
-                              swal("File not uploaded.");
-                           }
-                         }
-                      };
-
-                      // Send request with data
-                      xhttp.send(formData);
-
-                   }else{
-                      swal("Please select an image file");
-                   }
-                    
-
-                }else{
+                    }else{
                     swal({text:"Please fill-up all required (*) fields. ",icon:"error"});
                 }
+
+            // var files = document.getElementById("empimgpic").files;
+
+            //        if(files.length > 0 ){
+
+            //           var formData = new FormData();
+            //           formData.append("file", files[0]);
+
+            //           var xhttp = new XMLHttpRequest();
+
+            //           // Set POST method and ajax file path
+            //           xhttp.open("POST", "newemp_uploadajaxfile.php", true);
+
+            //           // call on request changes state
+            //           xhttp.onreadystatechange = function() {
+            //              if (this.readyState == 4 && this.status == 200) {
+
+            //                var response = this.responseText;
+            //                if(response == 1){
+
+            //                }else{
+            //                   swal("File not uploaded.");
+            //                }
+            //              }
+            //           };
+
+            //           // Send request with data
+            //           xhttp.send(formData);
+
+            //        }else{
+            //           // swal("Please select an image file");
+            //        }
+                    
+
+ 
             });
 
 

@@ -75,15 +75,15 @@
             <tfoot>
                 <tr>".
                     "<td colspan='5' class='text-center bg-success'><b>Total</b></td>".
-                    "<td class='bg-success'><b>" . $totalHoursWorked . "</b></td>".
-                    "<td class='bg-success'><b>" . $totalLateHours . "</b></td>".
-                    "<td class='bg-success'><b>" . $totalUndertime . "</b></td>".
-                    "<td class='bg-success'><b>" . $totalRegularOvertime . "</b></td>".
-                    "<td class='bg-success'><b>" . $totalRestdayOvertime . "</b></td>".
-                    "<td class='bg-success'><b>" . $totalRegularHolidayOvertime . "</b></td>".
-                    "<td class='bg-success'><b>" . $totalSpecialHolidayOvertime . "</b></td>".
-                    "<td class='bg-success'><b>" . $totalNightDiff . "</b></td>".
-                    "<td class='bg-success'></td>".
+                    "<td class='bg-secondary'><b>" . $totalHoursWorked . "</b></td>".
+                    "<td class='bg-secondary'><b>" . $totalLateHours . "</b></td>".
+                    "<td class='bg-secondary'><b>" . $totalUndertime . "</b></td>".
+                    "<td class='bg-secondary'><b>" . $totalRegularOvertime . "</b></td>".
+                    "<td class='bg-secondary'><b>" . $totalRestdayOvertime . "</b></td>".
+                    "<td class='bg-secondary'><b>" . $totalRegularHolidayOvertime . "</b></td>".
+                    "<td class='bg-secondary'><b>" . $totalSpecialHolidayOvertime . "</b></td>".
+                    "<td class='bg-secondary'><b>" . $totalNightDiff . "</b></td>".
+                    "<td class='bg-secondary'></td>".
                 "</tr>
             </tfoot>
         </table>";

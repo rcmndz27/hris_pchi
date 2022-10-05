@@ -60,7 +60,7 @@
                         <div class="form-row">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                <label class="control-label" for="collegeCourse">Upload Photo <span class="req">*</span></label>
+                                <label class="control-label" for="collegeCourse">Upload Photo </label>
                                 <input class="d-block" type="file" name="empimgpic" id="empimgpic" accept="image/png, image/jpeg" onChange="GetEmpImgFile()">
                                 </div>
                             </div>
@@ -83,37 +83,38 @@
                                         <label class="control-label" for="newEmpCode">Employee Code:<span class="req">*</span></label>
                                           <div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                              <span class="input-group-text">OBN</span>
+                                              <span class="input-group-text">PCH</span>
                                             </div>
                                             <input type="text" class="form-control inputtext" id="emp_code" name="emp_code" placeholder="000999">
                                           </div> 
                                     </div>
                                 </div>   
 
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label class="control-label" for="employeeid">Employee ID:</label>
+                                        <input type="text" class="form-control" name="emp_id"
+                                            id="emp_id" placeholder="Employee ID">                                        
+                                    </div>
+                                </div>                                 
+
                                                              
-                                <div class="col-lg-10">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label" for="positionList">Position Title:<span class="req">*</span></label>
                                         <input type="text" class="form-control inputtext" name="positiontitle"
-                                            id="positiontitle" placeholder="Job Title" required>
-
+                                            id="positiontitle" placeholder="Position Title">                                        
                                     </div>
-                                </div>                                                               
+                                </div> 
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="department">Department:<span class="req">*</span></label>
+                                    <input type="text" class="form-control inputtext" name="department"
+                                            id="department" placeholder="Department Title">
+                                    </div>
+                                </div>                                                                                                
                             </div> 
-<!--                         
-<div class="form-row mb-2">
-<div class="col-lg-6">
-<label class="control-label" for="reasonsfor">Reason for wishing to be considered for the position at hand:<span class="req">*</span></label>
-<textarea class="form-control" id="reason_position" name="reason_position" rows="1"
-cols="90" placeholder="Reason....."></textarea>
-</div>
-<div class="col-lg-6">
-<label class="control-label" for="expect_salary">Expected Minimum Salary:<span class="req">*</span></label>
-<input type="text" class="form-control inputtext" onkeypress="return onlyNumberKey(event)"name="expected_salary"
-id="expected_salary" placeholder="P 00,000.00">
-</div>                            
-</div>   
--->
+
                           <div class="form-row">
                                 <div class="col-lg-8">
                                     <div class="form-group">
@@ -127,15 +128,16 @@ id="expected_salary" placeholder="P 00,000.00">
                                             <option value="JobStreet">JobStreet</option>
                                             <option value="Website">Website</option>
                                             <option value="Referred By">Referred By</option>
+                                            <option value="Others">Others</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="control-label" for="Referred By">Referred By:</label>
+                                        <label class="control-label" for="Referred By">Remarks:</label>
                                         <div id="refby_show">
                                             <input type="text" class="form-control inputtext" name="referredby"
-                                                id="referredby" placeholder="Referred by">
+                                                id="referredby" placeholder="Remarks">
                                         </div>
                                         <div id="refby_dis">
                                             <input type="text" class="form-control inputtext" placeholder="Referred by" readonly>
@@ -186,7 +188,7 @@ id="expected_salary" placeholder="P 00,000.00">
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="control-label" for="Permanent">(B) Permanent Address<span class="req">*</span></label>
-                                        <label class="note"><input class="btn samea" id="perma" value="SAME IN (A)"></label>
+                                        <label class="note"><input class="btn samea" id="perma" value="SAME IN (A)" onkeydown="return false;"></label>
                                   <textarea class="form-control" id="emp_address2" name="emp_address2" rows="2"
                                     cols="90" placeholder="Address....."></textarea>
                                     </div>
@@ -261,21 +263,7 @@ id="expected_salary" placeholder="P 00,000.00">
                                 </div>
                             
                             </div>
-<!-- 
-                            <div class="form-row">
-                                <div class="col-lg-6">
-                                    <label class="control-label" for="residence_certno">Residence Certificate No. :</label>
-                                    <input type="text" class="form-control" name="residence_certno" id="residence_certno" placeholder="Certificate No....">
-                                </div>
-                                <div class="col-lg-2">
-                                    <label class="control-label" for="residence_certdate">Date Issued:</label>
-                                    <input type="date" class="form-control" name="residence_certdate" id="residence_certdate">
-                                </div>  
-                                <div class="col-lg-4">
-                                    <label class="control-label" for="residence_certplace">Place Issued:</label>
-                                    <input type="text" class="form-control" name="residence_certplace" id="residence_certplace" placeholder="Place Issued....">
-                                </div>                                                               
-                            </div><br> -->
+
                             <div class="form-row">
                                 <div class="col-lg-3">
                                     <div class="form-group">
@@ -481,10 +469,10 @@ id="expected_salary" placeholder="P 00,000.00">
                             <div class="form-row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="control-label" for="companyrelatives">Have you any near relatives working in another company like Obanana ?</label>
+                                        <label class="control-label" for="companyrelatives">Have you any near relatives working in another company like PCHI ?</label>
                                         <label class="note">If so, give name, relationship, and organization.</label>
                                         <textarea class="form-control" id="companyrelatives" name="companyrelatives" rows="4"
-                                        cols="90" placeholder="Have you any near relatives working in another company like Obanana ?"></textarea>
+                                        cols="90" placeholder="Have you any near relatives working in another company like PCHI ?"></textarea>
                                     </div>
                                 </div> 
                                 <div class="col-lg-12">
