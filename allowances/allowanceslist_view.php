@@ -62,7 +62,7 @@
             <button type="button" id="search" class="btn btn-primary text-white mr-1" onclick="generateEmpStatus();">
               <i class="fas fa-search-plus"></i> Generate                      
             </button>  
-        <button type="button" class="btn btn-primary" id="allowancesEntry"><i class="fas fa-plus-circle"></i> Add New Employee Allowance </button>                                              
+        <button type="button" class="btn btn-secondary" id="allowancesEntry"><i class="fas fa-plus-circle"></i> Add New Employee Allowance </button>                                              
         </div>
       <div class="col-md-1">
             <select class="form-select" name="state" id="maxRows">

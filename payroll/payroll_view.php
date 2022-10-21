@@ -102,7 +102,7 @@ else
 
         <?php 
         if($tkstat == 'READY' || $tkstat == 'DELETED') {
-            echo '<button type="button" class="btn btn-primary" onclick="savetk()"><i class="fas fa-save mr-1"></i> Save Timekeeping</button>';
+            echo '<button type="button" class="btn btn-secondary" onclick="savetk()"><i class="fas fa-save mr-1 text-white"></i> Save Timekeeping</button>';
         }else if($tkstat == 'SAVED' && $empUserType == 'Admin') {
             echo "<button class='btn btn-primary' onclick='ApprovePayView()'><i class='fas fa-save'></i> Generate Payroll</button>";
 

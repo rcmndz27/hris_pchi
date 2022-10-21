@@ -13,7 +13,7 @@ Class NewHireAccess{
                 <div class="col-lg-4">        
                         </div>                     
                 </div>  
-        <table id="allEmpList" class="table empp table-striped table-sm">
+        <table id="allEmpList" class="table table-sm">
         <thead>
             <tr>
                 <th>Emp Code</th>
@@ -38,16 +38,17 @@ Class NewHireAccess{
                 $fullname =  $result['lastname'].','.$result['firstname'];
                 $empcd = "'".$result['emp_code']."'";
                 $emppicloc = "'".$result['emp_pic_loc']."'";
+                $onlk = 'onclick="viewEmpModal('.$empcd.','.$emppicloc.')"';
                  $day[] = $result;
                 echo '
-                <tr>
-                <td>' . $result['emp_code'] . '</td>
-                <td>' . $fullname . '</td>
-                <td>' . $result['position'] . '</td>
-                <td>' . $result['department'] . '</td>
-                <td>' . $result['location'] . '</td>
-                <td>' . $result['emp_type'] . '</td>
-                <td>' . $result['emp_status'] . '</td>';
+                <tr class="csor-pointer">
+                <td '.$onlk.' >' . $result['emp_code'] . '</td>
+                <td '.$onlk.'>' . $fullname . '</td>
+                <td '.$onlk.'>' . $result['position'] . '</td>
+                <td '.$onlk.'>' . $result['department'] . '</td>
+                <td '.$onlk.'>' . $result['location'] . '</td>
+                <td '.$onlk.'>' . $result['emp_type'] . '</td>
+                <td '.$onlk.'>' . $result['emp_status'] . '</td>';
                 echo '<td><button type="button" class="btn btn-info btn-sm btn-sm mr-1" onclick="viewEmpModal('.$empcd.','.$emppicloc.')" title="View Employee Profile"><i class="fas fa-binoculars"></i>
                             </button><button type="button" class="btn btn-warning btn-sm" onclick="updateEmpModal('.$empcd.')" title="Update Employee Profile">
                                 <i class="fas fa-edit"></i>
