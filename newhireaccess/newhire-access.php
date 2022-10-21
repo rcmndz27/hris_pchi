@@ -49,7 +49,7 @@ Class NewHireAccess{
                 <td '.$onlk.'>' . $result['location'] . '</td>
                 <td '.$onlk.'>' . $result['emp_type'] . '</td>
                 <td '.$onlk.'>' . $result['emp_status'] . '</td>';
-                echo '<td><button type="button" class="btn btn-info btn-sm btn-sm mr-1" onclick="viewEmpModal('.$empcd.','.$emppicloc.')" title="View Employee Profile"><i class="fas fa-binoculars"></i>
+                echo '<td><button type="button" class="btn btn-info btn-sm btn-sm mr-1 mb-1" onclick="viewEmpModal('.$empcd.','.$emppicloc.')" title="View Employee Profile"><i class="fas fa-binoculars"></i>
                             </button><button type="button" class="btn btn-warning btn-sm" onclick="updateEmpModal('.$empcd.')" title="Update Employee Profile">
                                 <i class="fas fa-edit"></i>
                             </button></td>
