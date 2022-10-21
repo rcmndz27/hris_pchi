@@ -126,8 +126,8 @@
               </select>    
           </div>
         <div class='col-md-5' >          
-            <button type="button" id="search" class="btn btn-primary mr-1" onclick="generateEmpStatus();">
-              <i class="fas fa-search-plus"></i> Generate                      
+            <button type="button" id="search" class="btn btn-success mr-1 text-white" onclick="generateEmpStatus();">
+              <i class="fas fa-search-plus text-white"></i> Generate                      
             </button> 
             
               <a href="../newhireaccess/newemployee_entry.php" class="text-light" target="_blank"><button type="button" id="search" class="btn btn-primary mr-2" ><i class="fas fa-user mr-2"></i>Add User</button></a>                    

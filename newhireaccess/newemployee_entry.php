@@ -178,8 +178,7 @@
                                     <div class="form-group">
                                         <label class="control-label" for="Address">(A) Present Address<span class="req">*</span></label>
                                         <label class="note">(indicate since when)</label>
-                                  <textarea class="form-control" id="emp_address" name="emp_address" rows="2"
-                                    cols="90" placeholder="Address....."></textarea>
+                                        <input type="text" class="form-control" name="emp_address" id="emp_address" placeholder="Address">
                                     </div>
                                 </div>
 
@@ -187,8 +186,7 @@
                                     <div class="form-group">
                                         <label class="control-label" for="Permanent">(B) Permanent Address<span class="req">*</span></label>
                                         <label class="note"><input class="btn samea" id="perma" value="SAME IN (A)" onkeydown="return false;"></label>
-                                  <textarea class="form-control" id="emp_address2" name="emp_address2" rows="2"
-                                    cols="90" placeholder="Address....."></textarea>
+                                        <input type="text" class="form-control" name="emp_address2" id="emp_address2" placeholder="Address">
                                     </div>
                                 </div>
                             </div>      
