@@ -22,7 +22,7 @@ if (!empty($_POST['loginSubmit']))
     $stmt->execute($param);
     $r = $stmt->fetch();
 
-    $userid = isset($r['userid']) ? $r['userid'] : 'PCHI00000';
+    $userid = isset($r['userid']) ? $r['userid'] : 'PCH00000';
     $password = $_POST['password'];
 
     $date1 = date("Y-m-d");
@@ -87,7 +87,7 @@ if (empty($_SESSION['userid'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PCHI | Timekeeping</title>
+    <title>PCHI | Web Portal</title>
     <noscript><h3>Please enable Javascript in order to use this form.</h3><meta HTTP-EQUIV='refresh' content=0; url='JavascriptNotEnabled.php'></noscript>
     
     <meta charset='utf-8'>
@@ -107,7 +107,7 @@ if (empty($_SESSION['userid'])) {
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <script type='text/javascript' src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- <script type="text/javascript" src='js/script.js'></script> -->
+<script type="text/javascript" src='js/script.js'></script>
 <style type="text/css">    
 .loader {
             position: fixed;
@@ -131,7 +131,7 @@ if (empty($_SESSION['userid'])) {
         <div class="card-header text-center">
             
             <a href="#" class="h5">
-            <img class="mb-2 img-fluid mx-auto d-block newoblogo" src="img/pchi-logo.png" alt="">    
+            <img class="mb-1 img-fluid mx-auto d-block newoblogo" src="img/pchi-logo.png" alt="">    
             <b>Human Resource Information System</b> </a>
         </div>
         <div class="card-body">
@@ -168,33 +168,12 @@ if (empty($_SESSION['userid'])) {
                 }
             ?>
           <div class="social-auth-links text-center mt-2 mb-3">
-            <input type="submit" class="btn btn-login btn-block" name="loginSubmit" value="Login" >
+            <input type="submit" class="btn btn-login btn-block text-white" name="loginSubmit" value="Login" >
             <div class="row">
-                <!-- <h6>Forgot password?Kindly contact the administrator.</h6> -->
-<!--                 <div class="col-sm-6">
-                    <a href="newhireaccess/newemployee_entry.php" class="btn btn-block btn-login-emp mt-2" onclick="show()">
-                        <i class="fas fa-users"></i> New Employee
-                    </a>
-                </div>
-                <div class="col-sm-6">
-                    <a href="applicantprofile/applicant_entry.php" class="btn btn-block btn-login-emp mt-2" onclick="show()">
-                        <i class="fas fa-file "></i> Applicant
-                    </a>
-                </div> -->
+
             </div>
           </div>
           </form>
-            
-          <!-- /.social-auth-links -->
-
-          <!-- <p class="mb-1">
-            <a href="forgot-password.html">I forgot my password</a>
-          </p>
-          <p class="mb-0">
-            <a href="register.html" class="text-center"
-              >Register a new membership</a
-            >
-          </p> -->
         </div>
         <!-- /.card-body -->
       </div>

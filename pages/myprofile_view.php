@@ -12,7 +12,7 @@
 
         global $connL;
 
-        $query = "SELECT * from employee_profile where emp_code = :empcode";
+        $query = "SELECT * from employee_profile a left join employee_level b on a.ranking = b.level_id where emp_code = :empcode";
         $stmt =$connL->prepare($query);
         $param = array(":empcode" => $empCode);
         $stmt->execute($param);
@@ -182,6 +182,12 @@
                   </div>
                   <hr>
                   <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Employee Level:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <?php echo $result['level_description']; ?>
+                    </div>                    
                   </div>
                 </div>
               </div>

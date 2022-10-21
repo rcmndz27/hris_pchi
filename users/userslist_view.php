@@ -41,14 +41,14 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active bb" aria-current="page"><b><i class='fas fa-money-bill-wave fa-fw'>
-                        </i>&nbsp;USERS MANAGEMENT LIST</b></li>
+              <li class="breadcrumb-item active bb" aria-current="page"><i class='fas fa-money-bill-wave fa-fw mr-1'>
+                        </i>Users Management List</li>
             </ol>
           </nav>
     <div class="pt-3">
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-secondary" id="usersEntry"><i class="fas fa-plus-circle"></i> ADD NEW USER ACCOUNT </button>
+                <button type="button" class="btn btn-primary" id="usersEntry"><i class="fas fa-plus-circle"></i> Add New User Account</button>
             </div>
         </div>
         <div class="row">
@@ -67,7 +67,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">USERS ENTRY  <i class="fas fa-minus-circle"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-minus-circle mr-1"></i>Users Entry</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -86,21 +86,6 @@
                                         <?php $dd->GenerateSingleGenDropDown("emp_code", $mf->GetUserAccntNames("allusracnt")); ?> 
                                     </div>
                                 </div> 
-<!--                               <div class="col-12">
-                                <div class="form-group">
-                                 <label class="control-label" for="users_id">User Password<span class="req">*</span>
-                                 </label>
-                                <div class="input-group mb-3">
-                                  <input name="password" type="password"  class="form-control inputtext" id="password" nameplaceholder="Password" required="true" aria-label="password" aria-describedby="basic-addon1" />
-                                  <div class="input-group-append">
-                                    <span class="input-group-text" onclick="confirmpassword_show_hide();">
-                                      <i class="fas fa-eye" id="cfshow_eye"></i>
-                                      <i class="fas fa-eye-slash d-none" id="cfhide_eye"></i>
-                                    </span>
-                                  </div>
-                                </div>
-                                </div>
-                              </div>  -->
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="control-label" for="emp_level">User Level<span class="req">*</span></label>
@@ -136,7 +121,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">UPDATE USERS   <i class="fas fa-minus-circle"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-minus-circle mr-1"></i>Update Users</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -156,21 +141,6 @@
                                   <input name="usrid" id="usrid" class="form-control" hidden />
                                     </div>
                                 </div> 
-<!--                               <div class="col-12">
-                                <div class="form-group">
-                                 <label class="control-label" for="password">User Password<span class="req">*</span>
-                                 </label>
-                                <div class="input-group mb-3">
-                                  <input name="pssword" type="password"  class="form-control inputtext" id="pssword" nameplaceholder="Password" required="true" aria-label="password" aria-describedby="basic-addon1" />
-                                  <div class="input-group-append">
-                                    <span class="input-group-text" onclick="password_show_hide();">
-                                      <i class="fas fa-eye" id="cfdshow_eye"></i>
-                                      <i class="fas fa-eye-slash d-none" id="cfdhide_eye"></i>
-                                    </span>
-                                  </div>
-                                </div>
-                                </div>
-                              </div>  -->
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="control-label" for="usrtyp">User Level<span class="req">*</span></label>

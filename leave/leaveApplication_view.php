@@ -28,8 +28,10 @@
         $astmt =$connL->prepare($aquery);
         $astmt->execute($aparam);
         $ar = $astmt->fetch();
-        $e_appr = $ar['emailaddress'];
-        $n_appr = $ar['firstname'].' '.$ar['lastname'];        
+        $e_appr = (isset($ar['emailaddress'])) ? $ar['emailaddress'] : 'n/a' ;
+        $afname = (isset($ar['firstname'])) ? $ar['firstname'] : 'n/a' ; 
+        $alname = (isset($ar['lastname'])) ? $ar['lastname'] : 'n/a' ;
+        $n_appr = $afname.' '.$alname;        
 
         $querys = 'SELECT * FROM dbo.employee_leave WHERE emp_code = :empcode ';
         $params = array(":empcode" => $_SESSION['userid']);
@@ -53,6 +55,22 @@
             $totalVal = [];
         }
 
+        $queryd = "EXEC disableddates :empcode";
+        $paramd = array(":empcode" => $_SESSION['userid']);
+        $stmtd =$connL->prepare($queryd);
+        $stmtd->execute($paramd);
+        $rsd = $stmtd->fetch();
+
+        if(!empty($rsd)){
+            $disdate = [];
+            do { 
+                array_push($disdate,$rsd['punch_date']);
+                
+            } while ($rsd = $stmtd->fetch());
+        }else{
+            $disdate = [];
+        }        
+
     }    
 ?>
 
@@ -62,7 +80,7 @@
 
 
 
-    function viewLeaveModal(datefl,leavedesc,leavetyp,datefr,dateto,remark,appdays,appr_oved,actlcnt,appr_over){
+    function viewLeaveModal(datefl,leavedesc,leavetyp,datefr,dateto,remark,appdays,appr_oved,actlcnt,appr_over,attachment){
 
         $('#viewLeaveModal').modal('toggle');
         document.getElementById('datefl').value =  datefl;   
@@ -74,11 +92,21 @@
         document.getElementById('appdays').value =  appdays;  
         document.getElementById('appr_oved').value =  appr_oved;  
         document.getElementById('actlcnt').value =  actlcnt;        
-        document.getElementById('appr_over').value =  appr_over;        
+        document.getElementById('appr_over').value =  appr_over; 
+        if(!attachment){
+            $('#viewattachment').hide();
+        }else{
+            $('#viewattachment').show();
+            document.getElementById('viewattachment').setAttribute('href','../uploads/'+attachment);
+        }
+        
+
+               
 }
 
     function viewLeaveHistoryModal(lvlogid)
     {
+
        $('#viewLeaveHistoryModal').modal('toggle');
         var url = "../leave/leave_viewlogs.php";
         var lvlogid = lvlogid;
@@ -89,7 +117,10 @@
                 _action: 1,
                 lvlogid: lvlogid             
             },
-            function(data) { $("#contents2").html(data).show(); }
+            function(data) { 
+        $("#contents2").html(data).show(); 
+        $('#viewLeaveModal').modal('hide');
+    }
         );
     }
 
@@ -116,9 +147,11 @@
 function cancelLeave(lvid,empcd)
 {
 
+ $('#viewLeaveModal').hide();
  var url = "../leave/cancelLeaveProcess.php";  
  var leaveid = lvid;   
- var emp_code = empcd;   
+ var emp_code = empcd; 
+
     swal({
           title: "Are you sure?",
           text: "You want to cancel this leave?",
@@ -144,7 +177,7 @@ function cancelLeave(lvid,empcd)
                             icon: "info",
                             }).then(function() {
                                 document.getElementById('st'+leaveid).innerHTML = 'CANCELLED';
-                                document.querySelector('#clv').remove();
+                                $('#clv'+leaveid).hide();
                             });  
                     }
                 );
@@ -170,8 +203,7 @@ function cancelLeave(lvid,empcd)
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-suitcase fa-fw'>
-                        </i>&nbsp;LEAVE APPLICATION</b></li>
+              <li class="breadcrumb-item active font-weight-bold" aria-current="page"><i class='fas fa-suitcase fa-fw mr-1'></i>Leave Application Form</li>
             </ol>
           </nav>
     <div class="pt-3">
@@ -186,7 +218,7 @@ function cancelLeave(lvid,empcd)
         </div>
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-secondary" id="applyLeave"><i class="fas fa-plus-circle"></i> APPLY LEAVE</button>
+                <button type="button" class="btn btn-primary" id="applyLeave"><i class="fas fa-plus-circle mr-1 text-white"></i> Apply Leave</button>
             </div>
         </div>
 
@@ -207,8 +239,8 @@ function cancelLeave(lvid,empcd)
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                        <h5 class="modal-title bb" id="popUpModalTitle">APPLY LEAVE <i class="fas fa-suitcase ">
-                        </i></h5>
+                        <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-suitcase mr-1">
+                        </i> Leave Application Form </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -268,7 +300,7 @@ function cancelLeave(lvid,empcd)
                                 }
                                  ?>                                            
                          <!-- sick leave advance filing  -->
-                        <div id="advancefiling">
+<!--                         <div id="advancefiling">
                             <div class="row">
                                 <div class=col-md-2>
                                     <label for="">Advance Filing:</label>
@@ -287,7 +319,7 @@ function cancelLeave(lvid,empcd)
                                 </div>
                             </div>
                         </div>
-
+ -->
                         
                         <?php 
                         $emp_type = $r['emp_type'];
@@ -372,14 +404,14 @@ function cancelLeave(lvid,empcd)
                                 <label for="">Leave From:</label><span class="req">*</span>
                             </div>
                             <div class="col-md-3 d-inline">
-                                <input type="date" id="dateFrom" name="dateFrom" class="form-control"
+                                <input type="date" id="dateFrom" name="dateFrom" class="form-control inputtext"
                                     >
                             </div>
                             <div class="col-md-1 d-inline">
                                 <label for="">To:</label><span class="req">*</span>
                             </div>
                             <div class="col-md-3 d-inline">
-                                <input type="date" id="dateTo" name="dateTo" class="form-control"
+                                <input type="date" id="dateTo" name="dateTo" class="form-control inputtext"
                                     >
                             </div>
                             <div class="col-md-3 d-inline">
@@ -424,10 +456,10 @@ function cancelLeave(lvid,empcd)
 
                              <div class="row pb-2">
                                 <div class="col-md-2">
-                                    <label for="Attachment" id="LabelAttachment">Attachment:</label>
+                                    <label for="Attachment" id="LabelAttachment">Attachment:</label><span class="req">*</span>
                                 </div>
                                 <div class="col-md-10">
-                                    <input type="file" name="medicalfiles" id="medicalfiles" accept=".pdf" onChange="GetMedFile()">
+                                    <input type="file" name="medicalfiles" id="medicalfiles" class="inputtext" accept=".pdf,.jpg,.png" onChange="GetMedFile()">
                                 </div>
                             </div>
                         
@@ -488,7 +520,7 @@ function cancelLeave(lvid,empcd)
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">VIEW LEAVE <i class="fas fa-suitcase fa-fw"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-suitcase fa-fw mr-1"></i>View Leave</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -560,11 +592,15 @@ function cancelLeave(lvid,empcd)
                                         <label class="control-label" for="appr_oved">Status</label>
                                         <input type="text" id="appr_oved" name="appr_oved" class="form-control" readonly>
                                     </div>
-                                </div>                                
+                                </div> 
+
+                             
                             </div> <!-- form row closing -->
                     </fieldset> 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                            <?php   echo"<a title='Attachment' id='viewattachment' class='font-weight-bold' href=''  
+                                target='popup'><button type='button' class='btn btn-primary '><i class='text-white fas fa-paperclip mr-1'></i>View Attachment</button></a>";   ?>                                      
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                                 </div> 
                         </div> <!-- main body closing -->
                     </div> <!-- modal body closing -->
@@ -577,7 +613,7 @@ function cancelLeave(lvid,empcd)
         <div class="modal-dialog modal-sg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">VIEW LEAVE LOGS   <i class="fas fa-suitcase"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-suitcase mr-1"></i>View Leave Logs</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -603,7 +639,7 @@ function cancelLeave(lvid,empcd)
                     </fieldset> 
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                                 </div> 
                         </div> <!-- main body closing -->
                     </div> <!-- modal body closing -->
@@ -618,28 +654,196 @@ function cancelLeave(lvid,empcd)
 
 <script type="text/javascript">
 
-             $('#dateFrom').change(function(){
+   var allhaftday = 1;
 
+
+    function CheckInput() {
+
+        var inputValues = [];
+
+        inputValues = [
+            
+            $('#leaveDesc'),
+            $('#dateFrom'),
+            $('#dateTo'),
+            $('#medicalfiles')
+            
+        ];
+
+        var result = (CheckInputValue(inputValues) === '0') ? true : false;
+        return result;
+    }
+
+    $('#Submit').click(function(){
+             
+                var leave_pay ;
+
+                if($('#leaveType').val() === 'Sick Leave' && $('#leave_pay1:checked').val() === 'WithPay'){
+                    leave_pay = 'Sick Leave';
+                }else if($('#leaveType').val() === 'Sick Leave' && $('#leave_pay2:checked').val() === 'WithoutPay'){
+                    leave_pay = 'Sick Leave without Pay';
+                }else if($('#leaveType').val() === 'Vacation Leave' && $('#leave_pay1:checked').val() === 'WithPay'){
+                    leave_pay = 'Vacation Leave';
+                }else if($('#leaveType').val() === 'Vacation Leave' && $('#leave_pay2:checked').val() === 'WithoutPay'){
+                    leave_pay = 'Vacation Leave without Pay';
+                }else{
+                    leave_pay = $('#leaveType').val();
+              
+                }   
+
+                  var checkBox = document.getElementById("halfDay");
+                  if (checkBox.checked == true){
+                    leaveCount = 0.5;
+                  } else {
+                     leaveCount = 1.0;
+                  }
+                  
                 var dte = $('#dateFrom').val();
-                var disableDates  =  <?php echo json_encode($totalVal) ;?>;
-
-                if(disableDates.includes(dte)){
-                    document.getElementById('dateFrom').value = '';
-                }
-
-            });
-
-             $('#dateTo').change(function(){
-
                 var dte_to = $('#dateTo').val();
-                var disableDates  =  <?php echo json_encode($totalVal) ;?>;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+                dateArr = []; 
 
+                var start = new Date(dte);
+                var date = new Date(dte_to);
+                var end = date.setDate(date.getDate() + 1);
 
-                if(disableDates.includes(dte_to)){
-                    document.getElementById('dateTo').value = '';
+                while(start < end){
+                   dateArr.push(moment(start).format('YYYY-MM-DD'));
+                   var newDate = start.setDate(start.getDate() + 1);
+                   start = new Date(newDate);  
                 }
 
-            });
+                var ite_date = dateArr.length === 0  ? dte : dateArr ;
+                var disableDates  =  <?php echo json_encode($disdate) ;?>;
+
+                var arr2 = Object.values(ite_date);
+                var arr1 = Object.values(disableDates);
+
+                arr2 = arr2.reduce(function (prev, value) {
+
+                    var isDuplicate = false;
+                    for (var i = 0; i < arr1.length; i++) {
+                        if (value == arr1[i]) {
+                            isDuplicate = true;
+                            break;
+                        }
+                    }
+                      
+                    if (!isDuplicate) {
+                        prev.push(value);
+                    }
+                       
+                    return prev;
+                        
+                }, []);
+
+                var itdate = arr2;
+
+                // console.log(JSON.stringify(arr2));
+                // return false;
+
+                var e_req = $('#e_req').val();
+                var n_req = $('#n_req').val();
+                var e_appr = $('#e_appr').val();
+                var n_appr = $('#n_appr').val();
+
+            if (CheckInput() === true) {
+
+                param = {
+                    "Action":"ApplyLeave",
+                    "leavetype": leave_pay,
+                    "datebirth": $('#dateBirth').val(),
+                    "datestartmaternity": $('#dateStartMaternity').val(),
+                    "leaveDate": itdate,
+                    "leavedesc" : $('#leaveDesc').val(),
+                    "medicalfile": pdfFile,
+                    "leaveCount": leaveCount,
+                    "allhalfdayMark": allhaftday,
+                    "e_req": e_req,
+                    "n_req": n_req,
+                    "e_appr": e_appr,
+                    "n_appr": n_appr
+    
+                };
+                
+                param = JSON.stringify(param);
+
+                // console.log(param);
+                // return false;
+
+                    if($('#dateTo').val() >= $('#dateFrom').val()){
+                        swal({
+                          title: "Are you sure?",
+                          text: "You want to apply this leave?",
+                          icon: "success",
+                          buttons: true,
+                          dangerMode: true,
+                        })
+                        .then((applyLeave) => {
+                            document.getElementById("myDiv").style.display="block";
+                          if (applyLeave) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "../leave/leaveApplicationProcess.php",
+                                        data: {data:param} ,
+                                        success: function (data){
+                                            // console.log("success: "+ data);
+                                                    swal({
+                                                    title: "Success!", 
+                                                    text: "Successfully added leave details!", 
+                                                    type: "success",
+                                                    icon: "success",
+                                                    }).then(function() {
+                                                        location.href = '../leave/leaveApplication_view.php';
+                                                    });
+                                        },
+                                        error: function (data){
+                                            // console.log("error: "+ data);    
+                                        }
+                                    });//ajax
+                          } else {
+                            document.getElementById("myDiv").style.display="none";
+                            swal({text:"You cancel your leave!",icon:"error"});
+                          }
+                        });
+                    
+                        }else{
+                            swal({text:"Leave Date TO must be greater than Leave Date From!",icon:"error"});
+                        }
+
+
+            }else{
+                swal({text:"Kindly fill up blank fields.",icon:"warning"});
+            }
+
+    
+        
+    });
+
+
+
+     $('#dateFrom').change(function(){
+
+        var dte = $('#dateFrom').val();
+        var disableDates  =  <?php echo json_encode($totalVal) ;?>;
+
+        if(disableDates.includes(dte)){
+            document.getElementById('dateFrom').value = '';
+        }
+
+    });
+
+     $('#dateTo').change(function(){
+
+        var dte_to = $('#dateTo').val();
+        var disableDates  =  <?php echo json_encode($totalVal) ;?>;
+
+
+        if(disableDates.includes(dte_to)){
+            document.getElementById('dateTo').value = '';
+        }
+
+    });
 
 
      function updateLeaveModal(leaveid){

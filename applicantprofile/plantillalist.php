@@ -61,7 +61,7 @@ Class PlantillaList{
                                 <i class="fas fa-check-circle"></i> ACTIVATE
                             </button></td>';
                 }else{
-                    echo '<td id="act'.$result['rowid'].'"><button type="button" class="debtn btn-info" onclick="deactivatePlant('.$result['rowid'].');">
+                    echo '<td id="act'.$result['rowid'].'"><button type="button" class="debtn btn-info btn-sm" onclick="deactivatePlant('.$result['rowid'].');">
                                <i class="fas fa-times-circle"></i> DE-ACTIVATE
                             </button></td>';
                 }

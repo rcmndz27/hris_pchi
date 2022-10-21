@@ -10,12 +10,13 @@
     $description = $_POST["description"];  
     $inc_decr = $_POST["inc_decr"];  
     $amount = $_POST["amount"];
-    $remarks = $_POST["remarks"];        
+    $remarks = $_POST["remarks"];
+    $saladjid = $_POST["saladjid"];                
 
 
     if ($action == 1)
     {
-        UpdateSalaryAdj($emp_code,$period_from,$period_to,$description,$inc_decr,$amount,$remarks);
+        UpdateSalaryAdj($emp_code,$period_from,$period_to,$description,$inc_decr,$amount,$remarks,$saladjid);
     }
     else {
 

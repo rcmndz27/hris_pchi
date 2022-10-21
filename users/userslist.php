@@ -66,10 +66,10 @@ Class UsersList{
                 <td id="st'.$result['userid'].'">' . $result['status']. '</td>';
 
                 if( $result['locked_acnt'] == 1){
-                echo'<td><button type="button" class="btn btn-info btn-sm" onclick="editUsrModal('. $empcd.','. $name.')" title="Update User/Change Password">
+                echo'<td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="editUsrModal('. $empcd.','. $name.')" title="Update User/Change Password">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button id="ub'.$result['userid'].'" type="button" class="btn btn-warning btn-sm" onclick="deleteLogsModal('. $empcd.')" title="Unblocked User">
+                            <button id="ub'.$result['userid'].'" type="button" class="btn btn-primary btn-sm" onclick="deleteLogsModal('. $empcd.')" title="Unblocked User">
                                 <i class="fas fa-lock-open"></i>
                             </button>
                             <button type="button" class="btn btn-danger btn-sm" onclick="resetPassword('. $empcd.')" title="Reset Password">
@@ -77,7 +77,7 @@ Class UsersList{
                             </button>                             
                             </td>';
                 } else{
-                    echo'<td><button type="button" class="btn btn-info btn-sm" onclick="editUsrModal('. $empcd.','. $name.')" title="Update User/Change Password">
+                    echo'<td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="editUsrModal('. $empcd.','. $name.')" title="Update User/Change Password">
                                 <i class="fas fa-edit"></i>
                             </button>
                             <button type="button" class="btn btn-danger btn-sm" onclick="resetPassword('. $empcd.')" title="Reset Password">

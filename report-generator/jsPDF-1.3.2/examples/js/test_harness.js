@@ -68,7 +68,7 @@ pdf_test_harness_init = function(pdf, message) {
 	//if (pdf_test_harness.onload) {
 	//harness.pdf = pdf_test_harness.onload(harness);
 	if (message) {
-		message += "<p style='text-align:center;font-style:italic;font-size:.8em'>click to close</p>";
+		message += "<p style='text-align:center;font-style:italic;font-size:.8em'>click to Close</p>";
 		var popup = document.createElement('div');
 		popup.setAttribute('style', 'z-index:100;margin:100px auto;cursor:pointer;font-size:1.3em;top:50px;background-color:rgb(243, 224, 141);padding:1em;border:1px solid black');
 		popup.innerHTML = message;

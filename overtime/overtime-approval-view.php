@@ -33,8 +33,7 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-hourglass fa-fw'>
-                        </i>&nbsp;OVERTIME APPROVAL</b></li>
+              <li class="breadcrumb-item active font-weight-bold" aria-current="page"><i class='fas fa-hourglass fa-fw mr-1'></i>Overtime Approval</li>
             </ol>
           </nav>
           
@@ -50,7 +49,7 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                        <label for="rejectReason">Reason for rejection</label>
+                        <label for="rejectReason">Reason for rejection:</label>
                         <input type="text" name="rejectReason" id="rejectReason" class="form-control">
                     </div>
                 </div>

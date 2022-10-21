@@ -12,6 +12,11 @@
         $pto = $_POST['pto'];
         $ppay = $_POST['ppay'];
         SaveTk($empCode,$pfrom,$pto,$ppay);
+    }else{
+        $pfrom = $_POST['pfrom'];
+        $pto = $_POST['pto'];
+        $ppay = $_POST['ppay'];
+        SaveEmpTk($empCode,$pfrom,$pto,$ppay);
     }
 
 ?>

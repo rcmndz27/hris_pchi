@@ -28,7 +28,8 @@
         $e_appr = $otApplication->{"e_appr"};
         $n_appr = $otApplication->{"n_appr"};
         $otDate = $otApplication->{"otdate"} ;
-        $otApp->InsertAppliedOtApp($empCode,$empReportingTo,$otDate,$otStartDtime,$otEndDtime,$remarks,$e_req,$n_req,$e_appr,$n_appr);
+        $attachment = $otApplication->{"attachment"} ;
+        $otApp->InsertAppliedOtApp($empCode,$empReportingTo,$otDate,$otStartDtime,$otEndDtime,$remarks,$e_req,$n_req,$e_appr,$n_appr,$attachment);
     }
 
 ?>

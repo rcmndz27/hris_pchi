@@ -45,7 +45,7 @@
             <div class="pt-3">
                 <div class="row align-items-end justify-content-end">
                     <div class="col-md-12 mb-3">
-                        <button type="button" class="btn btn-secondary" id="plantillaEntry"><i class="fas fa-plus-circle"></i> ADD NEW PLANTILLA </button>
+                        <button type="button" class="btn btn-primary" id="plantillaEntry"><i class="fas fa-plus-circle"></i> ADD NEW PLANTILLA </button>
                     </div>
                 </div>
 
@@ -153,7 +153,7 @@ var rowid = data;
                     icon: "success",
                     }).then(function(e) {
                         document.getElementById('st'+rowid).innerHTML = 'Active';
-                        document.getElementById('act'+rowid).innerHTML = '<button type="button" class="debtn btn-info" onclick="deactivatePlant('+rowid+')"><i class="fas fa-times-circle"></i> DE-ACTIVATE</button>';
+                        document.getElementById('act'+rowid).innerHTML = '<button type="button" class="debtn btn-info btn-sm" onclick="deactivatePlant('+rowid+')"><i class="fas fa-times-circle"></i> DE-ACTIVATE</button>';
                     }); 
                     }   
                 );

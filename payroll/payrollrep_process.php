@@ -12,6 +12,9 @@
     if ($action == 1)
     {
         GetPayrollList($action, $dateFrom, $dateTo,$location,$empCode);
+    }else{
+        $emp_code = $_POST["emp_code"];
+        GetPayrollEmpList($action,$dateFrom,$dateTo,$location,$empCode,$emp_code);
     }
 
 ?>

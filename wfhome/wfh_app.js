@@ -1,55 +1,55 @@
-//  var pdfFile;
+ var attFile;
 
-// function GetWfhFile() {
-//     var selectedfile = document.getElementById("attachment").files;
-//     if (selectedfile.length > 0) {
-//         var uploadedFile = selectedfile[0];
-//         var fileReader = new FileReader();
-//         var fl = uploadedFile.name;
+function GetAttFile() {
+    var selectedfile = document.getElementById("attachment").files;
+    if (selectedfile.length > 0) {
+        var uploadedFile = selectedfile[0];
+        var fileReader = new FileReader();
+        var fl = uploadedFile.name;
 
-//         fileReader.onload = function (fileLoadedEvent) {
-//             var srcData = fileLoadedEvent.target.result;
-//             pdfFile =  fl;
-//         }
-//         fileReader.readAsDataURL(uploadedFile);
-//     }
-// }
-
-
-// function uploadFile() {
-
-//    var files = document.getElementById("attachment").files;
-
-//    if(files.length > 0 ){
-
-//       var formData = new FormData();
-//       formData.append("file", files[0]);
-
-//       var xhttp = new XMLHttpRequest();
+        fileReader.onload = function (fileLoadedEvent) {
+            var srcData = fileLoadedEvent.target.result;
+            attFile =  fl;
+        }
+        fileReader.readAsDataURL(uploadedFile);
+    }
+}
 
 
-//       xhttp.open("POST", "ajaxfile.php", true);
+function uploadFile() {
 
-//       xhttp.onreadystatechange = function() {
-//          if (this.readyState == 4 && this.status == 200) {
+   var files = document.getElementById("attachment").files;
 
-//            var response = this.responseText;
-//            if(response == 1){
-//               alert("Upload successfully.");
-//            }else{
-//               alert("File not uploaded.");
-//            }
-//          }
-//       };
+   if(files.length > 0 ){
 
-//       // Send request with data
-//       xhttp.send(formData);
+      var formData = new FormData();
+      formData.append("file", files[0]);
 
-//    }else{
-//       // alert("Please select a file");
-//    }
+      var xhttp = new XMLHttpRequest();
 
-// }
+
+      xhttp.open("POST", "../pages/ajaxfile.php", true);
+
+      xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+
+           var response = this.responseText;
+           if(response == 1){
+              // alert("Upload successfully.");
+           }else{
+              swal("File not uploaded.");
+           }
+         }
+      };
+
+      // Send request with data
+      xhttp.send(formData);
+
+   }else{
+      // alert("Please select a file");
+   }
+
+}
 
 
  $(function(){
@@ -61,9 +61,8 @@
 
         inputValues = [
             
-            $('#wfh_task')
-            // ,$('#wfh_output')
-            // ,$('#wfh_percentage')
+            $('#wfh_task'),
+            $('#attachment')
             
         ];
 
@@ -72,30 +71,6 @@
     }
 
 
-
-            // $('#wfhdateto').change(function(){
-
-            //     if($('#wfhdateto').val() < $('#wfhdate').val()){
-
-            //         swal({text:"WFH date TO must be greater than WFH Date From!",icon:"error"});
-
-            //         var input2 = document.getElementById('wfhdateto');
-            //         input2.value = '';               
-
-            //     }else{
-            //         // alert('Error');
-            //     }   
-
-            // });
-
-
-            // $('#wfhdate').change(function(){
-
-            //         var input2 = document.getElementById('wfhdateto');
-            //         document.getElementById("wfhdateto").min = $('#wfhdate').val();
-            //         input2.value = '';
-
-            // });
 
 $('#Submit').click(function(){
 
@@ -135,14 +110,15 @@ $('#Submit').click(function(){
                     "e_req": e_req,
                     "n_req": n_req,
                     "e_appr": e_appr,
-                    "n_appr": n_appr                    
+                    "n_appr": n_appr,
+                    "attachment": attFile                    
                     
                };
                 
                 param = JSON.stringify(param);
 
-                // alert(param);
-                // exit();
+                // console.log(param);
+                // return false;
                 
                       swal({
                           title: "Are you sure?",

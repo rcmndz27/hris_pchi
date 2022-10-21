@@ -82,14 +82,14 @@
 
                
 
-                $sql = $connL->prepare(@"SELECT * FROM dbo.mf_pyrollco ORDER by pyrollco_from DESC");
+                $sql = $connL->prepare(@"SELECT * FROM dbo.mf_pyrollco where status = 'Active' ORDER by pyrollco_from DESC");
                 $sql->execute();
 
                 if ($type == "payrollco")
                 {
                     while ($r = $sql->fetch(PDO::FETCH_ASSOC))
                     {
-                        array_push( $data, array($r["rowid"], date("m/d/Y", strtotime($r["pyrollco_from"])) . " - " . date("m/d/Y", strtotime($r["pyrollco_to"]))) );
+                        array_push( $data, array($r["co_type"], date("m/d/Y", strtotime($r["pyrollco_from"])) . " - " . date("m/d/Y", strtotime($r["pyrollco_to"]))) );
                     }
                 }
 
@@ -500,6 +500,35 @@
             }
         }
 
+        public function GetEmployeeSalaryEmp($type)
+        {
+            global $connL;
+
+            try
+            {
+                $data = [];
+               
+
+                $sql = $connL->prepare(@"SELECT a.rowid,a.emp_code,(a.lastname +','+a.firstname+' '+a.middlename) as fullname from employee_profile a where a.emp_status = 'Active' and NOT EXISTS (SELECT * FROM employee_salary_management b where a.emp_code = b.emp_code) order by a.lastname asc");
+                $sql->execute();
+
+                if ($type == "empsalc")
+                {
+                    while ($r = $sql->fetch(PDO::FETCH_ASSOC))
+                    {
+                       array_push( $data, array($r["emp_code"],$r["fullname"]));
+                    }
+                }
+
+                return $data;
+            }
+            catch (Exception $e)
+            {
+                echo $e->getMessage();
+            }
+        }
+
+
 
         public function GetAllManpowerList($type)
         {
@@ -754,6 +783,34 @@
             }
         }
 
+        public function GetAttEmployeeNamesCode($type)
+        {
+            global $connL;
+
+            try
+            {
+                $data = [];
+               
+
+                $sql = $connL->prepare(@"SELECT rowid,emp_code,(lastname +','+firstname+' '+middlename) as fullname FROM dbo.employee_profile where emp_status = 'Active' and emp_code = (select emp_code from payroll where payroll_status = 'R') ORDER by lastname ASC");
+                $sql->execute();
+
+                if ($type == "allempcode")
+                {
+                    while ($r = $sql->fetch(PDO::FETCH_ASSOC))
+                    {
+                       array_push( $data, array($r["emp_code"],$r["fullname"]));
+                    }
+                }
+
+                return $data;
+            }
+            catch (Exception $e)
+            {
+                echo $e->getMessage();
+            }
+        }        
+
         public function GetAttEmployeeNamesRep($type,$empCode)
         {
             global $connL;
@@ -909,7 +966,7 @@
                 $data = [];
                
 
-                $sql = $connL->prepare(@"SELECT pyrollco_from,pyrollco_to,rowid from mf_pyrollco where pyrollco_from not in (select period_from from att_summary) and pyrollco_from not in (select period_to from att_summary)");
+                $sql = $connL->prepare(@"SELECT pyrollco_from,pyrollco_to,rowid from mf_pyrollco where pyrollco_from not in (select period_from from att_summary) and pyrollco_from not in (select period_to from att_summary) and status = 'Active' ORDER BY pyrollco_from DESC");
                 $sql->execute();
 
                 if ($type == "ungenpco")
@@ -958,6 +1015,34 @@
             }
         }
 
+        public function GetWorkSched($type)
+        {
+            global $connL;
+
+            try
+            {
+                $data = [];
+               
+
+                $sql = $connL->prepare(@"SELECT rowid,schedule_name FROM schedules ORDER by rowid ASC");
+                $sql->execute();
+
+                if ($type == "schedtype")
+                {
+                    while ($r = $sql->fetch(PDO::FETCH_ASSOC))
+                    {
+                       array_push( $data, array($r["rowid"],$r["schedule_name"]));
+                    }
+                }
+
+                return $data;
+            }
+            catch (Exception $e)
+            {
+                echo $e->getMessage();
+            }
+        }        
+
         public function GetAllEmployeeLevel($type)
         {
             global $connL;
@@ -974,7 +1059,7 @@
                 {
                     while ($r = $sql->fetch(PDO::FETCH_ASSOC))
                     {
-                       array_push( $data, array($r["level_id"],$r["level_id"]." - ".$r["level_description"]));
+                       array_push( $data, array($r["level_id"],$r["level_description"]));
                     }
                 }
 

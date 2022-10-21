@@ -30,13 +30,13 @@ else
     $rto = $r['ptmax'];
     $rfrom = $r['pfmax'];
 
-    $queryp = 'EXEC dbo.xp_pending_forms :date_from,:date_to';
+    $queryp = 'EXEC xp_pending_forms :date_from,:date_to';
     $stmtp =$connL->prepare($queryp);
     $paramp = array(":date_from" => $rfrom,":date_to" => $rto);
     $stmtp->execute($paramp);
     $resultp = $stmtp->fetch();  
 
-    $querypf = 'EXEC dbo.xp_pending_forms :date_from,:date_to';
+    $querypf = 'EXEC xp_pending_forms :date_from,:date_to';
     $stmtpf =$connL->prepare($querypf);
     $parampf = array(":date_from" => $rfrom,":date_to" => $rto);
     $stmtpf->execute($parampf);
@@ -69,20 +69,20 @@ else
 <body  onload="javascript:generatePayrll();">
     <div class="container-fluid">
         <div class="section-title">
-          <h6><br></h6>
+          <h1><br></h1>
       </div>
       <div class="main-body mbt">
 
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-money-check fa-fw'>
-              </i>&nbsp;PAYROLL TIMEKEEPING LIST VIEW</b></li>
+              <li class="breadcrumb-item active font-weight-bold" aria-current="page"><i class='fas fa-money-check fa-fw mr-1'>
+              </i>Payroll Timekeeping List View</li>
           </ol>
       </nav>
 
       <div class="form-row">
-        <label for="payroll_period" class="col-form-label pad">PAYROLL PERIOD:</label>
+        <label for="payroll_period" class="col-form-label pad">Payroll Period:</label>
         <input type="text" name="empCode" id="empCode" value="<?php echo $empCode; ?>" hidden>
         <div class='col-lg-1' id="slct">
             <select class="form-select" id="spay">
@@ -91,11 +91,11 @@ else
             </select>
         </div>
         <div class='col-md-2' id="s15th">
-            <?php $dd->GenerateDropDown("ddcutoff", $mf->GetTKList("tkview")); ?>
-        </div>
-        <div class='col-md-2' id="s30th">
-            <?php $dd->GenerateDropDown("ddcutoff30", $mf->GetTKList("tkview")); ?>
-        </div>                    
+            <?php $dd->GenerateDropDown("ddcutoff", $mf->GetAllCutoffCO("payrollco")); ?>
+        </div>        
+        <div class='col-md-2' id="s30th"> 
+            <?php $dd->GenerateDisabledDropDown("ddcutoff30", $mf->GetAllCutoffCO("payrollco")); ?>
+        </div>                       
         <button type="button" id="search" class="btn btn-success" onmousedown="javascript:generatePayrll()">
             <i class="fas fa-search-plus"></i> GENERATE                      
         </button>
@@ -119,7 +119,7 @@ else
        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title bb" id="popUpModalTitle">UPDATE EMPLOYEE ATTENDANCE <i class="fas fa-money-check fa-fw"></i></h5>
+                <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-money-check fa-fw mr-1"></i>Update Employee Attendance </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times; </span>
                 </button>
@@ -417,9 +417,9 @@ else
             </tbody>
             <tfoot>
                 <tr>".
-                    "<td class='text-right bg-secondary'><b>Total</b></td>".
-                    "<td class='bg-secondary'><b>" . $totalPendings . "</b></td>".
-                    "<td class='bg-secondary'><b></b></td>".
+                    "<td class='text-right bg-success'><b>Total</b></td>".
+                    "<td class='bg-success'><b>" . $totalPendings . "</b></td>".
+                    "<td class='bg-success'><b></b></td>".
                 "</tr>
             </tfoot>
         </table>";
@@ -430,7 +430,7 @@ else
             </fieldset> 
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                         </div> 
                         </div> <!-- main body closing -->
                     </div> <!-- modal body closing -->
@@ -483,6 +483,46 @@ else
             </div> <!-- modal dialog closing -->
         </div><!-- modal fade closing -->
 
+<div class="modal fade" id="viewApprovedForms" tabindex="-1" role="dialog" aria-labelledby="informationModalTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title bb" id="popUpModalTitle">VIEW APPROVED FORMS  <i class="fas fa-money-bill"></i></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times; </span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="main-body">
+                <fieldset class="fieldset-border">
+                    <div class="d-flex justify-content-center">
+                        <legend class="fieldset-border pad">
+                        </legend>
+                    </div>
+                    <div class="form-row">
+                        <div class="row pt-3">
+                            <div class="col-md-12">
+                                <div class="panel-body">
+                                    <div id="contents4" class="table-responsive-sm table-body">
+                                        <button type="button" id="search" hidden>GENERATE</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                               
+                    </div> <!-- form row closing -->
+                </fieldset> 
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+                </div> 
+            </div> <!-- main body closing -->
+        </div> <!-- modal body closing -->
+    </div> <!-- modal content closing -->
+</div> <!-- modal dialog closing -->
+</div><!-- modal fade closing -->   
+
+
 <div class="modal fade" id="viewAllAttendanceEmp" tabindex="-1" role="dialog" aria-labelledby="informationModalTitle"
 aria-hidden="true">
 <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
@@ -514,7 +554,7 @@ aria-hidden="true">
                 </fieldset> 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                 </div> 
             </div> <!-- main body closing -->
         </div> <!-- modal body closing -->
@@ -553,7 +593,7 @@ aria-hidden="true">
                 </fieldset> 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                 </div> 
             </div> <!-- main body closing -->
         </div> <!-- modal body closing -->
@@ -709,6 +749,50 @@ aria-hidden="true">
         }
         }
     }
+
+function viewApprovedForms(bdno,pfrom,pto)
+ {
+     $('#viewApprovedForms').modal('toggle');
+     var url = "../payroll/approvedforms_process.php";
+     var emp_code = bdno;
+     var dateFrom = pfrom;
+     var dateTo = pto;
+
+     $.post (
+        url,
+        {
+            _action: 1,
+            emp_code: emp_code,
+            dateFrom: dateFrom,
+            dateTo: dateTo             
+        },
+        function(data) { 
+            $("#contents4").html(data).show();            
+        }
+        );
+ }
+
+function viewApprovedForms(bdno,pfrom,pto)
+ {
+     $('#viewApprovedForms').modal('toggle');
+     var url = "../payroll/approvedforms_process.php";
+     var emp_code = bdno;
+     var dateFrom = pfrom;
+     var dateTo = pto;
+
+     $.post (
+        url,
+        {
+            _action: 1,
+            emp_code: emp_code,
+            dateFrom: dateFrom,
+            dateTo: dateTo             
+        },
+        function(data) { 
+            $("#contents4").html(data).show();            
+        }
+        );
+ }
 
 
 function ApprovePayView()

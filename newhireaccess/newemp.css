@@ -73,9 +73,9 @@ opacity: 0.5;
 }
 
 .adddep{
-    background-color: #6c757d;
+    background-color: #ffaa00;
     font-weight: bolder;
-    border-color: #6c757d;
+    border-color: #ffaa00;
     color: #ffff;
     width: 75px;
     height: 35px;
@@ -84,16 +84,16 @@ opacity: 0.5;
 }
 
 .adddep:hover{
-background-color: #dfded0;
-border-color: #dfded0;
+background-color: #fbec1e;
+border-color: #fbec1e;
 color: #000;
 
 }
 
 .addjob {
-    background-color: #6c757d;
+    background-color: #ffaa00;
     font-weight: bolder;
-    border-color: #6c757d;
+    border-color: #ffaa00;
     border-radius: 1rem;
     color: #ffff;
     width: 160px;
@@ -103,8 +103,8 @@ color: #000;
 }
 
 .addjob:hover{
-    background-color: #dfded0;
-    border-color: #dfded0;
+    background-color: #fbec1e;
+    border-color: #fbec1e;
     color: #000;
 }
 

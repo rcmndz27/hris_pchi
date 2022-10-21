@@ -18,7 +18,7 @@ Class ObApp{
     public function GetAllObAppHistory($date_from,$date_to,$status){
         global $connL;
 
-        echo '<div class="form-row">  
+        echo '<div class="form-row mb-2">  
                     <div class="col-lg-1">
                         <select class="form-select" name="state" id="maxRows">
                              <option value="5000">ALL</option>
@@ -88,10 +88,10 @@ Class ObApp{
                 <td>' . $result['stats'] . '</td>';
 
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm" onclick="viewObModal('.$obdestination.','.$obdate.','.$obtime.','.$obpurpose.','.$obpercmp.','.$stats.')" title="View Official Business">
+                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewObModal('.$obdestination.','.$obdate.','.$obtime.','.$obpurpose.','.$obpercmp.','.$stats.')" title="View Official Business">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm" onclick="viewObHistoryModal('.$obid.')" title="View Logs">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="viewObHistoryModal('.$obid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                      
                             </td>';                             
@@ -122,7 +122,7 @@ Class ObApp{
  public function GetAllObRepHistory($date_from,$date_to,$empCode){
         global $connL;
 
-        echo '<div class="form-row">  
+        echo '<div class="form-row mb-2">  
                     <div class="col-lg-1">
                         <select class="form-select" name="state" id="maxRows">
                              <option value="5000">ALL</option>
@@ -189,10 +189,10 @@ Class ObApp{
                 <td>' . $result['stats'] . '</td>';
 
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm" onclick="viewObModal('.$obdestination.','.$obdate.','.$obtime.','.$obpurpose.','.$obpercmp.','.$stats.')" title="View Official Business">
+                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewObModal('.$obdestination.','.$obdate.','.$obtime.','.$obpurpose.','.$obpercmp.','.$stats.')" title="View Official Business">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm" onclick="viewObHistoryModal('.$obid.')" title="View Logs">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="viewObHistoryModal('.$obid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                      
                             </td>';                             
@@ -244,7 +244,7 @@ Class ObApp{
                     <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for official business.." title="Type in official business details"> 
                         </div>                     
                 </div>          
-        <table id="obList" class="table table-striped table-sm">
+        <table id="obList" class="table table-sm">
         <thead>
             <tr>
                 <th>OB Date</th>
@@ -262,7 +262,7 @@ Class ObApp{
                     when   status = 2 then 'APPROVED'
                     when   status = 3 then 'REJECTED'
                     when   status = 4 then 'CANCELLED' ELSE 'N/A' END) as stats,a.rowid as rowdy,b.firstname+' '+b.lastname as approver,* FROM dbo.tr_offbusiness 
-                    a left join employee_profile b on a.ob_reporting = b.emp_code where a.emp_code = :emp_code ORDER BY date_filed DESC";
+                    a left join employee_profile b on a.ob_reporting = b.emp_code where a.emp_code = :emp_code ORDER BY ob_date DESC";
         $param = array(':emp_code' => $this->employeeCode);
         $stmt =$connL->prepare($query);
         $stmt->execute($param);
@@ -280,32 +280,34 @@ Class ObApp{
                 $obid = "'".$result['rowdy']."'";
                 $appr_over = "'".$result['approver']."'";
                 $empcode = "'".$result['emp_code']."'";
+                $atch = "'".$result['attachment']."'";
+                $onclick = 'onclick="viewObModal('.$obdestination.','.$obdate.','.$obtime.','.$obpurpose.','.$obpercmp.','.$stats.','.$appr_over.','.$atch.')"';
                 echo '
-                <tr>
-                <td>' . date('F d, Y', strtotime($result['ob_date'])). '</td>                
-                <td>' . $result['ob_destination'] . '</td>
-                <td>' . date('h:i a', strtotime($result['ob_time'])) . '</td>
-                <td>' . $result['ob_purpose'] . '</td>
-                <td>' . $result['ob_percmp'] . '</td>
-                <td id="st'.$result['rowdy'].'">' . $result['stats'] . '</td>';
+                <tr class="csor-pointer">
+                <td '.$onclick.'>' . date('F d, Y', strtotime($result['ob_date'])). '</td>                
+                <td '.$onclick.'>' . $result['ob_destination'] . '</td>
+                <td '.$onclick.'>' . date('h:i a', strtotime($result['ob_time'])) . '</td>
+                <td '.$onclick.'>' . $result['ob_purpose'] . '</td>
+                <td '.$onclick.'>' . $result['ob_percmp'] . '</td>
+                <td '.$onclick.' id="st'.$result['rowdy'].'">' . $result['stats'] . '</td>';
                 if($result['stats'] == 'PENDING' || $result['stats'] == 'APPROVED'){
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm" onclick="viewObModal('.$obdestination.','.$obdate.','.$obtime.','.$obpurpose.','.$obpercmp.','.$stats.','.$appr_over.')" title="View Official Business">
+                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewObModal('.$obdestination.','.$obdate.','.$obtime.','.$obpurpose.','.$obpercmp.','.$stats.','.$appr_over.','.$atch.')" title="View Official Business">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm" onclick="viewObHistoryModal('.$obid.')" title="View Logs">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="viewObHistoryModal('.$obid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                         
-                            <button type="button" id="clv" class="btn btn-danger btn-sm" onclick="cancelOb('.$obid.','.$empcode.')" title="Cancel Official Business">
+                            <button type="button" id="clv'.$result['rowdy'].'" class="btn btn-danger btn-sm" onclick="cancelOb('.$obid.','.$empcode.')" title="Cancel Official Business">
                                 <i class="fas fa-ban"></i>
                             </button>
                             </td>';
                 }else{
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm" onclick="viewObModal('.$obdestination.','.$obdate.','.$obtime.','.$obpurpose.','.$obpercmp.','.$stats.','.$appr_over.')" title="View Official Business">
+                <td><button type="button" class="btn btn-info btn-sm btn-sm btn-sm" onclick="viewObModal('.$obdestination.','.$obdate.','.$obtime.','.$obpurpose.','.$obpercmp.','.$stats.','.$appr_over.','.$atch.')" title="View Official Business">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm" onclick="viewObHistoryModal('.$obid.')" title="View Logs">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="viewObHistoryModal('.$obid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                      
                             </td>';
@@ -335,12 +337,12 @@ Class ObApp{
     }
 
     public function InsertAppliedObApp($empCode,$empReportingTo,$ob_time,$ob_destination,$ob_purpose,$ob_percmp, 
-            $obDate,$e_req,$n_req,$e_appr,$n_appr){
+            $obDate,$e_req,$n_req,$e_appr,$n_appr,$attachment){
 
         global $connL;
 
-            $query = "INSERT INTO tr_offbusiness (emp_code,date_filed,ob_date,ob_reporting,ob_time,ob_destination,ob_purpose,ob_percmp,audituser,auditdate) 
-                VALUES(:emp_code,:date_filed,:ob_date,:ob_reporting,:ob_time,:ob_destination,:ob_purpose,:ob_percmp,:audituser,:auditdate) ";
+            $query = "INSERT INTO tr_offbusiness (emp_code,date_filed,ob_date,ob_reporting,ob_time,ob_destination,ob_purpose,ob_percmp,attachment,audituser,auditdate) 
+                VALUES(:emp_code,:date_filed,:ob_date,:ob_reporting,:ob_time,:ob_destination,:ob_purpose,:ob_percmp,:attachment,:audituser,:auditdate) ";
     
                 $stmt =$connL->prepare($query);
 
@@ -353,6 +355,7 @@ Class ObApp{
                     ":ob_destination"=> $ob_destination,
                     ":ob_purpose"=> $ob_purpose,
                     ":ob_percmp"=> $ob_percmp,
+                    ":attachment"=> $attachment,
                     ":audituser" => $empCode,
                     ":auditdate"=>date('m-d-Y H:i:s')
                 );
@@ -418,14 +421,14 @@ Class ObApp{
         $mail->Body    = '<h1>Hi '.$napprover.' </b>,</h1>An employee has requested official business(#'.$rst['maxid'].').<br><br>
                         <h2>From: '.$nrequester.' <br><br></h2>
                         <h2>Check the request in :
-                        <a href="http://124.6.185.87:4200/hris_pchi/ob/ob-approval-view.php">Official Business Approval List</a> 
+                        <a href="http://124.6.185.87:6868/ob/ob-approval-view.php">Official Business Approval List</a> 
                         <br><br></h2>
 
                         Thank you for using our application! <br>
                         Regards, <br>
                         Human Resource Information System <br> <br>
 
-                        <h6>If you are having trouble clicking the "Official Business Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:4200/hris_pchi/ob/ob-approval-view.php <h6>
+                        <h6>If you are having trouble clicking the "Official Business Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/ob/ob-approval-view.php <h6>
                        ';
             $mail->send();
             // echo 'Message has been sent';

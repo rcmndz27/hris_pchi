@@ -61,6 +61,26 @@ $i++;
 }else{
 }
 
+//GET OB
+$queryob = "SELECT * from tr_offbusiness where status = 2 and emp_code = :empcode";
+$stmtob =$connL->prepare($queryob);
+$paramob = array(":empcode" => $empCode);
+$stmtob->execute($paramob);
+$rsob = $stmtob->fetch();
+
+if(!empty($rsob)){
+do { 
+$d = new data();
+$d->start = date('Y-m-d',strtotime($rsob['ob_date']));
+$d->title = $rsob['ob_purpose'];
+$d->color = '#FD0A84';
+$d->textColor = '#FFFFFF';
+array_push($totalVal,$d);  
+$i++;
+} while ($rsob = $stmtob->fetch());                     
+}else{
+}
+
 //GET ATTENDANCE
 $queryd = "exec xp_attendance_portal_admin :empcode";
 $stmtd =$connL->prepare($queryd);
@@ -107,7 +127,7 @@ $stmtl->execute();
 $resultl = $stmtl->fetch();    
 
 //ANNOUNCEMENT
-$queryan = "SELECT * from logs_events where status = 1 or (date_to >= DATEADD(dd, 0, DATEDIFF(dd, 0, GETDATE())) and status = 0)";
+$queryan = "SELECT * from logs_events where status = 1 or (date_to >= DATEADD(dd, 0, DATEDIFF(dd, 0, GETDATE())) and status = 0) ORDER BY rowid desc";
 $stmtan =$connL->prepare($queryan);
 $stmtan->execute();
 $resultan = $stmtan->fetch();    
@@ -667,12 +687,12 @@ swal({text:"You cancel your time out!",icon:"warning"});
 
            <div class="row">  
     <!-- All Act Emp-->
-    <div class="col-xl-2 col-md-3 mb-4">
+    <div class="col-xl-2 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">EMPLOYEE HANDBOOK
+                        <div class="text-xs font-weight-bold text-primary text-capitalize mb-1">EMPLOYEE HANDBOOK
                             <?php echo date("Y") ?> </div>
                             <div class="row no-gutters align-items-center">
                                 <a href="../uploads/COD_HANDBOOK.pdf" target="_blank">
@@ -696,7 +716,7 @@ swal({text:"You cancel your time out!",icon:"warning"});
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Work Days <br><?php echo date("F Y") ?> 
+                            <div class="text-xs font-weight-bold text-danger text-capitalize mb-1">Total Work Days <br><?php echo date("F Y") ?> 
                         </div>
                         <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -718,7 +738,7 @@ swal({text:"You cancel your time out!",icon:"warning"});
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Total Overtime <br><?php echo date("F Y") ?> 
+                            <div class="text-xs font-weight-bold text-secondary text-capitalize mb-1">Total Overtime <br><?php echo date("F Y") ?> 
                         </div>
                         <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -740,7 +760,7 @@ swal({text:"You cancel your time out!",icon:"warning"});
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Undertime <br><?php echo date("F Y") ?> 
+                            <div class="text-xs font-weight-bold text-success text-capitalize mb-1">Total Undertime <br><?php echo date("F Y") ?> 
                         </div>
                         <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -762,7 +782,7 @@ swal({text:"You cancel your time out!",icon:"warning"});
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Lates <br><?php echo date("F Y") ?> 
+                        <div class="text-xs font-weight-bold text-info text-capitalize mb-1">Total Lates <br><?php echo date("F Y") ?> 
                     </div>
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -784,7 +804,7 @@ swal({text:"You cancel your time out!",icon:"warning"});
         <div class="card-body">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Today's Time-In: <br><?php echo date("F d, Y");  if(isset($wfhd)){echo': WFH';}   ?> 
+                    <div class="text-xs font-weight-bold text-warning text-capitalize mb-1">Today's Time-In: <br><?php echo date("F d, Y");  if(isset($wfhd)){echo': WFH';}   ?> 
                 </div>
                 <div class="row no-gutters align-items-center">
                     <div class="col-auto">
@@ -988,14 +1008,14 @@ swal({text:"You cancel your time out!",icon:"warning"});
     <div class="col-md-3">
     <div class="card">
         <div class="d-flex flex-row align-items-center justify-content-between">
-            <h5 class="m-0 font-weight-bold">Legend: 
+            <h6 class="m-0 font-weight-bold">Legend: 
                 <div class="onsite"></div><i class="ilgnd">Onsite</i>
                 <div class="wfhome"></div><i class="ilgnd">WFH</i>
                 <div class="obsched"></div><i class="ilgnd">OB</i>
                 <div class="leaveschd"></div><i class="ilgnd">Leave</i>
                 <div class="holisched"></div><i class="ilgnd">Holiday</i>
                 <div class="noinnout"></div><i class="ilgnd">No In/No Out</i>
-            </h5>
+            </h6>
               
         </div>
     </div>

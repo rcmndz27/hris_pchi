@@ -1,0 +1,205 @@
+table,th{
+
+                border: 1px solid #dee2e6;
+                font-weight: 600;
+                font-size: 14px;
+ }   
+
+
+table,td{
+
+        border: 1px solid #dee2e6;
+ }  
+
+ th,td{
+    border: 1px solid #dee2e6;
+ }
+  
+table {
+        border: 1px solid #dee2e6;
+        color: #ffff;
+        margin-bottom: 100px;
+        border: 2px solid black;
+        background-color: white;
+        text-align: center;
+        font-family: "Dosis", sans-serif;
+}
+
+  .pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+    z-index: 2;
+    color: #23527c;
+    background-color: #eee;
+    border-color: #ddd;
+}
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+ .pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+    z-index: 1;
+    color: #23527c;
+    background-color: #eee;
+    border-color: #ddd;
+}
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 1;
+    color: #fff;
+    cursor: default;
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.pagination>li:last-child>a, .pagination>li:last-child>span {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+    z-index: 1;
+    color: #23527c;
+    background-color: #eee;
+    border-color: #ddd;
+}
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+    
+#myInput {
+  background-image: url('../img/searchicon.png');
+  background-size: 30px;
+  background-position: 5px 5px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;  
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+    .bb{
+        font-weight: bolder;
+        text-align: center;
+        font-family: "Dosis", sans-serif;
+    }
+    .cstat {
+    color: #e65a5a;
+    font-size: 10px;
+    text-align: center;
+    margin: 0;
+    padding: 5px 5px 5px 5px;
+    }
+    .ppclip{
+        height: 50px;
+        width: 50px;
+        cursor: pointer;
+    }
+    .ppclip:hover{
+        opacity: 0.5;
+    }
+
+    .bb{
+        font-weight: bolder;
+        text-align: center;
+    }
+.mbt {
+    background-color: #faf9f9;
+    padding: 30px;
+    border-radius: 0.25rem;
+}
+
+.pad{
+    padding: 5px 5px 5px 5px;
+    font-weight: bolder;
+}
+
+.caps{
+    text-transform: uppercase;
+    font-weight: bolder;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.addapp{
+    color: #ffff;
+    font-weight: bolder;
+}
+.req{
+    color: red;
+}
+
+
+.addNewAppBut {
+    background-color: #fbec1e;
+    color: #ed6200;
+    border-color: #fbec1e;
+    border-radius: 1em;
+}
+
+
+.addNewAppBut:hover {
+    opacity: 0.5;
+}
+
+.backbut{
+    background-color: #fbec1e;
+    border-color: #fbec1e;
+    border-radius: 1rem;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #d64747;
+}
+
+.backbut:hover{
+    opacity: 0.5;
+}
+
+.subbut{
+    background-color: #ffaa00;
+    border-color: #ffaa00;
+    font-weight: bolder;
+    color: #ffff;
+    font-size: 20px;
+    border-radius: 1rem;
+}
+
+.subbut:hover{
+    opacity: 0.5;
+}

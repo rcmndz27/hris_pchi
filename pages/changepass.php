@@ -45,43 +45,52 @@
 <div class="container">
     <div class="section-title">
           <h1>MY PROFILE</h1>
-        </div>
+    </div>
     <div class="main-body mbsda">
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><b><i class="fas fa-cogs fa-fw"></i>&nbsp;CHANGE PASSWORD</b></li>
+              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-id-card fa-fw'></i>&nbsp;MY PROFILE</b></li>
             </ol>
           </nav>
           <?php  
               $sex = $result['sex'];
-              $emp_pic_loc = $result['emp_pic_loc'];
+              $up_avatar = $result['up_avatar'];
+              $up_sign = $result['up_sign'];
 
-              if($sex == 'Male' AND empty($emp_pic_loc)){
+              if($sex == 'Male' AND empty($up_avatar)){
                   $avatar = 'avatar2.png';
-              }else if($sex == 'Female' AND empty($emp_pic_loc)){
+              }else if($sex == 'Female' AND empty($up_avatar)){
                   $avatar = 'avatar8.png';
-              }else if($sex == 'Male' AND !empty($emp_pic_loc)){
-                  $avatar = $emp_pic_loc;
-              }else if($sex == 'Female' AND !empty($emp_pic_loc)){
-                  $avatar = $emp_pic_loc;
+              }else if($sex == 'Male' AND !empty($up_avatar)){
+                  $avatar = $up_avatar;
+              }else if($sex == 'Female' AND !empty($up_avatar)){
+                  $avatar = $up_avatar;
               }else{
                   $avatar = 'nophoto.png';
+              }
+
+              if(empty($up_sign)){
+                $signpic = '../uploads/employees/nosign.png';
+              }else{
+                $signpic = '../uploads/employees/'.$up_sign;
               }
            ?>
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
-                <div class="card-body ">
+                <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
                     <?php 
-                    echo'<img src="../uploads/employees/'.$avatar.'" alt="Admin" class="rounded-circle" width="150">';
+                    echo'<img src="../uploads/employees/'.$avatar.'" alt="Admin" title="Primary Picture" class="rounded-circle" width="150">';
                      ?>
                     
                     <div class="mt-3">
                       <h4><?php echo $empName; ?></h4>
+                      <input type="text" class="form-control" name="empcode" id="empcode" hidden value="<?php echo $empCode; ?>">
                       <p class="text-secondary mb-1"><?php echo $result['position']; ?></p>
                       <p class="text-muted font-size-sm"><?php echo $empCode.'-'.$result['emp_type']; ?></p>
+                      <img class="border" src="<?php echo $signpic ?>" height="100px;" width="225px;">                      
                     </div>
                   </div>
                 </div>
@@ -144,7 +153,7 @@
           </div>
 
                       <button id="empCode" value="<?php echo $result['emp_code']; ?>" hidden></button>
-                      <button type="button" class="btn btn-secondary" id="Submit" onclick="chngPass();"><i class="fas fa-key"></i> Change Password</button>
+                      <button type="button" class="chngpass" id="Submit" onclick="chngPass();"><i class="fas fa-key"></i> Change Password</button>
                   </section>
                 </div>
               </div>

@@ -51,72 +51,78 @@
 <script type="text/javascript">
 
 
-function viewdtrcorrectModal(dtrcdate,timein,timeout,rmrks,stts,approver){
+    function viewdtrcorrectModal(dtrcdate,timein,timeout,rmrks,stts,approver,attachment){
 
-$('#viewdtrcorrectModal').modal('toggle');
-document.getElementById('dtrcdate').value =  dtrcdate;   
-document.getElementById('timein').value =  timein;  
-document.getElementById('timeout').value =  timeout;  
-document.getElementById('rmrks').value =  rmrks;  
-document.getElementById('stts').value =  stts; 
-document.getElementById('approver').value =  approver;                          
-}
+        $('#viewdtrcorrectModal').modal('toggle');
+        document.getElementById('dtrcdate').value =  dtrcdate;   
+        document.getElementById('timein').value =  timein;  
+        document.getElementById('timeout').value =  timeout;  
+        document.getElementById('rmrks').value =  rmrks;  
+        document.getElementById('stts').value =  stts; 
+        document.getElementById('approver').value =  approver;                          
+        if(!attachment){
+            $('#viewattachment').hide();
+        }else{
+            $('#viewattachment').show();
+            document.getElementById('viewattachment').setAttribute('href','../uploads/'+attachment);
+        }
+    }
 
-function viewdtrcorrectHistoryModal(lvlogid)
-{
-$('#viewdtrcorrectHistoryModal').modal('toggle');
-var url = "../dtrcorrect/dtrcorrect_viewlogs.php";
-var lvlogid = lvlogid;
+    function viewdtrcorrectHistoryModal(lvlogid)
+    {
+        $('#viewdtrcorrectHistoryModal').modal('toggle');
+        var url = "../dtrcorrect/dtrcorrect_viewlogs.php";
+        var lvlogid = lvlogid;
 
-$.post (
-url,
-{
-_action: 1,
-lvlogid: lvlogid             
-},
-function(data) { $("#contents2").html(data).show(); }
-);
-}
+        $.post (
+            url,
+            {
+                _action: 1,
+                lvlogid: lvlogid             
+            },
+            function(data) { $("#contents2").html(data).show(); }
+            );
+    }
 
 function canceldtrcorrect(lvid,empcd)
 {
 
-var url = "../dtrcorrect/canceldtrcorrectProcess.php";  
-var dtrcorrectid = lvid;   
-var emp_code = empcd;   
-swal({
-title: "Are you sure?",
-text: "You want to cancel this dtr correction?",
-icon: "warning",
-buttons: true,
-dangerMode: true,
-})
-.then((cnclDTR) => {
-if (cnclDTR) {
-$.post (
-url,
-{
-choice: 1,
-dtrcorrectid:dtrcorrectid,
-emp_code:emp_code
-},
-function(data) { 
+    var url = "../dtrcorrect/canceldtrcorrectProcess.php";  
+    var dtrcorrectid = lvid;   
+    var emp_code = empcd;   
+    swal({
+        title: "Are you sure?",
+        text: "You want to cancel this dtr correction?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((cnclDTR) => {
+        if (cnclDTR) {
+            $.post (
+                url,
+                {
+                    choice: 1,
+                    dtrcorrectid:dtrcorrectid,
+                    emp_code:emp_code
+                },
+                function(data) { 
 // console.log(data);
 swal({
-title: "Oops!", 
-text: "Successfully cancelled dtr correction!", 
-type: "info",
-icon: "info",
+    title: "Oops!", 
+    text: "Successfully cancelled dtr correction!", 
+    type: "info",
+    icon: "info",
 }).then(function() {
-document.getElementById('st'+dtrcorrectid).innerHTML = 'CANCELLED';
-document.querySelector('#clv').remove();
+    document.getElementById('st'+dtrcorrectid).innerHTML = 'CANCELLED';
+    $('#clv'+dtrcorrectid).hide();
 });  
 }
 );
-} else {
-swal({text:"You stop the cancellation of your dtr correction.",icon:"error"});
-}
-});
+        } else {
+            swal({text:"You stop the cancellation of your dtr correction.",icon:"error"});
+        }
+    });
 }
 
 </script>
@@ -134,14 +140,14 @@ swal({text:"You stop the cancellation of your dtr correction.",icon:"error"});
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-clock fa-fw'>
-                        </i>&nbsp;DTR CORRECTION APPLICATION</b></li>
+              <li class="breadcrumb-item active font-weight-bold" aria-current="page"><i class='fas fa-clock fa-fw mr-1'>
+                        </i>DTR Correction Application</li>
             </ol>
           </nav>
 <div class="pt-3">
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-secondary" id="applydtrcorrect"><i class="fas fa-plus-circle"></i> APPLY DTR CORRECTION </button>
+                <button type="button" class="btn btn-primary" id="applydtrcorrect"><i class="fas fa-plus-circle mr-1 text-white"></i> Apply DTR Correction</button>
             </div>
         </div>
 
@@ -181,7 +187,7 @@ swal({text:"You stop the cancellation of your dtr correction.",icon:"error"});
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">APPLY DTR CORRECTION <i class="fas fa-clock"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-clock mr-1"></i>DTR Correction Form</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -252,10 +258,10 @@ swal({text:"You stop the cancellation of your dtr correction.",icon:"error"});
                     </div>   
                      <div class="row pb-2">
                         <div class="col-md-2">
-                            <label for="Attachment" id="LabelAttachment">Attachment: <span class="req">*</span></label>
+                            <label for="Attachment" id="LabelAttachment">Attachment:<span class="req">*</span></label>
                         </div>
                         <div class="col-md-10">
-                            <input class="inputtext" type="file" name="attachment" id="attachment" accept=".pdf,.jpg,.png" onChange="GetAttachFile()">
+                            <input type="file" class="inputtext" name="attachment" id="attachment" accept=".pdf,.jpg,.png" onChange="GetAttachFile()">
                         </div>
                     </div>                                             
             </div>
@@ -276,7 +282,7 @@ swal({text:"You stop the cancellation of your dtr correction.",icon:"error"});
         <div class="modal-dialog modal-sg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">VIEW DTR CORRECTION <i class="fas fa-clock"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-clock"></i> View DTR Correction</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -329,7 +335,9 @@ swal({text:"You stop the cancellation of your dtr correction.",icon:"error"});
                             </div> <!-- form row closing -->
                     </fieldset> 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                            <?php   echo"<a title='Attachment' id='viewattachment' class='font-weight-bold' href='' style='color:#ffff;'  
+                                target='popup'><button type='button' class='btn btn-primary'><i class='text-white fas fa-paperclip mr-1'></i>View Attachment</button></a>"; ?>                                    
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                                 </div> 
                         </div> <!-- main body closing -->
                     </div> <!-- modal body closing -->
@@ -342,7 +350,7 @@ swal({text:"You stop the cancellation of your dtr correction.",icon:"error"});
         <div class="modal-dialog modal-sg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">VIEW WORK FROM HOME LOGS   <i class='fas fa-clock'></i></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"> <i class='fas fa-clock mr-1'></i> View DTR Correction Logs</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -368,7 +376,7 @@ swal({text:"You stop the cancellation of your dtr correction.",icon:"error"});
                     </fieldset> 
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                                 </div> 
                         </div> <!-- main body closing -->
                     </div> <!-- modal body closing -->

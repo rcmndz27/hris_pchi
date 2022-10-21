@@ -26,7 +26,7 @@
             $param = array(":emp_ssn" => $emp_code, ":startDate" => $dateFrom, ":endDate" => $dateTo );
         }
 
-        $query = 'EXEC dbo.xp_attendance_portal :emp_ssn,:startDate,:endDate';
+        $query = 'EXEC xp_attendance_portal :emp_ssn,:startDate,:endDate';
         $stmt =$connL->prepare($query);
         $stmt->execute($param);
         $result = $stmt->fetch();
@@ -35,7 +35,7 @@
         <table id='empDtrList' class='table table-striped table-sm'>
             <thead>
                 <tr>
-                    <th colspan='8' class='text-center'>".$result['name']."</th>
+                    <th colspan='9' class='text-center'>".$result['name']."</th>
                 </tr>
                 <tr>
                     <th>Date</th>
@@ -45,6 +45,7 @@
                     <th>Lates (Hrs)</th>
                     <th>Undertime (Hrs)</th>
                     <th>Overtime (Hrs)</th>
+                    <th>Day</th>
                     <th>Remarks</th>
                 </tr>
             </thead>
@@ -64,6 +65,7 @@
                                 "<td>" . round($result['late'],2) . "</td>".
                                 "<td>" . round($result['undertime'],2) . "</td>".
                                 "<td>" . round($result['overtime'],2) . "</td>".
+                                "<td>" . $result['wday']. "</td>".
                                 "<td>" . $result['remarks']. "</td>".
                             "</tr>";
 
@@ -79,12 +81,13 @@
             </tbody>
             <tfoot>
                 <tr>".
-                    "<td colspan='3' class='text-right bg-secondary'><b>Total</b></td>".
-                    "<td class='bg-secondary'><b>" . $totalWork . "</b></td>".
-                    "<td class='bg-secondary'><b>" . $totalLate . "</b></td>".
-                    "<td class='bg-secondary'><b>" . $totalUndertime . "</b></td>".
-                    "<td class='bg-secondary'><b>" . $totalOvertime . "</b></td>".
-                    "<td class='bg-secondary'><b></b></td>".
+                    "<td colspan='3' class='text-right bg-success'><b>Total</b></td>".
+                    "<td class='bg-success'><b>" . $totalWork . "</b></td>".
+                    "<td class='bg-success'><b>" . $totalLate . "</b></td>".
+                    "<td class='bg-success'><b>" . $totalUndertime . "</b></td>".
+                    "<td class='bg-success'><b>" . $totalOvertime . "</b></td>".
+                    "<td class='bg-success'><b></b></td>".
+                    "<td class='bg-success'><b></b></td>".
                 "</tr>
             </tfoot>
         </table>";

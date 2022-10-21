@@ -38,14 +38,14 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active bb" aria-current="page"><b><i class='fas fa-calendar-alt'>
-                        </i>&nbsp;PAYROLL CUTOFF LIST</b></li>
+              <li class="breadcrumb-item active font-weight-bold" aria-current="page"><i class='fas fa-calendar-alt mr-1'>
+                        </i>PAYROLL CUTOFF LIST</li>
             </ol>
           </nav>
     <div class="pt-3">
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-secondary" id="mfpyrollcoEntry"><i class="fas fa-plus-circle"></i> ADD NEW PAYROLL CUTOFF </button>
+                <button type="button" class="btn btn-primary" id="mfpyrollcoEntry"><i class="fas fa-plus-circle"></i> ADD NEW PAYROLL CUTOFF </button>
             </div>
         </div>
         <div class="row">

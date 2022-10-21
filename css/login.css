@@ -19,7 +19,7 @@ body {
   background-image:  url('../img/loginbg.png');
 }
 
-.debtn btn-info {
+.debtn btn-info btn-sm {
   width: 100%;
   background-color: #fbec1e;
   border-color: #fbec1e;
@@ -29,7 +29,7 @@ body {
   border-radius: 1rem;
 }
 
-.debtn btn-info:hover {
+.debtn btn-info btn-sm:hover {
   opacity: 0.5;
 }
 .btn {
@@ -52,39 +52,39 @@ body {
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 .btn-login {
-  color: #ffffff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  color: #1f2d3d;
+  background-color: #0b5ed7;
+  border-color: #0b5ed7;
   box-shadow: none;
 }
 
 .btn-login:hover {
-  color: #ffffff;
-  background-color: #7fa2d6;
-  border-color: #7fa2d6;
+  color: #1f2d3d;
+  background-color: #bdd3ee;
+  border-color: #bdd3ee;
 }
 
 .btn-login:focus,
 .btn-login.focus {
   color: #1f2d3d;
-  background-color: #7fa2d6;
-  border-color: #7fa2d6;
+  background-color: #0b5ed7;
+  border-color: #0b5ed7;
   box-shadow: 0 0 0 0 rgba(221, 171, 15, 0.5);
 }
 
 .btn-login.disabled,
 .btn-login:disabled {
   color: #1f2d3d;
-  background-color: #ffaa00;
-  border-color: #ffaa00;
+  background-color: #0b5ed7;
+  border-color: #0b5ed7;
 }
 
 .btn-login:not(:disabled):not(.disabled):active,
 .btn-login:not(:disabled):not(.disabled).active,
 .show > .btn-login.dropdown-toggle {
   color: #1f2d3d;
-  background-color: #7fa2d6;
-  border-color: #7fa2d6;
+  background-color: #bdd3ee;
+  border-color: #bdd3ee;
 }
 
 .btn-login:not(:disabled):not(.disabled):active:focus,
@@ -95,15 +95,15 @@ body {
 
 .btn-login-emp {
   color: #1f2d3d;
-  background-color: #7fa2d6;
-  border-color: #7fa2d6;
+  background-color: #fbec1e;
+  border-color: #fbec1e;
   box-shadow: none;
 }
 
 .btn-login-emp:hover {
   color: #1f2d3d;
-  background-color: #7fa2d6;
-  border-color: #7fa2d6;
+  background-color: #0b5ed7;
+  border-color: #c8bc18;
 }
 
 .btn-login-emp:focus,
@@ -323,5 +323,5 @@ body {
 
 .card-header a {
   text-decoration: none;
-  color: #0d6efd;
+  color: #0b5ed7;
 }

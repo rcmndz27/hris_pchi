@@ -1,36 +1,19 @@
 $(function(){
 
-    // function XLSXExport(){
-    //     $("#LeaveListTab").tableExport({
-    //         headers: true,
-    //         footers: true,
-    //         formats: ['xlsx'],
-    //         filename: 'id',
-    //         bootstrap: false,
-    //         exportButtons: true,
-    //         position: 'top',
-    //         ignoreRows: null,
-    //         ignoreCols: null,
-    //         trimWhitespace: true,
-    //         RTL: false,
-    //         sheetname: ' Leaves'
-    //     });
-    // }
-
 
     $("#searchLeaveApp").click(function(e){
 
         e.preventDefault();
         document.getElementById("myDiv").style.display="block";
 
-        var cutoff = $('#ddcutoff').children("option:selected").val();
-        var det = cutoff.split(" - ");
+        var df = $('#dateFrom').val();
+        var dt = $('#dateTo').val();
         var status = $('#status').val();
  
         param = {
           Action: "GetAppLeave",
-          date_from: det[0],
-          date_to: det[1],
+          date_from: df,
+          date_to: dt,
           status : status
         };
         
@@ -83,14 +66,15 @@ $(function(){
         e.preventDefault();
         document.getElementById("myDiv").style.display="block";
 
-        var cutoff = $('#ddcutoff').children("option:selected").val();
-        var det = cutoff.split(" - ");
-        var empCode = 'PCHI'+$('#empCode').val();
+
+        var df = $('#dateFrom').val();
+        var dt = $('#dateTo').val()
+        var empCode = 'PCH'+$('#empCode').val();
  
         param = {
           Action: "GetRepLeave",
-          date_from: det[0],
-          date_to: det[1],
+          date_from: df,
+          date_to: dt,
           empCode : empCode
         };
         
@@ -120,22 +104,6 @@ $(function(){
 
 
 
- // function XLSXExportOt(){
- //        $("#OtListTab").tableExport({
- //            headers: true,
- //            footers: true,
- //            formats: ['xlsx'],
- //            filename: 'id',
- //            bootstrap: false,
- //            exportButtons: true,
- //            position: 'top',
- //            ignoreRows: null,
- //            ignoreCols: null,
- //            trimWhitespace: true,
- //            RTL: false,
- //            sheetname: ' OT'
- //        });
- //    }
 
 
     $("#searchOtApp").click(function(e){
@@ -143,14 +111,14 @@ $(function(){
         e.preventDefault();
         document.getElementById("myDiv").style.display="block";
 
-        var cutoff = $('#ddcutoff').children("option:selected").val();
-        var det = cutoff.split(" - ");
+        var df = $('#dateFrom').val();
+        var dt = $('#dateTo').val();
         var status = $('#status').val();
  
         param = {
           Action: "GetAppOt",
-          date_from: det[0],
-          date_to: det[1],
+          date_from: df,
+          date_to: dt,
           status : status
         };
         
@@ -199,14 +167,14 @@ $(function(){
         e.preventDefault();
         document.getElementById("myDiv").style.display="block";
 
-        var cutoff = $('#ddcutoff').children("option:selected").val();
-        var det = cutoff.split(" - ");
-        var empCode = 'PCHI'+$('#empCode').val();
+        var df = $('#dateFrom').val();
+        var dt = $('#dateTo').val();
+        var empCode = 'PCH'+$('#empCode').val();
  
         param = {
           Action: "GetRepOt",
-          date_from: det[0],
-          date_to: det[1],
+          date_from: df,
+          date_to: dt,
           empCode : empCode
         };
         
@@ -255,14 +223,14 @@ $(function(){
         e.preventDefault();
         document.getElementById("myDiv").style.display="block";
 
-        var cutoff = $('#ddcutoff').children("option:selected").val();
-        var det = cutoff.split(" - ");
+        var df = $('#dateFrom').val();
+        var dt = $('#dateTo').val();
         var status = $('#status').val();
  
         param = {
           Action: "GetAppWfh",
-          date_from: det[0],
-          date_to: det[1],
+          date_from: df,
+          date_to: dt,
           status : status
         };
         
@@ -311,14 +279,14 @@ function XLSXExportWfhRep(){
         e.preventDefault();
         document.getElementById("myDiv").style.display="block";
 
-        var cutoff = $('#ddcutoff').children("option:selected").val();
-        var det = cutoff.split(" - ");
-        var empCode = 'PCHI'+$('#empCode').val();
+        var df = $('#dateFrom').val();
+        var dt = $('#dateTo').val();
+        var empCode = 'PCH'+$('#empCode').val();
  
         param = {
           Action: "GetRepWfh",
-          date_from: det[0],
-          date_to: det[1],
+          date_from: df,
+          date_to: dt,
           empCode: empCode
         };
         
@@ -368,14 +336,14 @@ function XLSXExportOb(){
         e.preventDefault();
         document.getElementById("myDiv").style.display="block";
 
-        var cutoff = $('#ddcutoff').children("option:selected").val();
-        var det = cutoff.split(" - ");
+        var df = $('#dateFrom').val();
+        var dt = $('#dateTo').val();
         var status = $('#status').val();
  
         param = {
           Action: "GetAppOb",
-          date_from: det[0],
-          date_to: det[1],
+          date_from: df,
+          date_to: dt,
           status:status
         };
         
@@ -423,14 +391,14 @@ function XLSXExportObRep(){
         e.preventDefault();
         document.getElementById("myDiv").style.display="block";
 
-        var cutoff = $('#ddcutoff').children("option:selected").val();
-        var det = cutoff.split(" - ");
-        var empCode = 'PCHI'+$('#empCode').val();
+        var df = $('#dateFrom').val();
+        var dt = $('#dateTo').val();
+        var empCode = 'PCH'+$('#empCode').val();
  
         param = {
           Action: "GetRepOb",
-          date_from: det[0],
-          date_to: det[1],
+          date_from: df,
+          date_to: dt,
           empCode : empCode
         };
         
@@ -478,14 +446,14 @@ function XLSXExportDtrc(){
         e.preventDefault();
         document.getElementById("myDiv").style.display="block";
 
-        var cutoff = $('#ddcutoff').children("option:selected").val();
-        var det = cutoff.split(" - ");
+        var df = $('#dateFrom').val();
+        var dt = $('#dateTo').val();
         var status = $('#status').val();
  
         param = {
           Action: "GetAppDtrc",
-          date_from: det[0],
-          date_to: det[1],
+          date_from: df,
+          date_to: dt,
           status : status
         };
         
@@ -534,14 +502,14 @@ function XLSXExportDtrcRep(){
         e.preventDefault();
         document.getElementById("myDiv").style.display="block";
 
-        var cutoff = $('#ddcutoff').children("option:selected").val();
-        var det = cutoff.split(" - ");
-        var empCode = 'PCHI'+$('#empCode').val();
+        var df = $('#dateFrom').val();
+        var dt = $('#dateTo').val();
+        var empCode = 'PCH'+$('#empCode').val();
  
         param = {
           Action: "GetRepDtrc",
-          date_from: det[0],
-          date_to: det[1],
+          date_from: df,
+          date_to: dt,
           empCode : empCode
         };
         

@@ -40,14 +40,14 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active bb" aria-current="page"><b><i class='fas fa-money-bill-wave fa-fw'>
-                        </i>&nbsp;EMPLOYEE LEAVE BALANCE MANAGEMENT LIST</b></li>
+              <li class="breadcrumb-item active font-weight-bold" aria-current="page">
+                <i class='fas fa-money-bill-wave fa-fw mr-1'></i>Employee Leave Balance Management List</li>
             </ol>
           </nav>
     <div class="pt-3">
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-secondary" id="LeaveBalanceEntry"><i class="fas fa-plus-circle"></i> ADD EMPLOYEE LEAVE BALANCE</button>
+                <button type="button" class="btn btn-primary" id="LeaveBalanceEntry"><i class="fas fa-plus-circle mr-1 text-white"></i> Add Employee Leave Balance</button>
             </div>
         </div>
         <div class="row">
@@ -67,7 +67,7 @@
         <div class="modal-dialog modal-xs modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">LEAVE BALANCE ENTRY <i class="fas fa-money-check"></i> </h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-money-check mr-1"></i>Leave Balance Entry</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -129,7 +129,7 @@
         <div class="modal-dialog modal-xs modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">UPDATE LEAVE BALANCE <i class="fas fa-money-check"></i> </h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-money-check mr-1"></i>Update Leave Balance</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>

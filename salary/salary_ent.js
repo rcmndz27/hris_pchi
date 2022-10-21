@@ -14,7 +14,6 @@ $(function(){
         inputValues = [
             $('#emp_code'),
             $('#bank_type'),
-            // $('#bank_no'),
             $('#pay_type'),
             $('#amount'),
             $('#status')           
@@ -29,14 +28,11 @@ $(function(){
 
     $('#Submit').click(function(){
 
-        var empcode = $('#emp_code').children("option:selected").val();
-        var emp_code = empcode.split(" - ");
-
         if (CheckInput() === true) {
    
             param = {
                 'Action': 'InsertSalaryEnt',
-                'emp_code': emp_code[0],
+                'emp_code': $('#emp_code').val(),
                 'bank_type': $( "#bank_type option:selected" ).text(),
                 'bank_no': $('#bank_no').val(),
                 'pay_rate': $("#pay_rate option:selected" ).text(),

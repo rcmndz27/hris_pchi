@@ -154,7 +154,7 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
         global $connL;
 
         echo '
-        <div class="form-row">  
+        <div class="form-row mb-2">  
                     <div class="col-lg-1">
                         <select class="form-select" name="state" id="maxRows">
                              <option value="5000">ALL</option>
@@ -226,10 +226,10 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                 <td id="lc'.$result['lv_rowid'].'">' . $result['actl_cnt'] . '</td>
                 <td id="st'.$result['lv_rowid'].'">' . $result['approved'] . '</td>';
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.')" title="View Leave">
+                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.')" title="View Leave">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                        
                             </td>';
@@ -263,7 +263,7 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
         global $connL;
 
         echo '
-        <div class="form-row">  
+        <div class="form-row mb-2">  
                     <div class="col-lg-1">
                         <select class="form-select" name="state" id="maxRows">
                              <option value="5000">ALL</option>
@@ -332,10 +332,10 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                 <td id="lc'.$result['lv_rowid'].'">' . $result['actl_cnt'] . '</td>
                 <td id="st'.$result['lv_rowid'].'">' . $result['approved'] . '</td>';
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.')" title="View Leave">
+                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.')" title="View Leave">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                        
                             </td>';
@@ -390,7 +390,7 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                     <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for leave.." title="Type in leave details"> 
                 </div>                     
         </div>         
-        <table id="leaveList" class="table table-striped table-sm">
+        <table id="leaveList" class="table table-sm">
         <thead>
             <tr>
                 <th>Leave Date</th>
@@ -407,7 +407,7 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                     a.emp_code,(CASE when approved = 1 then 'PENDING'
                     when   approved = 2 then 'APPROVED'
                     when   approved = 3 then 'REJECTED'
-                    when   approved = 4 then 'CANCELLED' ELSE 'N/A' END) as approved,b.firstname+' '+b.lastname as approver 
+                    when   approved = 4 then 'CANCELLED' ELSE 'N/A' END) as approved,b.firstname+' '+b.lastname as approver,medicalfile 
                     FROM dbo.tr_leave a left join employee_profile b
                     on a.approval = b.emp_code
                     where a.emp_code = :emp_code ORDER BY date_from DESC, leavetype";
@@ -431,34 +431,34 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                 $actlcnt = "'".$result['actl_cnt']."'";
                 $leaveid = "'".$result['rowid']."'";
                 $empcode = "'".$result['emp_code']."'";
+                $medicalfile = "'".$result['medicalfile']."'";
+                $onclick = 'onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.','.$appr_over.','.$medicalfile.')"';
                 echo '
-                <tr>
-                <td id="ld'.$result['rowid'].'">' . date('F d, Y', strtotime($result['date_from'])) . '</td>
-                <td id="lt'.$result['rowid'].'">' . $result['leavetype'] . '</td>
-                <td id="ds'.$result['rowid'].'">' . $result['leave_desc'] . '</td>
-                <td id="lc'.$result['rowid'].'">' . $result['actl_cnt'] . '</td>
-                <td id="st'.$result['rowid'].'">' . $result['approved'] . '</td>';
-
-                // <button type="button" class="editL" onclick="updateLeaveModal('.$leaveid.')" title="View Leave"><i class="fas fa-edit"></i></button>
+                <tr class="csor-pointer" >
+                <td '.$onclick.'  id="ld'.$result['rowid'].'">' . date('F d, Y', strtotime($result['date_from'])) . '</td>
+                <td '.$onclick.' id="lt'.$result['rowid'].'">' . $result['leavetype'] . '</td>
+                <td '.$onclick.' id="ds'.$result['rowid'].'">' . $result['leave_desc'] . '</td>
+                <td '.$onclick.' id="lc'.$result['rowid'].'">' . $result['actl_cnt'] . '</td>
+                <td '.$onclick.' id="st'.$result['rowid'].'">' . $result['approved'] . '</td>';
     
                 if($result['approved'] == 'PENDING' || $result['approved'] == 'APPROVED'){
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.','.$appr_over.')" title="View Leave">
+                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.','.$appr_over.','.$medicalfile.')" title="View Leave">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                           
-                            <button type="button" id="clv" class="btn btn-danger btn-sm" onclick="cancelLeave('.$leaveid.','.$empcode.')" title="Cancel Leave">
+                            <button type="button" id="clv'.$result['rowid'].'" class="btn btn-danger btn-sm" onclick="cancelLeave('.$leaveid.','.$empcode.')" title="Cancel Leave">
                                 <i class="fas fa-ban"></i>
                             </button>
                             </td>';
                 }else{
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.','.$appr_over.')" title="View Leave">
+                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.','.$appr_over.','.$medicalfile.')" title="View Leave">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                        
                             </td>';
@@ -591,11 +591,6 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                         <option value="Sick Leave">Sick Leave</option>
                         <option value="Maternity Leave">Maternity Leave</option>
                         <option value="Paternity Leave">Paternity Leave</option>
-                        <option value="Solo Parent Leave">Solo Parent Leave</option>
-                        <option value="Magna Carta Leave">Magna Carta Leave</option>
-                        <option value="Special Leave for Women">Special Leave for Women</option>
-                        <option value="Military Service Leave">Military Service Leave</option>
-                        <option value="Special Leave for Victim of Violence">Special Leave for Victim of Violence</option>
                         <option value="Floating Leave">Floating Leave</option>
 
                     ';    
@@ -607,37 +602,22 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                         echo '
                             <option value="Maternity Leave">Maternity Leave</option>
                             <option value="Paternity Leave">Paternity Leave</option>
-                            <option value="Solo Parent Leave">Solo Parent Leave</option>
-                            <option value="Magna Carta Leave">Magna Carta Leave</option>
-                            <option value="Special Leave for Women">Special Leave for Women</option>
-                            <option value="Military Service Leave">Military Service Leave</option>
-                            <option value="Special Leave for Victim of Violence">Special Leave for Victim of Violence</option>
                             <option value="Floating Leave">Floating Leave</option>
                         ';  
                     }elseif(($earned_vl !== 0) && ($earned_sl === 0)){
                         echo '
                             <option value="Maternity Leave">Maternity Leave</option>
                             <option value="Paternity Leave">Paternity Leave</option>
-                            <option value="Solo Parent Leave">Solo Parent Leave</option>
-                            <option value="Magna Carta Leave">Magna Carta Leave</option>
                             <option value="Vacation Leave">Vacation Leave</option>
                             <option value="Bereavement Leave">Bereavement Leave</option>
-                            <option value="Special Leave for Women">Special Leave for Women</option>
-                            <option value="Military Service Leave">Military Service Leave</option>
-                            <option value="Special Leave for Victim of Violence">Special Leave for Victim of Violence</option>
                             <option value="Floating Leave">Floating Leave</option>
                         ';
                     }elseif(($earned_vl === 0) && ($earned_sl !== 0)){
                         echo '
                             <option value="Maternity Leave">Maternity Leave</option>
                             <option value="Paternity Leave">Paternity Leave</option>
-                            <option value="Solo Parent Leave">Solo Parent Leave</option>
-                            <option value="Magna Carta Leave">Magna Carta Leave</option>
                             <option value="Sick Leave">Sick Leave</option>
                             <option value="Emergency Leave">Emergency Leave</option>
-                            <option value="Special Leave for Women">Special Leave for Women</option>
-                            <option value="Military Service Leave">Military Service Leave</option>
-                            <option value="Special Leave for Victim of Violence">Special Leave for Victim of Violence</option>
                             <option value="Floating Leave">Floating Leave</option>
                         ';   
                     }else{
@@ -687,11 +667,6 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                         <option value="Sick Leave">Sick Leave</option>
                         <option value="Maternity Leave">Maternity Leave</option>
                         <option value="Paternity Leave">Paternity Leave</option>
-                        <option value="Solo Parent Leave">Solo Parent Leave</option>
-                        <option value="Magna Carta Leave">Magna Carta Leave</option>
-                        <option value="Special Leave for Women">Special Leave for Women</option>
-                        <option value="Military Service Leave">Military Service Leave</option>
-                        <option value="Special Leave for Victim of Violence">Special Leave for Victim of Violence</option>
                         <option value="Floating Leave">Floating Leave</option>
 
                     ';    
@@ -703,42 +678,27 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                         echo '
                             <option value="Maternity Leave">Maternity Leave</option>
                             <option value="Paternity Leave">Paternity Leave</option>
-                            <option value="Solo Parent Leave">Solo Parent Leave</option>
-                            <option value="Magna Carta Leave">Magna Carta Leave</option>
-                            <option value="Special Leave for Women">Special Leave for Women</option>
-                            <option value="Military Service Leave">Military Service Leave</option>
-                            <option value="Special Leave for Victim of Violence">Special Leave for Victim of Violence</option>
                             <option value="Floating Leave">Floating Leave</option>
                         ';  
                     }elseif(($earned_vl !== 0) && ($earned_sl === 0)){
                         echo '
                             <option value="Maternity Leave">Maternity Leave</option>
                             <option value="Paternity Leave">Paternity Leave</option>
-                            <option value="Solo Parent Leave">Solo Parent Leave</option>
-                            <option value="Magna Carta Leave">Magna Carta Leave</option>
                             <option value="Vacation Leave">Vacation Leave</option>
                             <option value="Bereavement Leave">Bereavement Leave</option>
-                            <option value="Special Leave for Women">Special Leave for Women</option>
-                            <option value="Military Service Leave">Military Service Leave</option>
-                            <option value="Special Leave for Victim of Violence">Special Leave for Victim of Violence</option>
                             <option value="Floating Leave">Floating Leave</option>
                         ';
                     }elseif(($earned_vl === 0) && ($earned_sl !== 0)){
                         echo '
                             <option value="Maternity Leave">Maternity Leave</option>
                             <option value="Paternity Leave">Paternity Leave</option>
-                            <option value="Solo Parent Leave">Solo Parent Leave</option>
-                            <option value="Magna Carta Leave">Magna Carta Leave</option>
                             <option value="Sick Leave">Sick Leave</option>
                             <option value="Emergency Leave">Emergency Leave</option>
-                            <option value="Special Leave for Women">Special Leave for Women</option>
-                            <option value="Military Service Leave">Military Service Leave</option>
-                            <option value="Special Leave for Victim of Violence">Special Leave for Victim of Violence</option>
                             <option value="Floating Leave">Floating Leave</option>
                         ';   
                     }else{
 
-                        $cmd = $connL->prepare(@'SELECT leavetype FROM dbo.mf_leavetype');
+                        $cmd = $connL->prepare(@"SELECT leavetype FROM dbo.mf_leavetype where status = 'Active'");
                         $cmd->execute();
 
                         while ($r = $cmd->fetch(PDO::FETCH_ASSOC))
@@ -897,14 +857,14 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
         $mail->Body    = '<h1>Hi '.$napprover.' </b>,</h1>An employee has requested a leave.<br><br>
                         <h2>From: '.$nrequester.' <br><br></h2>
                         <h2>Check the request in :
-                        <a href="http://124.6.185.87:4200/hris_pchi/leave/leaveApproval_view.php">Leave Approval List</a> 
+                        <a href="http://124.6.185.87:6868/leave/leaveApproval_view.php">Leave Approval List</a> 
                         <br><br></h2>
 
                         Thank you for using our application! <br>
                         Regards, <br>
                         Human Resource Information System <br> <br>
 
-                        <h6>If you are having trouble clicking the "Leave Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:4200/hris_pchi/leave/leaveApproval_view.php <h6>
+                        <h6>If you are having trouble clicking the "Leave Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/leave/leaveApproval_view.php <h6>
                        ';
             $mail->send();
             // echo 'Message has been sent';

@@ -30,13 +30,13 @@ else
     $rto = $r['ptmax'];
     $rfrom = $r['pfmax'];
 
-    $queryp = 'EXEC dbo.xp_pending_forms :date_from,:date_to';
+    $queryp = 'EXEC xp_pending_forms :date_from,:date_to';
     $stmtp =$connL->prepare($queryp);
     $paramp = array(":date_from" => $rfrom,":date_to" => $rto);
     $stmtp->execute($paramp);
     $resultp = $stmtp->fetch();  
 
-    $querypf = 'EXEC dbo.xp_pending_forms :date_from,:date_to';
+    $querypf = 'EXEC xp_pending_forms :date_from,:date_to';
     $stmtpf =$connL->prepare($querypf);
     $parampf = array(":date_from" => $rfrom,":date_to" => $rto);
     $stmtpf->execute($parampf);
@@ -100,7 +100,7 @@ else
             <i class="fas fa-search-plus"></i> GENERATE                      
         </button>
         &nbsp;&nbsp;
-        <button type="button" class="btn btn-secondary" id="usersEntry"><i class="fas fa-plus-circle"></i> ADD USER </button>
+        <button type="button" class="btn btn-primary" id="usersEntry"><i class="fas fa-plus-circle"></i> ADD USER </button>
         &nbsp;&nbsp;
 
         <?php 
@@ -426,9 +426,9 @@ else
             </tbody>
             <tfoot>
                 <tr>".
-                    "<td class='text-right bg-secondary'><b>Total</b></td>".
-                    "<td class='bg-secondary'><b>" . $totalPendings . "</b></td>".
-                    "<td class='bg-secondary'><b></b></td>".
+                    "<td class='text-right bg-success'><b>Total</b></td>".
+                    "<td class='bg-success'><b>" . $totalPendings . "</b></td>".
+                    "<td class='bg-success'><b></b></td>".
                 "</tr>
             </tfoot>
         </table>";
@@ -439,7 +439,7 @@ else
             </fieldset> 
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                         </div> 
                         </div> <!-- main body closing -->
                     </div> <!-- modal body closing -->
@@ -523,7 +523,7 @@ aria-hidden="true">
                 </fieldset> 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                 </div> 
             </div> <!-- main body closing -->
         </div> <!-- modal body closing -->
@@ -562,7 +562,7 @@ aria-hidden="true">
                 </fieldset> 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                 </div> 
             </div> <!-- main body closing -->
         </div> <!-- modal body closing -->

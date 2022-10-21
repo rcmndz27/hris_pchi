@@ -28,8 +28,10 @@
         $astmt =$connL->prepare($aquery);
         $astmt->execute($aparam);
         $ar = $astmt->fetch();
-        $e_appr = $ar['emailaddress'];
-        $n_appr = $ar['firstname'].' '.$ar['lastname'];   
+        $e_appr = (isset($ar['emailaddress'])) ? $ar['emailaddress'] : 'n/a' ;
+        $afname = (isset($ar['firstname'])) ? $ar['firstname'] : 'n/a' ; 
+        $alname = (isset($ar['lastname'])) ? $ar['lastname'] : 'n/a' ;
+        $n_appr = $afname.' '.$afname;    
 
 
         $queryf = "SELECT ot_date from dbo.tr_overtime WHERE emp_code = :empcode and  status in (1,2)";
@@ -53,7 +55,7 @@
 
 <script type="text/javascript">
     
-    function viewOtModal(otdate,ottype,otstartdtime,otenddtime,remark,otreqhrs,otrenhrs,rejectreason,stats,approver){
+    function viewOtModal(otdate,ottype,otstartdtime,otenddtime,remark,otreqhrs,otrenhrs,rejectreason,stats,approver,attachment){
         $('#viewOtModal').modal('toggle');
         document.getElementById('otdatev').value =  otdate;   
         document.getElementById('ottypev').value =  ottype;  
@@ -64,7 +66,13 @@
         document.getElementById('otrenhrsv').value =  otrenhrs;  
         document.getElementById('rejectreasonv').value =  rejectreason;    
         document.getElementById('statsv').value =  stats;
-        document.getElementById('approver').value =  approver;                                     
+        document.getElementById('approver').value =  approver;
+                if(!attachment){
+            $('#viewattachment').hide();
+        }else{
+            $('#viewattachment').show();
+            document.getElementById('viewattachment').setAttribute('href','../uploads/'+attachment);
+        }                                     
     }
 
     function viewOtHistoryModal(lvlogid)
@@ -88,6 +96,7 @@
          var url = "../overtime/cancelOvertimeProcess.php";  
          var otid = lvid;   
          var emp_code = empcd;   
+
             swal({
                   title: "Are you sure?",
                   text: "You want to cancel this overtime?",
@@ -98,30 +107,30 @@
                 .then((cnclOT) => {
                   if (cnclOT) {
                     $.post (
-                            url,
-                            {
-                                choice: 1,
-                                otid:otid,
-                                emp_code:emp_code
-                            },
-                            function(data) { 
-                                // console.log(data);
-                                    swal({
-                                    title: "Oops!", 
-                                    text: "Successfully cancelled overtime!", 
-                                    type: "info",
-                                    icon: "info",
-                                    }).then(function() {
-                                        document.getElementById('st'+otid).innerHTML = 'CANCELLED';
-                                        document.querySelector('#clv').remove();
-                                    });  
-                            }
-                        );
-                  } else {
-                    swal({text:"You stop the cancellation of your overtime.",icon:"error"});
-                  }
-                });
-      
+                    url,
+                    {
+                        choice: 1,
+                        otid:otid,
+                        emp_code:emp_code
+                    },
+                    function(data) { 
+                        // console.log(data);
+                    swal({
+                    title: "Oops!", 
+                    text: "Successfully cancelled overtime!", 
+                    type: "info",
+                    icon: "info",
+                    }).then(function() {
+                        document.getElementById('st'+otid).innerHTML = 'CANCELLED';
+                        $('#clv'+otid).hide();
+                    });  
+                    }
+                );
+          } else {
+            swal({text:"You stop the cancellation of your overtime.",icon:"error"});
+          }
+        });
+
     }
 
 </script>
@@ -132,15 +141,14 @@
 <script src="../overtime/moment-range.js"></script>
 <div class="container">
     <div class="section-title">
-          <h1>OVERTIME APPLICATION</h1>
+          <h1><br></h1>
         </div>
     <div class="main-body mbt">
 
-          <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-hourglass fa-fw'>
-                        </i>&nbsp;OVERTIME APPLICATION</b></li>
+              <li class="breadcrumb-item active font-weight-bold" aria-current="page"><i class='fas fa-hourglass fa-fw mr-1'>
+                </i>Overtime Application</li>
             </ol>
           </nav>
    
@@ -148,7 +156,7 @@
 
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-secondary" id="applyOvertime"><i class="fas fa-plus-circle"></i> APPLY OVERTIME</button>
+                <button type="button" class="btn btn-primary" id="applyOvertime"><i class="fas fa-plus-circle"></i> Apply Overtime</button>
             </div>
         </div>
 
@@ -168,8 +176,8 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">APPLY OVERTIME <i class="fas fa-hourglass fa-fw">
-                        </i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-hourglass fa-fw mr-1">
+                        </i>Overtime Application Form </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -209,17 +217,7 @@
                             <div class="col-md-3 d-inline">
                                 <input type="time" id="otenddtime" name="otenddtime" class="form-control inputtext">
                             </div>
-                        </div>
-                        <!-- 
-                        <div class="form-row align-items-center mb-2" id="planot">
-                        <div class="col-md-2 d-inline">
-                        <label for="">Plan OT(hrs):</label><span class="req">*</span>
-                        </div>
-                        <div class="col-md-3 d-inline">
-                        <input class="form-control" type="number" name="otreqhrs" id="otreqhrs"  min="1" max="10" onkeypress="return false" onchange="myChangeFunction()" placeholder="0">              
-                        </div>
                         </div> 
-                        -->
                         <div class="form-row mb-2">
                             <div class="col-md-2 d-inline">
                                 <label for='leaveDesc'>Remarks:</label><span class="req">*</span>
@@ -228,14 +226,21 @@
                                 <textarea class="form-control inputtext" id="remarks" name="remarks" rows="4" cols="50" ></textarea>
                             </div>
                         </div>
-
+                         <div class="row pb-2">
+                            <div class="col-md-2">
+                                <label for="Attachment" id="LabelAttachment">Attachment:</label><span class="req">*</span>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="file" name="attachment" id="attachment" class="inputtext" accept=".pdf,.jpg,.png" onChange="GetAttFile()">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Cancel</button>
-                    <button type="button" class="btn btn-success" id="Submit" ><i class="fas fa-check-circle"></i> Submit</button>
+                    <button type="button" class="btn btn-success" id="Submit" onclick="uploadFile();"><i class="fas fa-check-circle"></i> Submit</button>
                 </div>
 
             </div>
@@ -246,7 +251,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">VIEW OVERTIME <i class="fas fa-hourglass fa-fw fa-fw"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-hourglass fa-fw mr-1"></i> View Overtime</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -299,7 +304,7 @@
                                 <div class="col-lg-8">
                                     <div class="form-group">
                                         <label class="control-label" for="remarkv">Description</label>
-                                        <input type="text" id="remarkv" name="remarkv" class="form-control" readonly>
+                                <textarea class="form-control inputtext" id="remarkv" name="remarkv" rows="4" cols="50" disabled></textarea >                                        
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -323,7 +328,9 @@
                             </div> <!-- form row closing -->
                     </fieldset> 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                            <?php   echo"<a title='Attachment' id='viewattachment' class='font-weight-bold' href='' style='color:#ffff;'  
+                                target='popup'><button type='button' class='btn btn-primary'><i class='text-white fas fa-paperclip mr-1'></i>View Attachment</button></a>";   ?>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                                 </div> 
                         </div> <!-- main body closing -->
                     </div> <!-- modal body closing -->
@@ -336,7 +343,7 @@
         <div class="modal-dialog modal-sg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">VIEW OVERTIME LOGS   <i class="fas fa-hourglass fa-fw"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-hourglass fa-fw mr-1"></i>View Overtime Logs</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -362,7 +369,7 @@
                     </fieldset> 
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                                 </div> 
                         </div> <!-- main body closing -->
                     </div> <!-- modal body closing -->
@@ -617,3 +624,5 @@ function limitPagging(){
 
 
 <?php include("../_footer.php");?>
+
+

@@ -1042,11 +1042,11 @@ var FullCalendar = (function (exports) {
     }
 
     // TODO: new util arrayify?
-    function removeExact(array, exbtn btn-infoal) {
+    function removeExact(array, exbtn btn-info btn-smal) {
         var removeCnt = 0;
         var i = 0;
         while (i < array.length) {
-            if (array[i] === exbtn btn-infoal) {
+            if (array[i] === exbtn btn-info btn-smal) {
                 array.splice(i, 1);
                 removeCnt += 1;
             }

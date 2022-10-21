@@ -32,10 +32,10 @@ $pdf->Ln(2);
            
 global $connL;
 
-$cmd = $connL->prepare('EXEC dbo.payslip_summary :date_start, :date_end ,:emp_code');
+$cmd = $connL->prepare('EXEC payslip_summary :date_start, :date_end ,:emp_code');
 $cmd->bindValue(':date_start','04/08/2022');
 $cmd->bindValue(':date_end','04/22/2022');
-$cmd->bindValue(':emp_code','PCHI21000508');
+$cmd->bindValue(':emp_code','PCH21000508');
 $cmd->execute();
 $r = $cmd->fetch();
 

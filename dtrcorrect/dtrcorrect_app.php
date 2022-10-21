@@ -20,7 +20,7 @@ public function GetAlldtrcorrectAppHistory($date_from,$date_to,$status){
         global $connL;
 
         echo '
-        <div class="form-row">  
+        <div class="form-row mb-2">  
                     <div class="col-lg-1">
                         <select class="form-select" name="state" id="maxRows">
                              <option value="5000">ALL</option>
@@ -88,10 +88,10 @@ public function GetAlldtrcorrectAppHistory($date_from,$date_to,$status){
                 <td>'.$result['remarks'] . '</td>
                 <td id="st'.$result['dtrc_id'].'">'.$result['stats'].'</td>';
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm" onclick="viewdtrcorrectModal('.$dtrcdate.','.$timein.','.$timeout.','.$rmrks.','.$stts.')" title="View DTR Correction">
+                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewdtrcorrectModal('.$dtrcdate.','.$timein.','.$timeout.','.$rmrks.','.$stts.')" title="View DTR Correction">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm" onclick="viewdtrcorrectHistoryModal('.$dtrcid.')" title="View Logs">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="viewdtrcorrectHistoryModal('.$dtrcid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                       
                             </td>';                                
@@ -124,7 +124,7 @@ public function GetAlldtrcorrectAppHistory($date_from,$date_to,$status){
         global $connL;
 
         echo '
-        <div class="form-row">  
+        <div class="form-row mb-2">  
                     <div class="col-lg-1">
                         <select class="form-select" name="state" id="maxRows">
                              <option value="5000">ALL</option>
@@ -187,10 +187,10 @@ public function GetAlldtrcorrectAppHistory($date_from,$date_to,$status){
                 <td>'.$result['remarks'] . '</td>
                 <td id="st'.$result['dtrc_id'].'">'.$result['stats'].'</td>';
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm" onclick="viewdtrcorrectModal('.$dtrcdate.','.$timein.','.$timeout.','.$rmrks.','.$stts.')" title="View DTR Correction">
+                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewdtrcorrectModal('.$dtrcdate.','.$timein.','.$timeout.','.$rmrks.','.$stts.')" title="View DTR Correction">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm" onclick="viewdtrcorrectHistoryModal('.$dtrcid.')" title="View Logs">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="viewdtrcorrectHistoryModal('.$dtrcid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                       
                             </td>';                                
@@ -244,7 +244,7 @@ public function GetAlldtrcorrectAppHistory($date_from,$date_to,$status){
                     <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for dtr correction.." title="Type in dtr correction details"> 
                         </div>                     
                 </div>         
-        <table id="dtrcorrectList" class="table table-striped table-sm">
+        <table id="dtrcorrectList" class="table table-sm">
         <thead>
             <tr>
                 <th>DTR Date</th>
@@ -280,32 +280,33 @@ public function GetAlldtrcorrectAppHistory($date_from,$date_to,$status){
                 $dtrcid = "'".$result['rowdy']."'";
                 $empcode = "'".$result['emp_code']."'";
                 $appr_over = "'".$result['approver']."'";
-
+                $atch = "'".$result['attachment']."'";
+                $onclick = 'onclick="viewdtrcorrectModal('.$dtrcdate.','.$timein.','.$timeout.','.$rmrks.','.$stts.','.$appr_over.','.$atch.')"';
                 echo '
-                <tr>
-                <td>'.date('F d, Y', strtotime($result['dtrc_date'])).'</td>
-                <td>'.$t_in.'</td>
-                <td>'.$t_out.'</td>
-                <td>'.$result['remarks'] .'</td>
-                <td id="st'.$result['rowdy'].'">'.$result['stats'].'</td>';
+                <tr class="csor-pointer">
+                <td '.$onclick.'>'.date('F d, Y', strtotime($result['dtrc_date'])).'</td>
+                <td '.$onclick.'>'.$t_in.'</td>
+                <td '.$onclick.'>'.$t_out.'</td>
+                <td '.$onclick.'>'.$result['remarks'] .'</td>
+                <td '.$onclick.' id="st'.$result['rowdy'].'">'.$result['stats'].'</td>';
                 if($result['stats'] == 'PENDING' || $result['stats'] == 'APPROVED'){
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm" onclick="viewdtrcorrectModal('.$dtrcdate.','.$timein.','.$timeout.','.$rmrks.','.$stts.','.$appr_over.')" title="View DTR Correction">
+                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewdtrcorrectModal('.$dtrcdate.','.$timein.','.$timeout.','.$rmrks.','.$stts.','.$appr_over.','.$atch.')" title="View DTR Correction">
                     <i class="fas fa-binoculars"></i>
                 </button>
-                <button type="button" class="btn btn-warning btn-sm" onclick="viewdtrcorrectHistoryModal('.$dtrcid.')" title="View Logs">
+                <button type="button" class="btn btn-primary btn-sm" onclick="viewdtrcorrectHistoryModal('.$dtrcid.')" title="View Logs">
                     <i class="fas fa-history"></i>
                 </button>                           
-                <button type="button" id="clv" class="btn btn-danger btn-sm" onclick="canceldtrcorrect('.$dtrcid.','.$empcode.')" title="Cancel DTR Correction">
+                <button type="button" id="clv'.$result['rowdy'].'" class="btn btn-danger btn-sm" onclick="canceldtrcorrect('.$dtrcid.','.$empcode.')" title="Cancel DTR Correction">
                     <i class="fas fa-ban"></i>
                 </button>
                 </td>';
                 }else{
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm" onclick="viewdtrcorrectModal('.$dtrcdate.','.$timein.','.$timeout.','.$rmrks.','.$stts.','.$appr_over.')" title="View DTR Correction">
+                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewdtrcorrectModal('.$dtrcdate.','.$timein.','.$timeout.','.$rmrks.','.$stts.','.$appr_over.','.$atch.')" title="View DTR Correction">
                         <i class="fas fa-binoculars"></i>
                     </button>
-                    <button type="button" class="btn btn-warning btn-sm" onclick="viewdtrcorrectHistoryModal('.$dtrcid.')" title="View Logs">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="viewdtrcorrectHistoryModal('.$dtrcid.')" title="View Logs">
                         <i class="fas fa-history"></i>
                     </button>                       
                     </td>';
@@ -413,6 +414,10 @@ public function GetAlldtrcorrectAppHistory($date_from,$date_to,$status){
                     ":auditdate"=>date('m-d-Y H:i:s')
                 );
 
+
+                // var_dump($param);
+                // exit();
+
             $result = $stmt->execute($param);
 
             echo $result;
@@ -470,14 +475,14 @@ public function GetAlldtrcorrectAppHistory($date_from,$date_to,$status){
         $mail->Body    = '<h1>Hi '.$napprover.' </b>,</h1>An employee has requested dtr correction(#'.$rst['maxid'].').<br><br>
                         <h2>From: '.$nrequester.' <br><br></h2>
                         <h2>Check the request in :
-                        <a href="http://124.6.185.87:4200/hris_pchi/dtrcorrect/dtrcorrect_app_view.php">DTR Correction Approval List</a> 
+                        <a href="http://124.6.185.87:6868/dtrcorrect/dtrcorrect_app_view.php">DTR Correction Approval List</a> 
                         <br><br></h2>
 
                         Thank you for using our application! <br>
                         Regards, <br>
                         Human Resource Information System <br> <br>
 
-                        <h6>If you are having trouble clicking the "DTR Correction Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:4200/hris_pchi/dtrcorrect/dtrcorrect_app_view.php <h6>
+                        <h6>If you are having trouble clicking the "DTR Correction Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/dtrcorrect/dtrcorrect_app_view.php <h6>
                        ';
             $mail->send();
             // echo 'Message has been sent';

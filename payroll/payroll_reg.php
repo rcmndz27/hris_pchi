@@ -7,10 +7,35 @@ class PayrollRegApplication {
            
             global $connL;
 
-            $query = "SELECT * FROM dbo.payroll WHERE payroll_status = 'R' ORDER BY name asc";
-            $stmt =$connL->prepare($query);
-            $stmt->execute();
-            $r = $stmt->fetch();
+$query = "SELECT *,a.emp_code as empcd,
+COALESCE((b.tot_overtime_reg * (((month_pay * 12) / 313)/8) * 1.25),0) as tot_overtime_regamt,
+COALESCE((b.night_differential * (((month_pay * 12) / 313)/8) * 1.10),0) as night_differentialamt,
+COALESCE((b.night_differential_ot * (((month_pay * 12) / 313)/8) * 1.375),0) as night_differential_otamt,
+COALESCE((b.tot_regholiday * (((month_pay * 12) / 313)/8) * 2),0) as tot_regholidayamt,
+COALESCE((b.tot_overtime_regholiday * (((month_pay * 12) / 313)/8) * 2.6),0) as tot_overtime_regholidayamt,
+COALESCE((b.tot_regholiday_nightdiff * (((month_pay * 12) / 313)/8) * 2.2),0) as tot_regholiday_nightdiffamt,
+COALESCE((b.tot_overtime_regholiday_nightdiff * (((month_pay * 12) / 313)/8) * 2.86),0) as tot_overtime_regholiday_nightdiffamt,
+COALESCE((b.tot_spholiday * (((month_pay * 12) / 313)/8) * 1.3),0) as tot_spholidayamt,
+COALESCE((b.tot_overtime_spholiday * (((month_pay * 12) / 313)/8) * 1.69),0) as tot_overtime_spholidayamt,
+COALESCE((b.tot_spholiday_nightdiff * (((month_pay * 12) / 313)/8) * 1.43),0) as tot_spholiday_nightdiffamt,
+COALESCE((b.tot_overtime_spholiday_nightdiff * (((month_pay * 12) / 313)/8) * 1.859),0) as tot_overtime_spholiday_nightdiffamt,
+COALESCE((b.tot_rest * (((month_pay * 12) / 313)/8) * 1.30),0) as tot_restamt,
+COALESCE((b.tot_overtime_rest * (((month_pay * 12) /313)/8) * 1.69),0) as tot_overtime_restamt,
+COALESCE((b.night_differential_rest * (((month_pay * 12) /313)/8) * 1.43),0) as night_differential_restamt,
+COALESCE((b.night_differential_ot_rest * (((month_pay * 12) /313)/8) * 1.859),0) as night_differential_ot_restamt,
+COALESCE((b.tot_overtime_rest_regholiday * (((month_pay * 12) /313)/8) * 3.38),0) as tot_overtime_rest_regholidayamt,
+COALESCE((b.night_differential_rest_regholiday * (((month_pay * 12) /313)/8) * 2.86),0) as night_differential_rest_regholidayamt,
+COALESCE((b.tot_overtime_night_diff_rest_regholiday * (((month_pay * 12) /313)/8) * 3.718),0) as tot_overtime_night_diff_rest_regholidayamt,
+COALESCE((b.tot_overtime_sprestholiday * (((month_pay * 12) /313)/8) * 1.95),0) as tot_overtime_sprestholidayamt,
+COALESCE((b.tot_sprestholiday_nightdiff * (((month_pay * 12) /313)/8) * 1.65),0) as tot_sprestholiday_nightdiffamt,
+COALESCE((b.tot_overtime_sprestholiday_nightdiff * (((month_pay * 12) /313)/8) * 2.145),0) as tot_overtime_sprestholiday_nightdiffamt
+FROM payroll a left join att_summary b  on RIGHT(a.emp_code, LEN(a.emp_code) - 3) = b.badge_no
+and a.date_from = b.period_from and a.date_to = b.period_to
+left join employee_leave c on a.emp_code = c.emp_code
+where payroll_status = 'R' ORDER BY name ASC";
+$stmt =$connL->prepare($query);
+$stmt->execute();
+$r = $stmt->fetch();  
 
 
             echo "
@@ -59,7 +84,28 @@ class PayrollRegApplication {
                         <th> Undertime </th>
                         <th> Salary Adjustment (Days)</th>
                         <th> Salary Adjustment (Hrs)</th>
-                        <th> Overtime </th>
+                        <th>Regular Overtime (Hrs)</th>
+                        <th>Regular Night Differential (Hrs)</th>
+                        <th>Regular Night Differential OT (Hrs)</th> 
+                        <th>Regular Holiday (Hrs)</th>
+                        <th>Regular Holiday Overtime (Hrs)</th>
+                        <th>Regular Holiday Night Differential (Hrs)</th>
+                        <th>Regular Holiday Night Differential Overtime (Hrs)</th>
+                        <th>Special Holiday (Hrs)</th> 
+                        <th>Special Holiday Overtime (Hrs)</th> 
+                        <th>Special Holiday Night Differential (Hrs)</th> 
+                        <th>Special Holiday Night Differential Overtime (Hrs)</th> 
+                        <th>Rest Day (Hrs)</th>
+                        <th>Rest Day Overtime (Hrs)</th>
+                        <th>Rest Day Night Differential (Hrs)</th>
+                        <th>Rest Day Night Differential Overtime (Hrs)</th>
+                        <th>Rest Day Regular Holiday Overtime (Hrs)</th>
+                        <th>Rest Day Regular Holiday Night Differential (Hrs)</th>
+                        <th>Rest Day Regular Holiday Night Differential Overtime (Hrs)</th>
+                        <th>Rest Day Special Holiday Overtime (Hrs)</th>
+                        <th>Rest Day Special Holiday Night Differential (Hrs)</th>
+                        <th>Rest Day Special Holiday Night Differential Overtime (Hrs)</th>                        
+                        <th> Total Overtime </th>
                         <th> Meal Allowance </th>
                         <th> Salary Allowance </th>
                         <th> Out of Town Allowance </th>
@@ -118,6 +164,28 @@ $late = ($r['late'] <> '0') ?  '&#8369;'.number_format($r['late'],2,'.',',') : 0
 $undertime = ($r['undertime'] <> '0') ?  '&#8369;'.number_format($r['undertime'],2,'.',',') : 0 ;
 $total_adjstmenthrs = ($r['total_adjstmenthrs'] <> '0') ?  '&#8369;'.number_format($r['total_adjstmenthrs'],2,'.',',') : 0 ;
 $salary_adjustment = ($r['salary_adjustment'] <> '0') ?  '&#8369;'.number_format($r['salary_adjustment'],2,'.',',') : 0 ;
+$tot_overtime_regamt = ($r['tot_overtime_regamt'] <> '0') ?  '&#8369;'.number_format($r['tot_overtime_regamt'],2,'.',',') : 0 ;
+$night_differentialamt = ($r['night_differentialamt'] <> '0') ?  '&#8369;'.number_format($r['night_differentialamt'],2,'.',',') : 0 ;
+$night_differential_otamt = ($r['night_differential_otamt'] <> '0') ?  '&#8369;'.number_format($r['night_differential_otamt'],2,'.',',') : 0 ;
+$tot_regholidayamt = ($r['tot_regholidayamt'] <> '0') ?  '&#8369;'.number_format($r['tot_regholidayamt'],2,'.',',') : 0 ;
+$tot_overtime_regholidayamt = ($r['tot_overtime_regholidayamt'] <> '0') ?  '&#8369;'.number_format($r['tot_overtime_regholidayamt'],2,'.',',') : 0 ;
+$tot_regholiday_nightdiffamt = ($r['tot_regholiday_nightdiffamt'] <> '0') ?  '&#8369;'.number_format($r['tot_regholiday_nightdiffamt'],2,'.',',') : 0 ;
+$tot_overtime_regholiday_nightdiffamt = ($r['tot_overtime_regholiday_nightdiffamt'] <> '0') ?  '&#8369;'.number_format($r['tot_overtime_regholiday_nightdiffamt'],2,'.',',') : 0 ;
+$tot_spholidayamt = ($r['tot_spholidayamt'] <> '0') ?  '&#8369;'.number_format($r['tot_spholidayamt'],2,'.',',') : 0 ;
+$tot_overtime_spholidayamt = ($r['tot_overtime_spholidayamt'] <> '0') ?  '&#8369;'.number_format($r['tot_overtime_spholidayamt'],2,'.',',') : 0 ;
+$tot_spholiday_nightdiffamt = ($r['tot_spholiday_nightdiffamt'] <> '0') ?  '&#8369;'.number_format($r['tot_spholiday_nightdiffamt'],2,'.',',') : 0 ;
+$tot_overtime_spholiday_nightdiffamt = ($r['tot_overtime_spholiday_nightdiffamt'] <> '0') ?  '&#8369;'.number_format($r['tot_overtime_spholiday_nightdiffamt'],2,'.',',') : 0 ;
+$tot_restamt = ($r['tot_restamt'] <> '0') ?  '&#8369;'.number_format($r['tot_restamt'],2,'.',',') : 0 ;
+$tot_overtime_restamt = ($r['tot_overtime_restamt'] <> '0') ?  '&#8369;'.number_format($r['tot_overtime_restamt'],2,'.',',') : 0 ;
+$night_differential_restamt = ($r['night_differential_restamt'] <> '0') ?  '&#8369;'.number_format($r['night_differential_restamt'],2,'.',',') : 0 ;
+$night_differential_ot_restamt = ($r['night_differential_ot_restamt'] <> '0') ?  '&#8369;'.number_format($r['night_differential_ot_restamt'],2,'.',',') : 0 ;
+$tot_overtime_rest_regholidayamt = ($r['tot_overtime_rest_regholidayamt'] <> '0') ?  '&#8369;'.number_format($r['tot_overtime_rest_regholidayamt'],2,'.',',') : 0 ;
+$night_differential_rest_regholidayamt = ($r['night_differential_rest_regholidayamt'] <> '0') ?  '&#8369;'.number_format($r['night_differential_rest_regholidayamt'],2,'.',',') : 0 ;
+$tot_overtime_night_diff_rest_regholidayamt = ($r['tot_overtime_night_diff_rest_regholidayamt'] <> '0') ?  '&#8369;'.number_format($r['tot_overtime_night_diff_rest_regholidayamt'],2,'.',',') : 0 ;
+$tot_overtime_sprestholidayamt = ($r['tot_overtime_sprestholidayamt'] <> '0') ?  '&#8369;'.number_format($r['tot_overtime_sprestholidayamt'],2,'.',',') : 0 ;
+$tot_sprestholiday_nightdiffamt = ($r['tot_sprestholiday_nightdiffamt'] <> '0') ?  '&#8369;'.number_format($r['tot_sprestholiday_nightdiffamt'],2,'.',',') : 0 ;
+$tot_overtime_sprestholiday_nightdiffamt = ($r['tot_overtime_sprestholiday_nightdiffamt'] <> '0') ?  '&#8369;'.number_format($r['tot_overtime_sprestholiday_nightdiffamt'],2,'.',',') : 0 ;
+
 $overtime = ($r['overtime'] <> '0') ?  '&#8369;'.number_format($r['overtime'],2,'.',',') : 0 ;
 $meal_allowance = ($r['meal_allowance'] <> '0') ?  '&#8369;'.number_format($r['meal_allowance'],2,'.',',') : 0 ;
 $salary_allowance = ($r['salary_allowance'] <> '0') ?  '&#8369;'.number_format($r['salary_allowance'],2,'.',',') : 0 ;
@@ -164,7 +232,7 @@ $hdmf_er = ($r['hdmf_er'] <> '0') ?  '&#8369;'.number_format($r['hdmf_er'],2,'.'
 
     echo "<tr>".
     "<td>" . $r['name'] . "</td>".
-    "<td>" . $r['emp_code'] . "</td>".
+    "<td>" . $r['empcd'] . "</td>".
     "<td>" . $r['bank_acctno'] . "</td>".
     "<td>" . $r['bank'] . "</td>".
     "<td>" . $r['position'] . "</td>".
@@ -183,6 +251,27 @@ $hdmf_er = ($r['hdmf_er'] <> '0') ?  '&#8369;'.number_format($r['hdmf_er'],2,'.'
     "<td>" . $undertime. "</td>".
     "<td>" . $total_adjstmenthrs. "</td>".
     "<td>" . $salary_adjustment. "</td>".
+    "<td>" . $tot_overtime_regamt. "</td>".
+    "<td>" . $night_differentialamt. "</td>".
+    "<td>" . $night_differential_otamt. "</td>".
+    "<td>" . $tot_regholidayamt. "</td>".
+    "<td>" . $tot_overtime_regholidayamt. "</td>".
+    "<td>" . $tot_regholiday_nightdiffamt. "</td>".
+    "<td>" . $tot_overtime_regholiday_nightdiffamt. "</td>".
+    "<td>" . $tot_spholidayamt. "</td>".
+    "<td>" . $tot_overtime_spholidayamt. "</td>".
+    "<td>" . $tot_spholiday_nightdiffamt. "</td>".
+    "<td>" . $tot_overtime_spholiday_nightdiffamt. "</td>".
+    "<td>" . $tot_restamt. "</td>".
+    "<td>" . $tot_overtime_restamt. "</td>".
+    "<td>" . $night_differential_restamt. "</td>".
+    "<td>" . $night_differential_ot_restamt. "</td>".
+    "<td>" . $tot_overtime_rest_regholidayamt. "</td>".
+    "<td>" . $night_differential_rest_regholidayamt. "</td>".
+    "<td>" . $tot_overtime_night_diff_rest_regholidayamt. "</td>".
+    "<td>" . $tot_overtime_sprestholidayamt. "</td>".
+    "<td>" . $tot_sprestholiday_nightdiffamt. "</td>".
+    "<td>" . $tot_overtime_sprestholiday_nightdiffamt. "</td>".    
     "<td>" . $overtime. "</td>".
     "<td>" . $meal_allowance. "</td>".
     "<td>" . $salary_allowance. "</td>".
@@ -235,7 +324,7 @@ $hdmf_er = ($r['hdmf_er'] <> '0') ?  '&#8369;'.number_format($r['hdmf_er'],2,'.'
     echo"</tbody><tfoot>".
     "</tr><tr>".
     "<td colspan='67' class='paytop'>".
-    "<button class='conPyrll' onclick='ConfirmPayRegView()'><i class='fas fa-check-square'></i> CONFIRM PAYROLL REGISTER</button></td>".
+    "</td>".
     "</tr></tfoot>";    
 
     }else { 

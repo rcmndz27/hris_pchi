@@ -1,4 +1,4 @@
-
+                                                                                   
 <?php
 
 $now = new DateTime(null, new DateTimeZone('Asia/Taipei'));
@@ -316,7 +316,9 @@ rel="stylesheet">
                               <li class='dropdown'><a href='#'><i class='fas fa-money-check fa-fw'></i><span>Payroll</span><i class='bi bi-chevron-right'></i></a>
                                 <ul>
                                   <li><a href='../payroll/payroll_view.php' onclick='show()'>Payroll Timekeeping View</a></li>
+                                  <li><a href='../payroll/payroll_viewemp.php' onclick='show()'>Payroll Timekeeping per Employee View</a></li>
                                   <li><a href='../payroll/payroll_view_register.php' onclick='show()'>Payroll Register View ".$apprf."</a></li>
+                                  <li><a href='../payroll/payroll_view_register_emp.php' onclick='show()'>Payroll Register per Employee View ".$apprf."</a></li>                                  
                                   <li><a href='../payslip/payslip_viewall.php' onclick='show()'>Payslip All Employee</a></li>
                                   <li><a href='../salaryadjustment/salaryadjustmentlist_view.php' onclick='show()'>Salary Adjustment Management</a></li> 
                                   <li><a href='../payroll/payroll_tklist_view.php' onclick='show()'>Payroll Timekeeping List</a></li> 
@@ -340,8 +342,10 @@ rel="stylesheet">
                                   <li><a href='../salary/salarylist_view.php' onclick='show()'>Salary Management</a></li>
                                   <li><a href='../deduction/deductionlist_view.php' onclick='show()'>Deduction Management</a></li>
                                   <li><a href='../allowances/allowanceslist_view.php' onclick='show()'>Allowances Management</a></li>
+                                  <li><a href='../loans/loanslist_view.php' onclick='show()'>Loans Management</a></li>                                  
                                   <li><a href='../users/userslist_view.php' onclick='show()'>Users Management</a></li>                                                  
                                   <li><a href='../payroll_att/gen_att_view.php' onclick='show()'>Generate Scripts</a></li>
+                                  <li><a href='../payroll_att/gen_attemp_view.php' onclick='show()'>Generate Scripts per Employee</a></li>                                  
                                   <li><a href='../leavebalance/leavebalancelist_view.php' onclick='show()'>Employee Leave Balance</a></li>                                                                
                                 </ul>
                               </li>
@@ -364,6 +368,7 @@ rel="stylesheet">
                                   <li><a href='../mf_company/mfcompanylist_view.php' onclick='show()'>Company</a></li>
                                   <li><a href='../mf_deduction/mfdeductionlist_view.php' onclick='show()'>Deduction</a></li>
                                   <li><a href='../mf_department/mfdepartmentlist_view.php' onclick='show()'>Department</a></li>
+                                  <li><a href='../mf_sched/mfschedlist_view.php' onclick='show()'>Schedule</a></li>
                                 <li><a href='../mf_holiday/mfholidaylist_view.php' onclick='show()'>Holiday</a></li>  
                                 <li><a href='../mf_pyrollco/mfpyrollcolist_view.php' onclick='show()'>Payroll Cut-Off</a></li>  
                                 <li><a href='../mf_position/mfpositionlist_view.php' onclick='show()'>Job Position</a></li>

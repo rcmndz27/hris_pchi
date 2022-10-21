@@ -364,7 +364,7 @@ ul{
             </div>
             <div class="row">
                 <div class="col" id="app_button">
-                    <button class="btn btn-info btn-block wb loginbg" />
+                    <button class="btn btn-info btn-sm btn-block wb loginbg" />
                         <a href='emp_index.php' class="blk">
                             <img src="img/employee.png" class="imgsze">
                         EMPLOYEE-LOGIN
@@ -375,7 +375,7 @@ ul{
             <br>
             <div class="row">
                 <div class="col" id="app_button">
-                    <button class="btn btn-info btn-block wb newemp" />
+                    <button class="btn btn-info btn-sm btn-block wb newemp" />
                         <a href='newhireaccess/newemployee_entry.php' class="blk">
                             <img src="img/newemp.png" class="imgsze">
                         NEW EMPLOYEE
@@ -386,7 +386,7 @@ ul{
             <br>
             <div class="row">
                 <div class="col" id="app_button">
-                    <button class="btn btn-info btn-block wb loginbg" />
+                    <button class="btn btn-info btn-sm btn-block wb loginbg" />
                         <a href='applicantprofile/applicant_entry.php' class="blk">
                             <img src="img/applicant.png" class="imgsze">
                         APPLICANT

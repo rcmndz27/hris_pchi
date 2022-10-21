@@ -44,29 +44,33 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-money-check fa-fw'>
-                        </i>&nbsp;PAYROLL REGISTER VIEW</b></li>
+              <li class="breadcrumb-item active font-weight-bold" aria-current="page"><i class='fas fa-money-check fa-fw mr-1'>
+                        </i>Payroll Register View</li>
             </ol>
           </nav>
 
       <div class="form-row">
-        <label for="payroll_period" class="col-form-label pad">PAYROLL PERIOD/LOCATION:</label>
+        <label for="payroll_period" class="col-form-label pad">Payroll Period:</label>
         <div class='col-md-3'>
             <select class="form-control" id="empCode" name="empCode" value="" hidden>
                 <option value="<?php echo $empCode ?>"><?php echo $empCode ?></option>
             </select>
            <?php $dd->GenerateDropDown("ddcutoff", $mf->GetAllPayCutoffReg("paycutreg")); ?>
         </div>           
-        <button type="button" id="search" class="btn btn-danger" onmousedown="javascript:deletePayReg()">
-            <i class="fas fa-backspace"></i> DELETE                      
-        </button>                                      
+        <button type="button" id="search" class="btn btn-danger mr-2" onmousedown="javascript:deletePayReg()">
+            <i class="fas fa-backspace mr-1 text-white"></i> Delete                      
+        </button> 
+        <button class='btn btn-primary' id='confirm' onclick='ConfirmPayRegView()'>
+          <i class='fas fa-check-square'></i> 
+        Confirm Payroll Register
+        </button>                                             
         </div>
             <div class="row">
                 <div class="col-md-12">
                     <select class="form-control" id="empCode" name="empCode" value="" hidden>
                         <option value="<?php echo $empCode ?>"><?php echo $empCode ?></option>
                     </select>
-                        <button type="button" id="search" hidden>GENERATE</button>
+                        <button type="button" id="search" hidden>Generate</button>
                             <?php $payrollApplication->GetPayrollRegList()?>
                 </div>
             </div>
@@ -76,10 +80,13 @@
 
     var a = document.getElementById("ddcutoff").value;
     var b = document.getElementById("search");
+    var c = document.getElementById("confirm");
     if (a == null || a == "") {
       document.getElementById('ddcutoff').disabled = true
       document.getElementById("search").disabled = true;
+      document.getElementById("confirm").disabled = true;
       b.style.display = 'none';
+      c.style.display = 'none';
     }else{
 
     }

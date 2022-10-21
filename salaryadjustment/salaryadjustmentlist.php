@@ -2,32 +2,11 @@
 
 Class SalaryAdjList{
 
-    public function GetAllSalaryAdjList(){
+    public function GetAllSalaryAdjList($empStatus){
         global $connL;
 
         echo '
-
-        <div class="form-row">  
-                    <div class="col-lg-1">
-                        <select class="form-select" name="state" id="maxRows">
-                             <option value="5000">ALL</option>
-                             <option value="5">5</option>
-                             <option value="10">10</option>
-                             <option value="15">15</option>
-                             <option value="20">20</option>
-                             <option value="50">50</option>
-                             <option value="70">70</option>
-                             <option value="100">100</option>
-                        </select> 
-                </div>         
-                <div class="col-lg-8">
-                </div>                               
-                <div class="col-lg-3">        
-                    <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for employee details.." title="Type in employee details"> 
-                        </div>                     
-                </div>
-
-        <table id="allSalaryAdjList" class="table table-striped table-sm">
+        <table id="allSalaryAdjList" class="table table-sm">
         <thead>
             <tr>
                 <th>Employee Code</th>
@@ -36,6 +15,7 @@ Class SalaryAdjList{
                 <th>Category</th>
                 <th>Amount</th>
                 <th>Remarks</th>
+                <th>Emp Status</th>
                 <th>Action</th>
 
             </tr>
@@ -43,10 +23,11 @@ Class SalaryAdjList{
         <tbody>';
 
         $query = "SELECT a.emp_code,lastname+', '+firstname as fullname,period_to,period_from,description,remarks,amount,
-        inc_decr from dbo.employee_salaryadj_management a left join employee_profile b
-        on a.emp_code = b.emp_code ORDER by period_from DESC ";
+        inc_decr,salaryadj_id,b.emp_status from dbo.employee_salaryadj_management a left join employee_profile b
+        on a.emp_code = b.emp_code where b.emp_status = :empStatus ORDER by emp_status,period_from DESC ";
+        $param = array(":empStatus" => $empStatus);
         $stmt =$connL->prepare($query);
-        $stmt->execute();
+        $stmt->execute($param);
         $result = $stmt->fetch();
 
 
@@ -59,17 +40,20 @@ Class SalaryAdjList{
                 $descript = "'".$result['description']."'";
                 $amnt = "'".round($result['amount'],3)."'";
                 $remark = "'".$result['remarks']."'";   
-                $incdecr = "'".$result['inc_decr']."'";               
+                $incdecr = "'".$result['inc_decr']."'";     
+                $salaryadjid = "'".$result['salaryadj_id']."'"; 
+                $onclick = 'onclick="editSalAdjModal('.$empcd.','.$percutoff.','.$descript.','.$amnt.','.$remark.','.$incdecr.','.$salaryadjid.')"';              
                 echo '
-                <tr>
-                <td>' . $result['fullname']. '</td>
-                <td>' . date('m/d/Y', strtotime($result['period_from'])) . '</td>
-                <td>' . date('m/d/Y', strtotime($result['period_to'])) . '</td>
-                <td>' . $result['description']. '</td>
-                <td>' . $result['amount'].'</td>                
-                <td>' . $result['remarks']. '</td>';
-                echo'<td><button type="button" class="btn btn-info btn-sm" onclick="editSalAdjModal('.$empcd.','.$percutoff.','.$descript.','.$amnt.','.$remark.','.$incdecr.')">
-                                <i class="fas fa-edit"></i> UPDATE
+                <tr class="csor-pointer">
+                <td '.$onclick.'>' . $result['fullname']. '</td>
+                <td '.$onclick.'>' . date('m/d/Y', strtotime($result['period_from'])) . '</td>
+                <td '.$onclick.'>' . date('m/d/Y', strtotime($result['period_to'])) . '</td>
+                <td '.$onclick.'>' . $result['description']. '</td>
+                <td '.$onclick.'>' . round($result['amount'],2).'</td>                
+                <td '.$onclick.'>' . $result['remarks']. '</td>
+                <td '.$onclick.'>' . $result['emp_status']. '</td>';
+                echo'<td><button type="button" class="btn btn-info btn-sm" title="Edit/Update" onclick="editSalAdjModal('.$empcd.','.$percutoff.','.$descript.','.$amnt.','.$remark.','.$incdecr.','.$salaryadjid.')">
+                                <i class="fas fa-edit"></i>
                             </button></td>';
                 
                 

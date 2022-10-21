@@ -102,15 +102,13 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label" for="positionList">Position Title:<span class="req">*</span></label>
-                                        <input type="text" class="form-control inputtext" name="positiontitle"
-                                            id="positiontitle" placeholder="Position Title">                                        
+                                        <?php $dd->GenerateDropDown("positiontitle", $mf->GetJobPosition("jobpos")); ?>                                        
                                     </div>
                                 </div> 
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="control-label" for="department">Department:<span class="req">*</span></label>
-                                    <input type="text" class="form-control inputtext" name="department"
-                                            id="department" placeholder="Department Title">
+                                    <?php $dd->GenerateDropDown("department", $mf->GetAllDepartment("alldep")); ?>                                             
                                     </div>
                                 </div>                                                                                                
                             </div> 

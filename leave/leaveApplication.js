@@ -69,7 +69,6 @@ $(function(){
     var approvedDays;
     var btnAccessed;
 
-    $('#advancefiling').hide();
     $('#leavepay').hide();
     $('#sickleavebal').hide();
     $('#vacleavebal').hide();
@@ -94,19 +93,6 @@ $(function(){
         }
     });
 
-    function CheckInput() {
-
-        var inputValues = [];
-
-        inputValues = [
-            
-            $('#leaveDesc'),
-            
-        ];
-
-        var result = (CheckInputValue(inputValues) === '0') ? true : false;
-        return result;
-    }
 
     function LoadLeaveList(){
 
@@ -533,138 +519,12 @@ swal({
 
 
 
-    $('#Submit').click(function(){
-
-
-            // console.log(leaveCount);
-
-
-                var leave_pay ;
-
-                if($('#leaveType').val() === 'Sick Leave' && $('#leave_pay1:checked').val() === 'WithPay'){
-                    leave_pay = 'Sick Leave';
-                }else if($('#leaveType').val() === 'Sick Leave' && $('#leave_pay2:checked').val() === 'WithoutPay'){
-                    leave_pay = 'Sick Leave without Pay';
-                        // alert('Sick Leave without Pay');
-                }else if($('#leaveType').val() === 'Vacation Leave' && $('#leave_pay1:checked').val() === 'WithPay'){
-                    leave_pay = 'Vacation Leave';
-                        // alert('Vacation Leave');
-                }else if($('#leaveType').val() === 'Vacation Leave' && $('#leave_pay2:checked').val() === 'WithoutPay'){
-                    leave_pay = 'Vacation Leave without Pay';
-                        // alert('Vacation Leave without Pay');
-                }else{
-                    leave_pay = $('#leaveType').val();
-              
-                }   
-
-                  var checkBox = document.getElementById("halfDay");
-                  if (checkBox.checked == true){
-                    leaveCount = 0.5;
-                  } else {
-                     leaveCount = 1.0;
-                  }
-                  
-                var dte = $('#dateFrom').val();
-                var dte_to = $('#dateTo').val();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-                dateArr = []; 
-
-                var start = new Date(dte);
-                var date = new Date(dte_to);
-                var end = date.setDate(date.getDate() + 1);
-
-                while(start < end){
-                   dateArr.push(moment(start).format('MM-DD-YYYY'));
-                   var newDate = start.setDate(start.getDate() + 1);
-                   start = new Date(newDate);  
-                }
-
-                const ite_date = dateArr.length === 0  ? dte : dateArr ;
-
-                var e_req = $('#e_req').val();
-                var n_req = $('#n_req').val();
-                var e_appr = $('#e_appr').val();
-                var n_appr = $('#n_appr').val();
-
-            if (CheckInput() === true) {
-
-                param = {
-                    "Action":"ApplyLeave",
-                    "leavetype": leave_pay,
-                    "datebirth": $('#dateBirth').val(),
-                    "datestartmaternity": $('#dateStartMaternity').val(),
-                    "leaveDate": ite_date,
-                    "leavedesc" : $('#leaveDesc').val(),
-                    "medicalfile": pdfFile,
-                    "leaveCount": leaveCount,
-                    "allhalfdayMark": allhaftday,
-                    "e_req": e_req,
-                    "n_req": n_req,
-                    "e_appr": e_appr,
-                    "n_appr": n_appr
     
-                };
-                
-                param = JSON.stringify(param);
-
-                // console.log(param);
-                // return false;
-
-                    if($('#dateTo').val() >= $('#dateFrom').val()){
-                        swal({
-                          title: "Are you sure?",
-                          text: "You want to apply this leave?",
-                          icon: "success",
-                          buttons: true,
-                          dangerMode: true,
-                        })
-                        .then((applyLeave) => {
-                            document.getElementById("myDiv").style.display="block";
-                          if (applyLeave) {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "../leave/leaveApplicationProcess.php",
-                                        data: {data:param} ,
-                                        success: function (data){
-                                            // console.log("success: "+ data);
-                                                    swal({
-                                                    title: "Success!", 
-                                                    text: "Successfully added leave details!", 
-                                                    type: "success",
-                                                    icon: "success",
-                                                    }).then(function() {
-                                                        location.href = '../leave/leaveApplication_view.php';
-                                                    });
-                                        },
-                                        error: function (data){
-                                            // console.log("error: "+ data);    
-                                        }
-                                    });//ajax
-                          } else {
-                            document.getElementById("myDiv").style.display="none";
-                            swal({text:"You cancel your leave!",icon:"error"});
-                          }
-                        });
-                    
-                        }else{
-                            swal({text:"Leave Date TO must be greater than Leave Date From!",icon:"error"});
-                        }
-
-
-            }else{
-                swal({text:"Kindly fill up blank fields.",icon:"warning"});
-            }
-
-    
-        
-    });
-
     $('#leaveType').change(function(){
 
         if ($(this).val() == 'Sick Leave' && $('#sick_leavebal').val() === '0.0' && $('#emptype').val() === 'Regular') {
             $("#leave_pay2").prop("checked", true);
             $("#wpay").hide();
-            $('#advancefiling').show();
             $('#paternity').hide();
             $('#maternity').hide();
             $('#specialwomen').hide();
@@ -678,7 +538,6 @@ swal({
             $('#Submit').show();
         }else if ($(this).val() == 'Sick Leave' && $('#sick_leavebal').val() !== '0.0' && $('#emptype').val() === 'Regular') {
             $("#leavepay").show();
-            $('#advancefiling').show();
             $('#paternity').hide();
             $('#maternity').hide();
             $('#specialwomen').hide();
@@ -699,7 +558,6 @@ swal({
             $("#wpay").hide();
             $('#paternity').hide();
             $('#leavepay').show();
-            $('#advancefiling').hide();
             $('#maternity').hide();
             $('#specialwomen').hide();
             $('#specialviolence').hide();
@@ -714,7 +572,6 @@ swal({
             $("#leave_pay1").prop("checked", true);
             $('#paternity').hide();
             $('#leavepay').show();
-            $('#advancefiling').hide();
             $('#maternity').hide();
             $('#specialwomen').hide();
             $('#specialviolence').hide();
@@ -728,7 +585,6 @@ swal({
             $("#wpay").hide();
             $('#paternity').hide();
             $('#leavepay').show();
-            $('#advancefiling').hide();
             $('#maternity').hide();
             $('#specialwomen').hide();
             $('#specialviolence').hide();
@@ -742,7 +598,6 @@ swal({
             $("#wpay").hide();
             $('#paternity').hide();
             $('#leavepay').show();
-            $('#advancefiling').hide();
             $('#maternity').hide();
             $('#specialwomen').hide();
             $('#specialviolence').hide();
@@ -752,7 +607,6 @@ swal({
             $('#Submit').show();
         }else if ($(this).val() == 'Paternity Leave' && $('#civilstatus').val() == 'Single') {
             $('#paternity').show();
-            $('#advancefiling').hide();
             $('#maternity').hide();
             $('#specialwomen').hide();
             $('#specialviolence').hide();
@@ -763,7 +617,6 @@ swal({
             $('#Submit').hide();
         }else if ($(this).val() == 'Paternity Leave' && $('#civilstatus').val() == 'Married') {
             $('#paternity').show();
-            $('#advancefiling').hide();
             $('#maternity').hide();
             $('#specialwomen').hide();
             $('#specialviolence').hide();
@@ -774,7 +627,6 @@ swal({
             $('#Submit').show();
         }else if ($(this).val() == 'Maternity Leave') {
             $('#paternity').hide();
-            $('#advancefiling').hide();
             $('#maternity').show();
             $('#specialwomen').hide();
             $('#specialviolence').hide();
@@ -787,7 +639,6 @@ swal({
             $('#Submit').show();
         }else if ($(this).val() == 'Special Leave for Women') {
             $('#paternity').hide();
-            $('#advancefiling').hide();
             $('#maternity').hide();
             $('#specialwomen').show();
             $('#specialviolence').hide();
@@ -798,7 +649,6 @@ swal({
             $('#Submit').show();
         }else if ($(this).val() == 'Special Leave for Victim of Violence') {
             $('#paternity').hide();
-            $('#advancefiling').hide();
             $('#maternity').hide();
             $('#specialwomen').hide();
             $('#specialviolence').show();
@@ -809,7 +659,6 @@ swal({
             $('#Submit').show();
         }else if ($(this).val() == 'Solo Parent Leave' || $(this).val() == 'Bereavement Leave') {
             $('#paternity').hide();
-            $('#advancefiling').hide();
             $('#maternity').hide();
             $('#specialwomen').hide();
             $('#specialviolence').hide();
@@ -819,7 +668,7 @@ swal({
             $('#leavepay').hide();
             $('#Submit').show();
         } else {
-            $('#advancefiling').hide();
+
             $('#paternity').hide();
             $('#maternity').hide();
             $('#specialwomen').hide();

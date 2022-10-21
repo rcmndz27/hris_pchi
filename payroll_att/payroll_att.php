@@ -92,15 +92,15 @@ function GetPayrollAttList($action, $dtFrom, $dtTo,$location,$empCode){
                                         echo "<tfoot>
                                         <tr>".
                                             "<td colspan='3' class='text-center bg-success'><b>Total</b></td>".
-                                            "<td class='bg-secondary'><b>" . $totalDaysAbsent . "</b></td>".
-                                            "<td class='bg-secondary'><b>" . $totalDaysWorked . "</b></td>".
-                                            "<td class='bg-secondary'><b>" . $lates . "</b></td>".
-                                            "<td class='bg-secondary'><b>" . $undertime . "</b></td>".
-                                            "<td class='bg-secondary'><b>" . $reg_ot . "</b></td>".
-                                            "<td class='bg-secondary'><b>" . $rd_ot . "</b></td>".
-                                            "<td class='bg-secondary'><b>" . $rh_ot . "</b></td>".
-                                            "<td class='bg-secondary'><b>" . $sh_ot . "</b></td>".
-                                            "<td class='bg-secondary'></td>".
+                                            "<td class='bg-success'><b>" . $totalDaysAbsent . "</b></td>".
+                                            "<td class='bg-success'><b>" . $totalDaysWorked . "</b></td>".
+                                            "<td class='bg-success'><b>" . $lates . "</b></td>".
+                                            "<td class='bg-success'><b>" . $undertime . "</b></td>".
+                                            "<td class='bg-success'><b>" . $reg_ot . "</b></td>".
+                                            "<td class='bg-success'><b>" . $rd_ot . "</b></td>".
+                                            "<td class='bg-success'><b>" . $rh_ot . "</b></td>".
+                                            "<td class='bg-success'><b>" . $sh_ot . "</b></td>".
+                                            "<td class='bg-success'></td>".
                                             "</tr><tr></tr></tfoot>";  
                                                                     
                 }else { 

@@ -9,6 +9,7 @@ body{
    background-size: cover;
    font-family: "Dosis", sans-serif;
    background-image:  url('../img/loginbg.png');
+   /*text-transform: capitalize;*/
 }
 
 

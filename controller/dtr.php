@@ -12,7 +12,7 @@
         public function GetAttendanceList($dateStart, $dateEnd, $empcode){
 
         global $connL;
-        global $dbConnection;
+        global $connL;
 
         $totalWork = 0;
         $totalLate = 0;
@@ -27,7 +27,7 @@
         $cmp = $resulty['company'];
         $subemp = strlen($cmp);
         
-        $query = 'EXEC dbo.xp_attendance_portal :emp_code,:startDate,:endDate';
+        $query = 'EXEC xp_attendance_portal :emp_code,:startDate,:endDate';
         $param = array(":emp_code" => substr($empcode,$subemp), ":startDate" => $dateStart, ":endDate" => $dateEnd );
         $stmt =$connL->prepare($query);
         $stmt->execute($param);
@@ -39,7 +39,7 @@
             <table id='dtrList' class='table table-striped table-sm'>
                 <thead>
                     <tr>
-                        <th colspan='8' class='text-center'>My Attendance</th>
+                        <th colspan='9' class='text-center'>My Attendance</th>
                     </tr>
                     <tr>
                         <th>Date</th>
@@ -49,6 +49,7 @@
                         <th>Late</th>
                         <th>Undertime</th>
                         <th>Overtime</th>
+                        <th>Day</th>
                         <th>Remarks</th>
                     </tr>
                 </thead>
@@ -76,6 +77,7 @@
                                 "<td>" . $slate."</td>".
                                 "<td>" . $sundertime."</td>".
                                 "<td>" . $sovertime."</td>".
+                                "<td>" . $result['wday'] . "</td>".
                                 "<td>" . $result['remarks'] . "</td>".
                                 "</tr>";
     
@@ -90,12 +92,13 @@
 
                     echo "<tfoot>
                             <tr>".
-                                "<td colspan='3' class='text-right bg-secondary'><b>Total</b></td>".
-                                "<td class='bg-secondary'><b>" . $totalWork . "</b></td>".
-                                "<td class='bg-secondary'><b>" . $totalLate . "</b></td>".
-                                "<td class='bg-secondary'><b>" . $totalUndertime . "</b></td>".
-                                "<td class='bg-secondary'><b>" . $totalOvertime . "</b></td>".
-                                "<td class='bg-secondary'><b></b></td>".
+                                "<td colspan='3' class='text-right bg-success'><b>Total</b></td>".
+                                "<td class='bg-success'><b>" . $totalWork . "</b></td>".
+                                "<td class='bg-success'><b>" . $totalLate . "</b></td>".
+                                "<td class='bg-success'><b>" . $totalUndertime . "</b></td>".
+                                "<td class='bg-success'><b>" . $totalOvertime . "</b></td>".
+                                "<td class='bg-success'><b></b></td>".
+                                "<td class='bg-success'><b></b></td>".
                             "</tr>
                         </tfoot>";
                 }else { 

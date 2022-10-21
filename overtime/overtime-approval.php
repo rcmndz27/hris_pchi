@@ -37,7 +37,7 @@ require '../vendor/autoload.php';
                     echo"
                         <tr>
                             <td>".$result['lastname'].",".$result['firstname']." ".$result['middlename']."</td>
-                            <td>"."<button style='width: 9.375rem;' class='penLeave btnPending ".$result['otrid']." ' id='".$result['emp_code']."' type='submit'>".$result['ot_req_hrs']."</button>
+                            <td>"."<button style='width: 9.375rem;' class='penLeave btnPending ".$result['otrid']." ' id='".$result['emp_code']."' type='submit'>".round($result['ot_req_hrs'],2)."</button>
                             <button id='alertot".$result['otrid']."' value='".$otFiled."' hidden></button></td>
                         </tr>";
                 } while($result = $stmt->fetch());
@@ -54,7 +54,7 @@ require '../vendor/autoload.php';
 
             global $connL;
 
-            $query = "SELECT a.ot_req_hrs,a.ot_date,a.ot_ren_hrs,b.firstname,b.middlename,b.lastname,a.emp_code,a.remarks,a.rowid,a.reporting_to from tr_overtime a left join employee_profile b on a.emp_code = b.emp_code WHERE a.reporting_to = :reporting_to AND a.emp_code = :emp_code and status = 1";
+            $query = "SELECT a.ot_req_hrs,a.ot_date,a.ot_ren_hrs,b.firstname,b.middlename,b.lastname,a.emp_code,a.remarks,a.rowid,a.reporting_to,a.attachment from tr_overtime a left join employee_profile b on a.emp_code = b.emp_code WHERE a.reporting_to = :reporting_to AND a.emp_code = :emp_code and status = 1";
             $stmt =$connL->prepare($query);
             $param = array(":reporting_to" => $empReportingTo , ":emp_code" => $empId );
             $stmt->execute($param);
@@ -80,24 +80,26 @@ require '../vendor/autoload.php';
             if($result){
                 do{
 
-                    $actualOT = (isset($result['ot_req_hrs']) ? $result['ot_req_hrs'] : 0);
+                    $actualOT = (isset($result['ot_req_hrs']) ? round($result['ot_req_hrs'],2) : 0);
 
                     echo"
                         <tr id='clv".$result['rowid']."'>
                             <td>".date('F d, Y',strtotime($result['ot_date']))."</td>
                             <td>".$result['remarks']."</td>
-                            <td>".$result['ot_req_hrs']."</td>
+                            <td>".round($result['ot_req_hrs'],2)."</td>
                             <td>".$result['ot_ren_hrs']."</td>
                             <td>"."<input type='number' id='ac".$result['rowid']."' class='form-control' value='".round($actualOT,2)."' max='".round($actualOT,2)."' onkeydown='return false' min='0.5' step='0.5'>"."</td>
                             <td hidden>"."<input type='text' class='form-control' value='".$result['reporting_to']."' >"."</td>
                             <td>".
+                            "<a title='Attachment' href='../uploads/".$result['attachment']."'   
+                                target='popup'); return false;'><button type='button' class='btn btn-primary btn-sm text-white font-weight-bold mr-1'><i class='fas fa-paperclip'></i></button></a>".
                                 "<button class='btn btn-success btn-sm btnApproved' id='".$result['rowid']."'><i class='fas fa-check'></i></button> &nbsp;".
                                 "<button class='btn btn-danger btn-sm btnRejectd' id='".$result['rowid']."'><i class='fas fa-times'></i></button> &nbsp;";
 
-                           if($result['reporting_to'] == 'PCHI20000205') {
+                           if($result['reporting_to'] == 'PCH20000205') {
 
                            }else{
-                            echo '<button class="btn btn-warning btn-sm btnFwd" id="'.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-arrow-right"></i><button id="empcode" value="'.$result['emp_code'].'" hidden></button>';
+                            echo '<button class="btn btn-primary btn-sm btnFwd" id="'.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-arrow-right"></i><button id="empcode" value="'.$result['emp_code'].'" hidden></button>';
                            }    
                         
                         echo"</td></tr>";
@@ -196,14 +198,14 @@ require '../vendor/autoload.php';
         $mail->Body    = '<h1>Hi '.$nrequester.' </b>,</h1>Your overtime request #'.$rowid.' has been approved.<br><br>
                         <h2>From: '.$napprover.' <br><br></h2>
                         <h2>Check the request in :
-                        <a href="http://124.6.185.87:4200/hris_pchi/overtime/ot_app_view.php">Overtime Request List</a> 
+                        <a href="http://124.6.185.87:6868/overtime/ot_app_view.php">Overtime Request List</a> 
                         <br><br></h2>
 
                         Thank you for using our application! <br>
                         Regards, <br>
                         Human Resource Information System <br> <br>
 
-                        <h6>If you are having trouble clicking the "Overtime Request List" button, copy and paste the URL below into your web browser: http://124.6.185.87:4200/hris_pchi/overtime/ot_app_view.php <h6>
+                        <h6>If you are having trouble clicking the "Overtime Request List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/overtime/ot_app_view.php <h6>
                        ';
             $mail->send();
             // echo 'Message has been sent';
@@ -304,14 +306,14 @@ require '../vendor/autoload.php';
                         <h2>From: '.$napprover.' <br></h2>
                         <h2>Reason: '.$rjctRsn.' <br><br></h2>
                         <h2>Check the request in :
-                        <a href="http://124.6.185.87:4200/hris_pchi/overtime/ot_app_view.php">Overtime Request List</a> 
+                        <a href="http://124.6.185.87:6868/overtime/ot_app_view.php">Overtime Request List</a> 
                         <br><br></h2>
 
                         Thank you for using our application! <br>
                         Regards, <br>
                         Human Resource Information System <br> <br>
 
-                        <h6>If you are having trouble clicking the "Overtime Request List" button, copy and paste the URL below into your web browser: http://124.6.185.87:4200/hris_pchi/overtime/ot_app_view.php <h6>
+                        <h6>If you are having trouble clicking the "Overtime Request List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/overtime/ot_app_view.php <h6>
                        ';
             $mail->send();
             // echo 'Message has been sent';
@@ -329,7 +331,7 @@ require '../vendor/autoload.php';
         global $connL;
 
         $cmd = $connL->prepare("UPDATE dbo.tr_overtime SET reporting_to = :approval where rowid = :rowid");
-        $cmd->bindValue('approval','PCHI20000205');         
+        $cmd->bindValue('approval','PCH20000205');         
         $cmd->bindValue('rowid',$rowid);                           
         $cmd->execute();
     
@@ -388,14 +390,14 @@ require '../vendor/autoload.php';
                         <h2>From: '.$napprover.' <br><br></h2>
     
                         <h2>Check the request in :
-                        <a href="http://124.6.185.87:4200/hris_pchi/overtime/ot_app_view.php">Overtime Approval List</a> 
+                        <a href="http://124.6.185.87:6868/overtime/ot_app_view.php">Overtime Approval List</a> 
                         <br><br></h2>
 
                         Thank you for using our application! <br><br>
                         Regards, <br>
                         Human Resource Information System <br> <br>
 
-                        <h6>If you are having trouble clicking the "Overtime Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:4200/hris_pchi/overtime/ot_app_view.php <h6>
+                        <h6>If you are having trouble clicking the "Overtime Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/overtime/ot_app_view.php <h6>
                        ';
             $mail->send();
             // echo 'Message has been sent';

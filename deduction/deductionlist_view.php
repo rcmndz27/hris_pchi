@@ -32,6 +32,7 @@
 <link rel="stylesheet" type="text/css" href="../deduction/ded_view.css">
 <script type="text/javascript" src="../deduction/deduction_ent.js"></script>
 <script type='text/javascript' src='../js/validator.js'></script>
+<body onload="javascript:generateEmpStatus();">
 <div class="container">
     <div class="section-title">
           <h1>ALL DEDUCTION LIST</h1>
@@ -41,35 +42,60 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active bb" aria-current="page"><b><i class='fas fa-money-bill-wave fa-fw'>
-                        </i>&nbsp;DEDUCTION MANAGEMENT LIST</b></li>
+              <li class="breadcrumb-item active font-weight-bold" aria-current="page"><i class='fas fa-money-bill-wave fa-fw mr-1'>
+                        </i>Deduction Management List</li>
             </ol>
           </nav>
-    <div class="pt-3">
-        <div class="row align-items-end justify-content-end">
-            <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-secondary" id="deductionEntry"><i class="fas fa-plus-circle"></i> ADD NEW EMPLOYEE DEDUCTION</button>
-            </div>
+    <div class="form-row">
+        <div class='col-sm-1'>
+            <label for="payroll_period" class="col-form-label pad">Status:</label>
         </div>
+            <div class='col-md-2' >
+              <select class="form-select" id="empStatus" name="empStatus" value="">
+                <option value="Active">Active</option>
+                <option value="Resigned">Resigned</option>
+                <option value="Terminated">Terminated</option>
+                <option value="Separated">Separated</option>
+              </select>    
+          </div>
+        <div class='col-md-4' >          
+            <button type="button" id="search" class="btn btn-primary text-white mr-1" onclick="generateEmpStatus();">
+              <i class="fas fa-search-plus"></i> Generate                      
+            </button>  
+        <button type="button" class="btn btn-primary" id="deductionEntry"><i class="fas fa-plus-circle"></i> Add New Employee Deduction </button>                                              
+        </div>
+      <div class="col-md-1">
+            <select class="form-select" name="state" id="maxRows">
+                <option value="5000">ALL</option>                
+                 <option value="5">5</option>
+                 <option value="10">10</option>
+                 <option value="15">15</option>
+                 <option value="20">20</option>
+                 <option value="50">50</option>
+                 <option value="70">70</option>
+                 <option value="100">100</option>
+            </select> 
+        </div>          
+        <div class='col-md-4' >     
+            <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for employee salary..." title="Type in employee name">
+        </div>                                              
+    </div>  
+
+    <div class="pt-1">
         <div class="row">
             <div class="col-md-12">
-                <div class="panel-body">
-                    <div id="tableList" class="table-responsive-sm table-body">
-                        <?php
-
-           $allDeductionList->GetAllDeductionList(); ?>
-                    </div>
-                </div>
+                    <div id='contents'></div>  
             </div>
         </div>
     </div>
+
 
     <div class="modal fade" id="popUpModal" tabindex="-1" role="dialog" aria-labelledby="informationModalTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">DEDUCTION ENTRY  <i class="fas fa-minus-circle"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-minus-circle mr-1"></i>Deduction Entry</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -85,18 +111,14 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="control-label" for="deductionid">Employee Code/Name<span class="req">*</span></label>
-                                        <?php
-
-           $dd->GenerateSingleDropDown("emp_code", $mf->GetEmployeeNames("allempnames")); ?> 
+                                        <?php $dd->GenerateSingleDropDown("emp_code", $mf->GetEmployeeNames("allempnames")); ?> 
                                     </div>
                                 </div> 
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="control-label" for="deduction_id">Deduction Name<span class="req">*</span>
                                         </label>
-                                        <?php
-
-           $dd->GenerateSingleDropDown("deduction_id", $mf->GetAllEmployeeDeduction("dedlist")); ?> 
+                                        <?php $dd->GenerateSingleDropDown("deduction_id", $mf->GetAllEmployeeDeduction("dedlist")); ?> 
                                     </div>
                                 </div> 
                                 <div class="col-lg-6">
@@ -105,8 +127,8 @@
                                         </label>
                                         <select type="select" class="form-select" id="period_cutoff" name="period_cutoff" >
                                             <option value="Both">Both</option>
-                                            <option value="First Half">First Half</option>
-                                            <option value="Second Half">Second Half</option>
+                                            <option value="15th">15th</option>
+                                            <option value="30th">30th</option>
                                         </select>
                                     </div>
                                 </div> 
@@ -143,7 +165,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">UPDATE DEDUCTION   <i class="fas fa-minus-circle"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-minus-circle mr-1"></i> Update Deduction</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -177,8 +199,8 @@
                                         </label>
                                         <select type="select" class="form-select" id="periodcutoff" name="periodcutoff" >
                                             <option value="Both">Both</option>
-                                            <option value="First Half">First Half</option>
-                                            <option value="Second Half">Second Half</option>
+                                            <option value="15th">15th</option>
+                                            <option value="30th">30th</option>
                                         </select>
                                     </div>
                                 </div> 
@@ -224,7 +246,7 @@ aria-hidden="true">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title bb" id="popUpModalTitle">VIEW DEDUCTION LOGS  <i class="fas fa-money-bill"></i></h5>
+            <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-money-bill"></i>View Deduction Logs</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times; </span>
             </button>
@@ -250,7 +272,7 @@ aria-hidden="true">
                 </fieldset> 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                 </div> 
             </div> <!-- main body closing -->
         </div> <!-- modal body closing -->
@@ -260,9 +282,43 @@ aria-hidden="true">
 
     </div> <!-- main body mbt closing -->
 </div><!-- container closing -->
-
+</body>
 <script>
 
+    function generateEmpStatus()
+    {
+        document.getElementById("myDiv").style.display="block";
+        var url = "../deduction/deductionlist_process.php";
+        var empStatus = $('#empStatus').val();
+
+        $.post (
+            url,
+            {   
+                empStatus:empStatus
+                
+            },
+            function(data) { 
+                $("#contents").html(data).show();
+                $("#allDeductionList").tableExport({
+                    headers: true,
+                    footers: true,
+                    formats: ['xlsx'],
+                    filename: 'id',
+                    bootstrap: false,
+                    exportButtons: true,
+                    position: 'top',
+                    ignoreRows: null,
+                    ignoreCols: null,
+                    trimWhitespace: true,
+                    RTL: false,
+                    sheetname: 'SalaryEmployees'
+                });
+            $(".fa-file-export").remove();
+            $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');      
+                document.getElementById("myDiv").style.display="none"; 
+            }
+            );
+    }    
 
     function onlyNumberKey(evt) {
           

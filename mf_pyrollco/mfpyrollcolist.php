@@ -37,7 +37,7 @@ Class MfpyrollcoList{
         </thead>
         <tbody>';
 
-        $query = "SELECT (CASE WHEN co_type = 0 then 'Payroll 15th' else 'Payroll 30th' END) AS cotype,* from dbo.mf_pyrollco ORDER BY rowid asc";
+        $query = "SELECT (CASE WHEN co_type = 0 then 'Payroll 15th' else 'Payroll 30th' END) AS cotype,* from dbo.mf_pyrollco ORDER BY pyrollco_from DESC";
         $stmt =$connL->prepare($query);
         $stmt->execute();
         $result = $stmt->fetch();

@@ -47,9 +47,9 @@
 
                     echo "<tfoot>
                             <tr>".
-                                "<td class='bg-secondary'><b>" . $total_days . "</b></td>".
-                                "<td class='bg-secondary'><b></b></td>".
-                                "<td class='bg-secondary'><b></b></td>".
+                                "<td class='bg-success'><b>" . $total_days . "</b></td>".
+                                "<td class='bg-success'><b></b></td>".
+                                "<td class='bg-success'><b></b></td>".
                             "</tr>
                         </tfoot>";
                 }else { 
@@ -69,7 +69,7 @@
 
             $total_lates = 0;
 
-            $query = 'EXEC dbo.xp_attendance_portal_late :startDate,:endDate';
+            $query = 'EXEC xp_attendance_portal_late :startDate,:endDate';
             $param = array(":startDate" => $dateStart, ":endDate" => $dateEnd);
             $stmt =$connL->prepare($query);
             $stmt->execute($param);
@@ -103,8 +103,8 @@
 
                     echo "<tfoot>
                             <tr>".
-                                "<td class='bg-secondary'><b>" . $total_lates . "</b></td>".
-                                "<td class='bg-secondary'><b></b></td>".
+                                "<td class='bg-success'><b>" . $total_lates . "</b></td>".
+                                "<td class='bg-success'><b></b></td>".
                             "</tr>
                         </tfoot>";
                 }else { 
@@ -123,7 +123,7 @@
             global $connL;
             $total_ut = 0;
 
-            $query = 'EXEC dbo.xp_attendance_portal_ut :startDate,:endDate';
+            $query = 'EXEC xp_attendance_portal_ut :startDate,:endDate';
             $param = array(":startDate" => $dateStart, ":endDate" => $dateEnd);
             $stmt =$connL->prepare($query);
             $stmt->execute($param);
@@ -157,8 +157,8 @@
 
                     echo "<tfoot>
                             <tr>".
-                                "<td class='bg-secondary'><b>" . $total_ut . "</b></td>".
-                                "<td class='bg-secondary'><b></b></td>".
+                                "<td class='bg-success'><b>" . $total_ut . "</b></td>".
+                                "<td class='bg-success'><b></b></td>".
                             "</tr>
                         </tfoot>";
                 }else { 
@@ -176,7 +176,7 @@
             $total_nologin = 0;
             $total_nologout = 0;
 
-            $query = 'EXEC dbo.xp_attendance_portal_nologs :startDate,:endDate';
+            $query = 'EXEC xp_attendance_portal_nologs :startDate,:endDate';
             $param = array(":startDate" => $dateStart, ":endDate" => $dateEnd);
             $stmt =$connL->prepare($query);
             $stmt->execute($param);
@@ -213,9 +213,9 @@
 
                     echo "<tfoot>
                             <tr>".
-                                "<td class='bg-secondary'><b></b></td>".
-                                "<td class='bg-secondary'><b>" . $total_nologin . "</b></td>".
-                                "<td class='bg-secondary'><b>" . $total_nologout . "</b></td>".
+                                "<td class='bg-success'><b></b></td>".
+                                "<td class='bg-success'><b>" . $total_nologin . "</b></td>".
+                                "<td class='bg-success'><b>" . $total_nologout . "</b></td>".
                             "</tr>
                         </tfoot>";
                 }else { 

@@ -24,7 +24,7 @@ Class EmployeeAttendance{
         {
 
             $param = array(":startDate" => $dateFrom, ":endDate" => $dateTo );
-            $query = 'EXEC dbo.xp_all_attendance_portal :startDate,:endDate';
+            $query = 'EXEC xp_all_attendance_portal :startDate,:endDate';
             $stmt =$connL->prepare($query);
             $stmt->execute($param);
             $result = $stmt->fetch();
@@ -32,7 +32,7 @@ Class EmployeeAttendance{
 
 
             $param = array(":emp_ssn" => $empCodeParam, ":startDate" => $dateFrom, ":endDate" => $dateTo );
-            $query = 'EXEC dbo.xp_attendance_portal :emp_ssn,:startDate,:endDate';
+            $query = 'EXEC xp_attendance_portal :emp_ssn,:startDate,:endDate';
             $stmt =$connL->prepare($query);
             $stmt->execute($param);
             $result = $stmt->fetch();
@@ -51,6 +51,7 @@ Class EmployeeAttendance{
                     <th>Late</th>
                     <th>Undertime</th>
                     <th>Overtime</th>
+                    <th>Day</th>
                     <th>Remarks</th>
                 </tr>
             </thead>
@@ -71,7 +72,7 @@ Class EmployeeAttendance{
                         $swork = (isset($result['timein']) || isset($result['timeout']) ?  round($result['workhours'],2): '');
     
                         echo    "<tr>".
-                                "<td>" . $result['fullname'] . "</td>".
+                                "<td>" . $result['name'] . "</td>".
                                 "<td class=".$class.">" . date('F d, Y', strtotime($result['punch_date'])) . "</td>".
                                 "<td>" . $timeIn . "</td>".
                                 "<td>" . $timeOut . "</td>".
@@ -79,6 +80,7 @@ Class EmployeeAttendance{
                                 "<td>" . $slate."</td>".
                                 "<td>" . $sundertime."</td>".
                                 "<td>" . $sovertime."</td>".
+                                "<td>" . $result['wday'] . "</td>".
                                 "<td>" . $result['remarks'] . "</td>".
                                 "</tr>";
     
@@ -96,12 +98,13 @@ Class EmployeeAttendance{
             </tbody>
             <tfoot>
                 <tr>".
-                    "<td colspan='4' class='text-right bg-secondary'><b>Total</b></td>".
-                    "<td class='bg-secondary'><b>" . $totalWork . "</b></td>".
-                    "<td class='bg-secondary'><b>" . $totalLate . "</b></td>".
-                    "<td class='bg-secondary'><b>" . $totalUndertime . "</b></td>".
-                    "<td class='bg-secondary'><b>" . $totalOvertime . "</b></td>".
-                    "<td class='bg-secondary'><b></b></td>".
+                    "<td colspan='4' class='text-right bg-success'><b>Total</b></td>".
+                    "<td class='bg-success'><b>" . $totalWork . "</b></td>".
+                    "<td class='bg-success'><b>" . $totalLate . "</b></td>".
+                    "<td class='bg-success'><b>" . $totalUndertime . "</b></td>".
+                    "<td class='bg-success'><b>" . $totalOvertime . "</b></td>".
+                    "<td class='bg-success'><b></b></td>".
+                    "<td class='bg-success'><b></b></td>".
                 "</tr>
             </tfoot>
         </table>";

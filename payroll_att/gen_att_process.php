@@ -11,6 +11,9 @@
     if ($action == 1)
     {
         GenAttendance($eMplogName,$pyrollco_from,$pyrollco_to);
+    }else{
+        $empCode = $_POST["empCode"];
+        GenEmpAttendance($eMplogName,$empCode,$pyrollco_from,$pyrollco_to);
     }
 
 ?>

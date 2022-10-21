@@ -13,6 +13,14 @@ table   {
  font-family: "Dosis", sans-serif;
 }
 
+.csor-pointer{
+    cursor: pointer;
+}
+
+.csor-pointer:hover{
+    background-color: #dee2e6;
+    color: black;
+}
 
 
 .addNoteBut {
@@ -677,7 +685,7 @@ color: #d64747;
     opacity: 0.5;
 }
 
-.btn btn-info btn-sm {
+.btn btn-info btn-sm btn-sm {
 
     width: 10;
     background-color: #fbec1e;
@@ -688,12 +696,12 @@ color: #d64747;
     border-radius:1rem;
 }
 
-.btn btn-info btn-sm:hover{
+.btn btn-info btn-sm btn-sm:hover{
     opacity: 0.5;
 }
 
 
-.btn btn-warning btn-sm{
+.btn btn-primary btn-sm{
     width: 10; 
     background-color: #ffaa00;
     border-color: #ffaa00;
@@ -703,11 +711,11 @@ color: #d64747;
     border-radius:1rem;;
 }
 
-.btn btn-warning btn-sm:hover{
+.btn btn-primary btn-sm:hover{
     opacity: 0.5;
 }
 
-.btn btn-info {
+.btn btn-info btn-sm {
 
     width: 110px;
     background-color: #fbec1e;
@@ -718,7 +726,7 @@ color: #d64747;
     border-radius:1rem;
 }
 
-.btn btn-info:hover{
+.btn btn-info btn-sm:hover{
     opacity: 0.5;
 }
 
@@ -762,7 +770,7 @@ color: #d64747;
 }
 
 
-.debtn btn-info{
+.debtn btn-info btn-sm{
     width: 130px; 
     background-color: #ffaa00;
     border-color: #ffaa00;
@@ -772,7 +780,7 @@ color: #d64747;
     border-radius:1rem;;
 }
 
-.debtn btn-info:hover{
+.debtn btn-info btn-sm:hover{
     opacity: 0.5;
 }
 

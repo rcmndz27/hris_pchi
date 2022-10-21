@@ -90,26 +90,30 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-clock fa-fw'>
-                        </i>&nbsp;EMPLOYEES DTR CORRECTION APPLICATION</b></li>
+              <li class="breadcrumb-item active font-weight-bold" aria-current="page"><i class='fas fa-clock fa-fw mr-1'>
+                        </i>Employee DTR Correction Application View</li>
             </ol>
           </nav>
 
-    <div class="form-row">
-            <label for="payroll_period" class="col-form-label pad">PAYROLL PERIOD:</label>
-            <div class='col-md-3'>
-                <?php $dd->GenerateDropDown("ddcutoff", $mf->GetAllCutoffCO("payrollco")); ?>
-            </div>           
+    <div class="form-row mb-2">
+        <label for="from" class="col-form-label pad">From:</label>
+        <div class="col-md-2">
+            <input type="date" id="dateFrom" class="form-control" name="dateFrom" value="<?php echo date('Y-m-d'); ?>" onkeydown="return false" required>
+        </div>
+        <label for="to" class="col-form-label pad">To:</label>
+        <div class="col-md-2">
+            <input type="date" id="dateTo" class="form-control" name="dateTo" value="<?php echo date('Y-m-d'); ?>" onkeydown="return false" required>
+        </div>                   
             <?php if($empUserType == 'Team Manager'){   
                      echo '
                     <label for="status" class="col-form-label pad">NAME:</label><div class="col-md-3">';
                     $dd->GenerateSingleRepDropDown("empCode",$mf->GetAttEmployeeNamesRep("allemprepnames",$empCode));
                     echo '</div>
-                    <button type="submit" id="searchDtrcRep" class="btn btn-secondary"><i class="fas fa-search-plus"></i> GENERATE
+                    <button type="submit" id="searchDtrcRep" class="btn btn-primary"><i class="fas fa-search-plus"></i> Generate
                     </button>';
                 }else{
                     echo '
-                    <label for="status" class="col-form-label pad">STATUS:</label>
+                    <label for="status" class="col-form-label pad">Status:</label>
                     <div class="col-md-2">
                         <select class="form-select" id="status" name="status">
                             <option value="1">PENDING</option>
@@ -118,7 +122,7 @@
                             <option value="4">CANCELLED</option>
                         </select>
                     </div>
-                    <button type="submit" id="searchDtrcApp" class="btn btn-secondary"><i class="fas fa-search-plus"></i> GENERATE
+                    <button type="submit" id="searchDtrcApp" class="btn btn-primary"><i class="fas fa-search-plus"></i> Generate
                     </button>';
                 }
             ?>                                                
@@ -145,7 +149,7 @@
         <div class="modal-dialog modal-sg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">VIEW DTR CORRECTION <i class="fas fa-clock"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-clock mr-1"></i>View DTR Correction</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -192,7 +196,7 @@
                             </div> <!-- form row closing -->
                     </fieldset> 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                                 </div> 
                         </div> <!-- main body closing -->
                     </div> <!-- modal body closing -->
@@ -205,7 +209,7 @@
         <div class="modal-dialog modal-sg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">VIEW WORK FROM HOME LOGS   <i class='fas fa-clock'></i></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class='fas fa-clock mr-1'></i> View DTR Correction Logs</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -231,7 +235,7 @@
                     </fieldset> 
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                                 </div> 
                         </div> <!-- main body closing -->
                     </div> <!-- modal body closing -->
@@ -243,6 +247,32 @@
 </div><!-- container closing -->
 
 <script type="text/javascript">
+
+
+
+$('#dateTo').change(function(){
+
+if($('#dateTo').val() < $('#dateFrom').val()){
+
+    swal({text:"Date to must be greater than date from!",icon:"error"});
+
+    var input2 = document.getElementById('dateTo');
+    input2.value = '';               
+
+}  
+
+});
+
+$('#dateFrom').change(function(){
+
+if($('#dateFrom').val() > $('#dateTo').val()){
+    var input2 = document.getElementById('dateTo');
+    document.getElementById("dateTo").min = $('#dateFrom').val();
+    input2.value = '';
+}
+});
+
+
 
 function exportReportToExcel() {
   let table = document.getElementsByTagName("table"); // you can use document.getElementById('tableId') as well by providing id to the table tag

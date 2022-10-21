@@ -30,13 +30,13 @@ else
     $rto = $r['ptmax'];
     $rfrom = $r['pfmax'];
 
-    $queryp = 'EXEC dbo.xp_pending_forms :date_from,:date_to';
+    $queryp = 'EXEC xp_pending_forms :date_from,:date_to';
     $stmtp =$connL->prepare($queryp);
     $paramp = array(":date_from" => $rfrom,":date_to" => $rto);
     $stmtp->execute($paramp);
     $resultp = $stmtp->fetch();  
 
-    $querypf = 'EXEC dbo.xp_pending_forms :date_from,:date_to';
+    $querypf = 'EXEC xp_pending_forms :date_from,:date_to';
     $stmtpf =$connL->prepare($querypf);
     $parampf = array(":date_from" => $rfrom,":date_to" => $rto);
     $stmtpf->execute($parampf);
@@ -67,58 +67,57 @@ else
 <body  onload="javascript:generatePayrll();">
     <div class="container-fluid">
         <div class="section-title">
-          <h6>&nbsp;</h6>
+          <h1><br></h1>
       </div>
       <div class="main-body mbt">
 
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-money-check fa-fw'>
-              </i>&nbsp;PAYROLL TIMEKEEPING VIEW</b></li>
+              <li class="breadcrumb-item active font-weight-bold" aria-current="page"><i class='fas fa-money-check fa-fw mr-1'>
+              </i>Payroll Timekeeping View</li>
           </ol>
       </nav>
 
       <div class="form-row">
-        <label for="payroll_period" class="col-form-label pad">PAYROLL PERIOD:</label>
+        <label for="payroll_period" class="col-form-label pad">Payroll Period:</label>
         <input type="text" name="empCode" id="empCode" value="<?php echo $empCode; ?>" hidden>
         <div class='col-lg-1' id="slct">
-            <select class="form-select" id="spay">
+            <select class="form-select" id="spay" disabled>
                 <option value="15th">15th Payroll</option>
                 <option value="30th">30th Payroll</option>
             </select>
         </div>
         <div class='col-md-2' id="s15th">
-            <?php $dd->GenerateDropDown("ddcutoff", $mf->GetTKList("tkview")); ?>
+            <?php $dd->GenerateSingleDropDown("ddcutoff", $mf->GetAllCutoffCO("payrollco")); ?>
         </div>
         
-        <div class='col-md-2' id="s30th">
-            <?php $dd->GenerateDropDown("ddcutoff30", $mf->GetTKList("tkview")); ?>
+        <div class='col-md-2' id="s30th"> 
+            <?php $dd->GenerateDisabledDropDown("ddcutoff30", $mf->GetAllCutoffCO("payrollco")); ?>
         </div>                    
         <button type="button" id="search" class="btn btn-success mr-2" onmousedown="javascript:generatePayrll()">
-            <i class="fas fa-search-plus"></i> GENERATE                      
+            <i class="fas fa-search-plus"></i> Generate                      
         </button>
-        <button type="button" class="btn btn-warning mr-2" id="usersEntry"><i class="fas fa-plus-circle"></i> ADD USER </button>
+        <button type="button" class="btn btn-primary mr-2" id="usersEntry"><i class="fas fa-plus-circle mr-1 text-white"></i> Add Employee </button>
 
         <?php 
         if($tkstat == 'READY' || $tkstat == 'DELETED') {
-            echo '<button type="button" class="btn btn-primary" onclick="savetk()"><i class="fas fa-save"></i> SAVE TIMEKEEPING </button>';
+            echo '<button type="button" class="btn btn-primary" onclick="savetk()"><i class="fas fa-save mr-1"></i> Save Timekeeping</button>';
         }else if($tkstat == 'SAVED' && $empUserType == 'Admin') {
-            echo "<button class='btn btn-primary' onclick='ApprovePayView()'><i class='fas fa-save'></i> GENERATE PAYROLL</button>"; 
+            echo "<button class='btn btn-primary' onclick='ApprovePayView()'><i class='fas fa-save'></i> Generate Payroll</button>";
 
         }else{
 
         }
         ?>
         
-  
-    </div>
+      </div>
    
         <div class="row pt-5">
             <div class="col-md-12 mbot"><br> 
                 <div class="d-flex justify-content-center">
                     <legend class="fieldset-border pad">
-                       <div id="pyper">Payroll Period of </span> from <span id="pfromt"></span> to <span id="ptot"></span></div>
+                       <div id="pyper">Payroll Period </span> from <span id="pfromt"></span> to <span id="ptot"></span></div>
                    </legend>
                </div>
                <div id='contents'></div>   
@@ -130,7 +129,7 @@ else
        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title bb" id="popUpModalTitle">UPDATE EMPLOYEE ATTENDANCE <i class="fas fa-money-check fa-fw"></i></h5>
+                <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-money-check fa-fw"></i> Update Employee Attendance</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times; </span>
                 </button>
@@ -401,7 +400,7 @@ else
             </fieldset> 
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                         </div> 
                         </div> <!-- main body closing -->
                     </div> <!-- modal body closing -->
@@ -414,7 +413,7 @@ else
         <div class="modal-dialog modal-xs modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">USERS ENTRY  <i class="fas fa-minus-circle"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-plus-circle mr-1 text-white"></i>Users Entry</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -459,7 +458,7 @@ aria-hidden="true">
 <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title bb" id="popUpModalTitle">VIEW ATTENDANCE LOGS   <i class="fas fa-suitcase"></i></h5>
+            <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-suitcase mr-1"></i>View Attendance Logs</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times; </span>
             </button>
@@ -485,7 +484,7 @@ aria-hidden="true">
                 </fieldset> 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                 </div> 
             </div> <!-- main body closing -->
         </div> <!-- modal body closing -->
@@ -498,7 +497,7 @@ aria-hidden="true">
 <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title bb" id="popUpModalTitle">VIEW ATTENDANCE PAYROLL LOGS  <i class="fas fa-money-bill"></i></h5>
+            <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-money-bill mr-1"></i>View Attendance Payroll Logs</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times; </span>
             </button>
@@ -524,7 +523,7 @@ aria-hidden="true">
                 </fieldset> 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                 </div> 
             </div> <!-- main body closing -->
         </div> <!-- modal body closing -->
@@ -539,7 +538,7 @@ aria-hidden="true">
 <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title bb" id="popUpModalTitle">VIEW APPROVED FORMS  <i class="fas fa-money-bill"></i></h5>
+            <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-money-bill mr-1"></i>View Approved Forms</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times; </span>
             </button>
@@ -565,7 +564,7 @@ aria-hidden="true">
                 </fieldset> 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                 </div> 
             </div> <!-- main body closing -->
         </div> <!-- modal body closing -->
@@ -587,6 +586,25 @@ aria-hidden="true">
         }
     });
 
+    $('#ddcutoff').change(function(){
+
+        var selectElem = document.getElementById('ddcutoff');
+        var index = selectElem.selectedIndex;
+
+        var ddcutoff = $('#ddcutoff').val();
+        if(ddcutoff == 0){
+            var ddval = '15th';
+            $("#s30th").hide();
+        }else{
+            var ddval = '30th';
+            $("#s30th").show();
+            document.getElementById('ddcutoff30').selectedIndex = index+1;
+        }
+        document.getElementById('spay').value =  ddval;        
+
+    });
+
+
     $('#pendingEntry').click(function(e){
         e.preventDefault();
         $('#pendingModal').modal('toggle');
@@ -602,7 +620,7 @@ aria-hidden="true">
     $('#Submit').click(function(){
 
         var bdno = $('#allempnames').val();
-        var cutoff = $('#ddcutoff').children("option:selected").val();
+        var cutoff = $('#ddcutoff').find(":selected").text();
         var det = cutoff.split(" - ");
         var name =  document.getElementById(bdno).innerHTML;
         var logname = $('#eMplogName').val();
@@ -663,14 +681,30 @@ aria-hidden="true">
     function generatePayrll()
     {
 
-        var cutoff = $('#ddcutoff').children("option:selected").val();
-        if(typeof(cutoff) != "undefined" && cutoff !== null) {
+        
             document.getElementById("myDiv").style.display="block";
             var url = "../payroll/payrollrep_process.php";
+            var cutoff = $('#ddcutoff').find(":selected").text();
             var dates = cutoff.split(" - ");
             var empCode = $('#empCode').val();
+
             document.getElementById('pfromt').innerHTML = dates[0];
             document.getElementById('ptot').innerHTML = dates[1];
+
+            var selectElem = document.getElementById('ddcutoff');
+            var index = selectElem.selectedIndex;
+
+            var ddcutoff = $('#ddcutoff').val();
+            if(ddcutoff == 0){
+                var ddval = '15th';
+                $("#s30th").hide();
+            }else{
+                var ddval = '30th';
+                $("#s30th").show();
+                document.getElementById('ddcutoff30').selectedIndex = index+1;
+            }   
+            document.getElementById('spay').value =  ddval; 
+                     
             $.post (
                 url,
                 {
@@ -701,17 +735,7 @@ aria-hidden="true">
                     document.getElementById("myDiv").style.display="none"; 
                 }
                 );
-        }else{
 
-               swal({
-                    title: "Warning!", 
-                    text: "No generated timekeeping logs.", 
-                    icon: "warning",
-                }).then(function() {
-                    window.location.replace("../pages/admin.php"); 
-                }); 
-
-        }
     }
 
     function viewAllAttendanceEmp(bdno,pfrom,pto)
@@ -1003,7 +1027,7 @@ function updateAtt()
                     vacation_leave_nopay: vacation_leave_nopay                    
                 },
                 function(data) {   
-    console.log(data);                                        
+    // console.log(data);                                        
         swal({
             title: "Success!", 
             text: "Successfully updated the attendance details!", 
@@ -1252,7 +1276,7 @@ function updateAtt()
             }
 
 
-        function myFunction() {
+function myFunction() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
@@ -1279,7 +1303,7 @@ function savetk()
     var empCode = $('#empCode').val();
     var url = "../payroll/payrollSaveTkProcess.php";
   
-        var cutoff = $('#ddcutoff').children("option:selected").val();
+        var cutoff = $('#ddcutoff').find(":selected").text();
         var dates = cutoff.split(" - ");
         var ppay =  $('#spay').val();
 
@@ -1322,12 +1346,11 @@ function ApprovePayView()
     var url = "../payroll/payrollViewProcess.php";
 
     if($('#spay').val() == '15th'){    
-        var cutoff = $('#ddcutoff').children("option:selected").val();
+        var cutoff = $('#ddcutoff').find(":selected").text();
         var dates = cutoff.split(" - ");
         var ppay =  $('#spay').val();
 
-        // console.log(dates[0]);
-        // console.log(dates[1]);
+        // console.log('15th');
         // return false;
 
             $('#contents').html('');
@@ -1349,7 +1372,17 @@ function ApprovePayView()
                         pto: dates[1],
                         ppay:ppay
                     },
-                    function(data) {window.location.replace("../payroll/payroll_view.php"); }
+                    function(data) {
+                            console.log('success: ' + data);
+                            swal({
+                            title: "Success!", 
+                            text: "Successfully generated payroll register!", 
+                            type: "success",
+                            icon: "success",
+                            }).then(function() {
+                               window.location.replace("../payroll/payroll_view_register.php");
+                            });
+                    }
                     );
 
             } else {
@@ -1357,16 +1390,13 @@ function ApprovePayView()
             }
         });        
     }else{ 
-        var cutoff = $('#ddcutoff').children("option:selected").val();
+        var cutoff = $('#ddcutoff').find(":selected").text();
         var dates = cutoff.split(" - ");
-        var cutoff30 = $('#ddcutoff30').children("option:selected").val();
+        var cutoff30 = $('#ddcutoff30').find(":selected").text();
         var dates30 = cutoff30.split(" - ");
         var ppay =  $('#spay').val();
 
-        // console.log(dates[0]);
-        // console.log(dates[1]);
-        // console.log(dates30[0]);
-        // console.log(dates30[1]);
+        // console.log('30th');
         // return false;
 
             $('#contents').html('');
@@ -1391,7 +1421,15 @@ function ApprovePayView()
                         ppay:ppay
                     },
                     function(data) {
-                        window.location.replace("../payroll/payroll_view.php"); 
+                    console.log('success: ' + data);
+                            swal({
+                            title: "Success!", 
+                            text: "Successfully generated payroll register!", 
+                            type: "success",
+                            icon: "success",
+                            }).then(function() {
+                               window.location.replace("../payroll/payroll_view_register.php");
+                            });
                     }
                     );
 

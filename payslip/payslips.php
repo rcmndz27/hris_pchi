@@ -60,13 +60,13 @@ a.trans_allowance as tralw,a.load_allowance as comalw,a.meal_allowance as mlalw,
 a.salary_allowance+a.oot_allowance+a.inc_allowance+a.disc_allowance as othrsalw,a.gross_pay,a.witholding_tax as whtax,
 a.sss_regee as ssscont,a.phic_ee as phcont,a.hdmf_ee as pgbgcont,a.total_taxable as totaltax,
 a.sss_sal_loan as ssssalloan,a.com_loan as comloan,a.sal_ded_nontax as salded,a.total_deduction as grsded,a.netpay as netpay,
-c.earned_sl as sld,c.earned_vl as vld,c.earned_fl as fld
+c.earned_sl as sld,c.earned_vl as vld,c.earned_fl as fld,a.others
 FROM payroll a left join att_summary b  on RIGHT(a.emp_code, LEN(a.emp_code) - 3) = b.badge_no
 and a.date_from = b.period_from and a.date_to = b.period_to
 left join employee_leave c on a.emp_code = c.emp_code
 where a.date_from = :datefrom and a.date_to = :dateto and a.emp_code = :empcode";
 $stmt =$connL->prepare($query);
-$param = array(":empcode" => $empCode,":datefrom" => $dtFrom,":dateto" => $dtTo,":dfrhol1" => $dtFrom,":dthol1" => $dtTo,":dfrhol2" => $dtFrom,":dthol2" => $dtTo,);
+$param = array(":empcode" => $empCode,":datefrom" => $dtFrom,":dateto" => $dtTo,":dfrhol1" => $dtFrom,":dthol1" => $dtTo,":dfrhol2" => $dtFrom,":dthol2" => $dtTo);
 $stmt->execute($param);
 $r = $stmt->fetch();     
 
@@ -174,7 +174,8 @@ echo "<tr>".
 "<td>Worked on Regular Holiday:</td>".
 "<td class='cnto'>".number_format($r['tot_regholiday'],2,".", ",")."</td>".
 "<td class='camt'>₱ ".number_format($r['tot_regholidayamt'],2,".", ",")."</td>".
-"<td colspan='3' class='erdc'></td>". 
+"<td colspan='2' class='erdc'>Others:</td>". 
+"<td colspan='1' class='cnto'>₱ ".number_format($r['others'],2,".", ",")."</td>".
 "</tr> 
 <tr>".
 "<td>Regular Holiday OT:</td>".

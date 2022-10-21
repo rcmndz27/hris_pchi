@@ -56,7 +56,7 @@ $(function(){
 
 
 
-    $(document).on('click','.btn btn-warning btn-sm',function(e){
+    $(document).on('click','.btn btn-primary btn-sm',function(e){
 
         var prid = this.id;
         var apvdDtrc = 1;

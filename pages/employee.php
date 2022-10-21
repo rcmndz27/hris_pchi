@@ -19,10 +19,10 @@ $empInfo->SetEmployeeInformation($_SESSION['userid']);
 $empCode = $empInfo->GetEmployeeCode();
 
 global $connL;
-global $dbConnection;
+global $connL;
 
 //ANNOUNCEMENT
-$queryan = "SELECT * from logs_events where status = 1 or (date_to >= DATEADD(dd, 0, DATEDIFF(dd, 0, GETDATE())) and status = 0)";
+$queryan = "SELECT * from logs_events where status = 1 or (date_to >= DATEADD(dd, 0, DATEDIFF(dd, 0, GETDATE())) and status = 0) ORDER BY rowid desc";
 $stmtan =$connL->prepare($queryan);
 $stmtan->execute();
 $resultan = $stmtan->fetch();    
@@ -66,6 +66,26 @@ $d->textColor = '#FFFFFF';
 array_push($totalVal,$d);  
 $i++;
 } while ($resultg = $stmtg->fetch());                     
+}else{
+}
+
+//GET OB
+$queryob = "SELECT * from tr_offbusiness where status = 2 and emp_code = :empcode";
+$stmtob =$connL->prepare($queryob);
+$paramob = array(":empcode" => $empCode);
+$stmtob->execute($paramob);
+$rsob = $stmtob->fetch();
+
+if(!empty($rsob)){
+do { 
+$d = new data();
+$d->start = date('Y-m-d',strtotime($rsob['ob_date']));
+$d->title = $rsob['ob_purpose'];
+$d->color = '#FD0A84';
+$d->textColor = '#FFFFFF';
+array_push($totalVal,$d);  
+$i++;
+} while ($rsob = $stmtob->fetch());                     
 }else{
 }
 
@@ -276,114 +296,17 @@ $app_leave =  (isset($results['app_leave'])) ? $results['app_leave'] : 0 ;
 
 
 // TOTAL WORK HRS
-$queryrenot = 'EXEC hrissys_dev.dbo.xp_attendance_portal_work :emp_code,:startDate,:endDate';
+$queryrenot = 'EXEC xp_attendance_portal_work :emp_code,:startDate,:endDate';
 $paramrenot = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-01-01"), ":endDate" => date("Y-12-31") );
-$stmtrenot =$dbConnection->prepare($queryrenot);
+$stmtrenot =$connL->prepare($queryrenot);
 $stmtrenot->execute($paramrenot);
 $resultrenot = $stmtrenot->fetch();
 $workhrs = (isset($resultrenot['workhrs'])) ? round($resultrenot['workhrs'],2) : 0 ;
 
-
-//JAN 
-$queryjan = 'EXEC hrissys_dev.dbo.xp_attendance_portal_count :emp_code,:startDate,:endDate';
-$paramjan = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-01-01"), ":endDate" => date("Y-01-31") );
-$stmtjan =$dbConnection->prepare($queryjan);
-$stmtjan->execute($paramjan);
-$resultjan = $stmtjan->fetch();
-$jancnt = $resultjan['cnt'];
-
-//FEB 
-$queryfeb = 'EXEC hrissys_dev.dbo.xp_attendance_portal_count :emp_code,:startDate,:endDate';
-$paramfeb = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-02-01"), ":endDate" => date("Y-02-28") );
-$stmtfeb =$dbConnection->prepare($queryfeb);
-$stmtfeb->execute($paramfeb);
-$resultfeb = $stmtfeb->fetch();
-$febcnt = $resultfeb['cnt'];
-
-//MAR 
-$querymar = 'EXEC hrissys_dev.dbo.xp_attendance_portal_count :emp_code,:startDate,:endDate';
-$parammar = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-03-01"), ":endDate" => date("Y-03-31") );
-$stmtmar =$dbConnection->prepare($querymar);
-$stmtmar->execute($parammar);
-$resultmar = $stmtmar->fetch();
-$marcnt = $resultmar['cnt'];
-
-//APR 
-$queryapr = 'EXEC hrissys_dev.dbo.xp_attendance_portal_count :emp_code,:startDate,:endDate';
-$paramapr = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-04-01"), ":endDate" => date("Y-04-30") );
-$stmtapr =$dbConnection->prepare($queryapr);
-$stmtapr->execute($paramapr);
-$resultapr = $stmtapr->fetch();
-$aprcnt = $resultapr['cnt'];
-
-//MAY 
-$querymay = 'EXEC hrissys_dev.dbo.xp_attendance_portal_count :emp_code,:startDate,:endDate';
-$parammay = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-05-01"), ":endDate" => date("Y-05-31") );
-$stmtmay =$dbConnection->prepare($querymay);
-$stmtmay->execute($parammay);
-$resultmay = $stmtmay->fetch();
-$maycnt = $resultmay['cnt'];    
-
-//jun 
-$queryjun = 'EXEC hrissys_dev.dbo.xp_attendance_portal_count :emp_code,:startDate,:endDate';
-$paramjun = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-06-01"), ":endDate" => date("Y-06-30") );
-$stmtjun =$dbConnection->prepare($queryjun);
-$stmtjun->execute($paramjun);
-$resultjun = $stmtjun->fetch();
-$juncnt = $resultjun['cnt'];
-
-//jul 
-$queryjul = 'EXEC hrissys_dev.dbo.xp_attendance_portal_count :emp_code,:startDate,:endDate';
-$paramjul = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-07-01"), ":endDate" => date("Y-07-31") );
-$stmtjul =$dbConnection->prepare($queryjul);
-$stmtjul->execute($paramjul);
-$resultjul = $stmtjul->fetch();
-$julcnt = $resultjul['cnt'];
-
-//aug 
-$queryaug = 'EXEC hrissys_dev.dbo.xp_attendance_portal_count :emp_code,:startDate,:endDate';
-$paramaug = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-08-01"), ":endDate" => date("Y-08-31") );
-$stmtaug =$dbConnection->prepare($queryaug);
-$stmtaug->execute($paramaug);
-$resultaug = $stmtaug->fetch();
-$augcnt = $resultaug['cnt'];    
-
-//sep 
-$querysep = 'EXEC hrissys_dev.dbo.xp_attendance_portal_count :emp_code,:startDate,:endDate';
-$paramsep = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-09-01"), ":endDate" => date("Y-09-30") );
-$stmtsep =$dbConnection->prepare($querysep);
-$stmtsep->execute($paramsep);
-$resultsep = $stmtsep->fetch();
-$sepcnt = $resultsep['cnt'];
-
-//OCT 
-$queryoct = 'EXEC hrissys_dev.dbo.xp_attendance_portal_count :emp_code,:startDate,:endDate';
-$paramoct = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-10-01"), ":endDate" => date("Y-10-31") );
-$stmtoct =$dbConnection->prepare($queryoct);
-$stmtoct->execute($paramoct);
-$resultoct = $stmtoct->fetch();
-$octcnt = $resultoct['cnt'];
-
-//nov 
-$querynov = 'EXEC hrissys_dev.dbo.xp_attendance_portal_count :emp_code,:startDate,:endDate';
-$paramnov = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-11-01"), ":endDate" => date("Y-11-30") );
-$stmtnov =$dbConnection->prepare($querynov);
-$stmtnov->execute($paramnov);
-$resultnov = $stmtnov->fetch();
-$novcnt = $resultnov['cnt'];    
-
-//dec 
-$querydec = 'EXEC hrissys_dev.dbo.xp_attendance_portal_count :emp_code,:startDate,:endDate';
-$paramdec = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-12-01"), ":endDate" => date("Y-12-31") );
-$stmtdec =$dbConnection->prepare($querydec);
-$stmtdec->execute($paramdec);
-$resultdec = $stmtdec->fetch();
-$deccnt = $resultdec['cnt'];  
-
 //laudot 
-$querylaudot = 'EXEC hrissys_dev.dbo.xp_attendance_portal_sum :emp_code,:startDate,:endDate';
+$querylaudot = 'EXEC xp_attendance_portal_sum :emp_code,:startDate,:endDate';
 $paramlaudot = array(":emp_code" => substr($empCode,$subemp), ":startDate" => date("Y-01-01"), ":endDate" => date("Y-12-31") );
-$stmtlaudot =$dbConnection->prepare($querylaudot);
+$stmtlaudot =$connL->prepare($querylaudot);
 $stmtlaudot->execute($paramlaudot);
 $resultlaudot = $stmtlaudot->fetch();
 $latepct = (isset($resultlaudot['latepct'])) ? round($resultlaudot['latepct'],2) : 0 ;
@@ -645,7 +568,7 @@ $attid = (isset($spresult['attid'])) ? "'".$spresult['attid']."'" : '' ;
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">EMPLOYEE HANDBOOK
+                        <div class="text-xs font-weight-bold text-primary text-capitalize mb-1">EMPLOYEE HANDBOOK
                             <?php echo date("Y") ?> </div>
                             <div class="row no-gutters align-items-center">
                                 <a href="../uploads/COD_HANDBOOK.pdf" target="_blank">
@@ -669,7 +592,7 @@ $attid = (isset($spresult['attid'])) ? "'".$spresult['attid']."'" : '' ;
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Work Days <br><?php echo date("F Y") ?> 
+                            <div class="text-xs font-weight-bold text-danger text-capitalize mb-1">Total Work Days <br><?php echo date("F Y") ?> 
                         </div>
                         <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -691,7 +614,7 @@ $attid = (isset($spresult['attid'])) ? "'".$spresult['attid']."'" : '' ;
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Total Overtime <br><?php echo date("F Y") ?> 
+                            <div class="text-xs font-weight-bold text-secondary text-capitalize mb-1">Total Overtime <br><?php echo date("F Y") ?> 
                         </div>
                         <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -713,7 +636,7 @@ $attid = (isset($spresult['attid'])) ? "'".$spresult['attid']."'" : '' ;
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Undertime <br><?php echo date("F Y") ?> 
+                            <div class="text-xs font-weight-bold text-success text-capitalize mb-1">Total Undertime <br><?php echo date("F Y") ?> 
                         </div>
                         <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -735,7 +658,7 @@ $attid = (isset($spresult['attid'])) ? "'".$spresult['attid']."'" : '' ;
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Lates <br><?php echo date("F Y") ?> 
+                        <div class="text-xs font-weight-bold text-info text-capitalize mb-1">Total Lates <br><?php echo date("F Y") ?> 
                     </div>
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -757,7 +680,7 @@ $attid = (isset($spresult['attid'])) ? "'".$spresult['attid']."'" : '' ;
         <div class="card-body">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Today's Time-In: <br><?php echo date("F d, Y");  if(isset($wfhd)){echo': WFH';}   ?> 
+                    <div class="text-xs font-weight-bold text-warning text-capitalize mb-1">Today's Time-In: <br><?php echo date("F d, Y");  if(isset($wfhd)){echo': WFH';}   ?> 
                 </div>
                 <div class="row no-gutters align-items-center">
                     <div class="col-auto">

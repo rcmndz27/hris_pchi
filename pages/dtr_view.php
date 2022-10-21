@@ -29,23 +29,23 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-calendar fa-fw'>
-                </i>&nbsp;MY ATTENDANCE</b></li>
+              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-calendar fa-fw mr-1'>
+                </i>My Attendance</b></li>
             </ol>
           </nav>
     <div class="form-row pt-3">
             <input type="text" name="empCode" id="empCode" value="<?php $empCode ?>" hidden>
-                <label class="control-label pad" for="dateFrom">FROM:</label>
+                <label class="control-label pad" for="dateFrom">From:</label>
             <div class="col-md-2">
                 <input type="date" id="dateFrom" class="form-control" name="dateFrom"
                     value="<?php echo date('Y-m-d'); ?>" onkeydown="return false">
             </div>
-                <label class="control-label pad" for="dateTo">TO:</label>
+                <label class="control-label pad" for="dateTo">To:</label>
             <div class="col-md-2">
                 <input type="date" id="dateTo" class="form-control" name="dateTo" value="<?php echo date('Y-m-d'); ?>" onkeydown="return false">
             </div>
             <div class="col-md-2">
-                <button type="submit" id="search" class="btn btn-secondary" ><i class="fas fa-search-plus"></i> GENERATE
+                <button type="submit" id="search" class="btn btn-primary" ><i class="fas fa-search-plus"></i> Generate
                 </button>
             </div>
         </div>

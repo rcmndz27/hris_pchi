@@ -101,15 +101,15 @@
 <body onload="javascript:generateEmpStatus();">
 <div class="container">
     <div class="section-title">
-          <h4>ALL EMPLOYEE LIST</h4>
+          <h1><br></h1>
         </div>
     <div class="main-body mbt">
 
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active bb" aria-current="page"><b><i class='fas fa-users fa-fw'>
-                        </i>&nbsp;ALL EMPLOYEE LIST - 201 MASTERFILE</b></li>
+              <li class="breadcrumb-item active bb" aria-current="page"><i class='fas fa-users fa-fw mr-1'>
+                        </i>All Employee List - 201 Masterfile</li>
             </ol>
           </nav>
 
@@ -126,11 +126,11 @@
               </select>    
           </div>
         <div class='col-md-5' >          
-            <button type="button" id="search" class="btn btn-warning mr-2" onclick="generateEmpStatus();">
-              <i class="fas fa-search-plus"></i> GENERATE                      
+            <button type="button" id="search" class="btn btn-primary mr-1" onclick="generateEmpStatus();">
+              <i class="fas fa-search-plus"></i> Generate                      
             </button> 
             
-              <a href="../newhireaccess/newemployee_entry.php" class="text-light" target="_blank"><button type="button" id="search" class="btn btn-primary mr-2" ><i class="fas fa-user"></i>  ADD USER </button></a>                    
+              <a href="../newhireaccess/newemployee_entry.php" class="text-light" target="_blank"><button type="button" id="search" class="btn btn-primary mr-2" ><i class="fas fa-user mr-2"></i>Add User</button></a>                    
                        
         </div>
         <div class='col-md-4' >     
@@ -345,11 +345,8 @@
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                     <label class="control-label" for="work_sched_type">Work Schedule</label>
-                                        <select type="select" class="form-select" id="work_sched_type" name="work_sched_type" >
-                                            <option value="0">Compressed</option>
-                                            <option value="1">Regular</option>
-                                        </select>
-                                        </div>
+                                        <?php $dd->GenerateSingleDropDown("work_sched_type", $mf->GetWorkSched("schedtype")); ?>
+                                    </div>
                                 </div> 
 
                                 <div class="col-lg-3">
@@ -393,7 +390,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle">VIEW EMPLOYEE PROFILE <i class="fas fa-profile fa-fw fa-fw"></i></h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-users fa-fw mr-1"></i>View Employee Profile</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>
@@ -439,7 +436,7 @@
                         </div> <!-- form row closing -->
                     </fieldset> 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> CLOSE</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                                 </div> 
                         </div> <!-- main body closing -->
                     </div> <!-- modal body closing -->
@@ -532,10 +529,22 @@ function GetEmpImgFile() {
     {
 
 
+        if(empImgFile == null){
+            var empFIle = 'nophoto.png';
+        }else{
+            var empFIle = empImgFile;
+        }
+
+        var empd = $('#emp_id').val();
+        if(empd == null){
+            var empdc = 0;
+        }else{
+            var empdc = empd;
+        }
 
         var url = "../newhireaccess/update_newhireaccess_process.php";
         var rowid = $('#rowid').val();
-        var emp_pic = empImgFile;
+        var emp_pic = empFIle;
         var lastname = $('#lnameg').val();
         var firstname = $('#fnameg').val();
         var middlename = $('#mnameg').val();
@@ -559,11 +568,12 @@ function GetEmpImgFile() {
         var emp_type = $( "#emp_type option:selected" ).text();
         var emp_level = $('#emp_level').children("option:selected").val();
         var emplevel = emp_level.split(" - ");
+        var elevel = $('#emp_level').val();
         var work_sched_type = $( "#work_sched_type option:selected" ).val();
         var minimum_wage = $( "#minimum_wage option:selected" ).val();
         var pay_type = $( "#pay_type option:selected" ).val();
         var emp_status = $( "#emp_status option:selected" ).val();
-        var emp_id = $('#emp_id').val();
+        var emp_id = empdc;
         if(emplevel[0] == 4){
              var rt =  'none';
         }else{
@@ -572,8 +582,7 @@ function GetEmpImgFile() {
              var rt = reportingto[0];
         }
 
-
-        // console.log(rowid);
+        // console.log(emplevel[0]);
         // return false;
 
             var files = document.getElementById("empimgpic").files;
@@ -652,10 +661,10 @@ function GetEmpImgFile() {
                                             emp_id: emp_id                
                                         },
                                         function(data) {
-                                            // console.log('success: ' + data);
+                                            console.log('success: ' + data);
                                                     swal({
                                                     title: "Success!", 
-                                                    text: "Successfully updated employee detailss!", 
+                                                    text: "Successfully updated employee details!", 
                                                     type: "success",
                                                     icon: "success",
                                                     }).then(function() {
