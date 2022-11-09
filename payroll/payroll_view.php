@@ -700,6 +700,7 @@ aria-hidden="true">
             var index = selectElem.selectedIndex;
 
             var ddcutoff = $('#ddcutoff').val();
+            console.log(ddcutoff);
             if(ddcutoff == 0){
                 var ddval = '15th';
                 $("#s30th").hide();
