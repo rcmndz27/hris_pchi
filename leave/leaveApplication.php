@@ -62,7 +62,7 @@ Class LeaveApplication{
         $results = $stmts->fetch();
 
         $queryv = "SELECT count(actl_cnt) as cnt_vl from tr_leave where approved = 2 and emp_code  = :empCode 
-        and leavetype in ('Vacation Leave','Emergency Leave','Bereavement Leave',)";
+        and leavetype in ('Vacation Leave','Emergency Leave','Bereavement Leave')";
         $stmtv =$connL->prepare($queryv);
         $paramv = array(":empCode" => $this->employeeCode);
         $stmtv->execute($paramv);
