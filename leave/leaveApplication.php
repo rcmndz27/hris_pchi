@@ -62,7 +62,7 @@ Class LeaveApplication{
         $results = $stmts->fetch();
 
         $queryv = "SELECT count(actl_cnt) as cnt_vl from tr_leave where approved = 2 and emp_code  = :empCode 
-        and leavetype in ('Vacation Leave','Emergency Leave')";
+        and leavetype in ('Vacation Leave','Emergency Leave','Bereavement Leave',)";
         $stmtv =$connL->prepare($queryv);
         $paramv = array(":empCode" => $this->employeeCode);
         $stmtv->execute($paramv);
@@ -194,6 +194,7 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                 $leaveid = "'".$result['lv_rowid']."'";
                 $empcode = "'".$result['emp_code']."'";
                 echo '
+                <tr>
                 <tr>
                 <td id="ld'.$result['lv_rowid'].'">' . date('F d,Y', strtotime($result['date_from'])) . '</td>
                 <td>' . $result['fullname'] . '</td>
