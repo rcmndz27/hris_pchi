@@ -17,11 +17,12 @@ if($dedent->{"Action"} == "InseryDeductionEnt")
     $deduction_id = $dedent->{"deduction_id"};
     $period_cutoff = $dedent->{"period_cutoff"};
     $effectivity_date = $dedent->{"effectivity_date"};
+    $end_date = $dedent->{"end_date"};
     $amount = $dedent->{"amount"};
     $eMplogName = $dedent->{"eMplogName"};
 
 
-    $dedEnt->InsertDeductionEnt($eMplogName,$emp_code,$deduction_id,$period_cutoff,$effectivity_date,$amount);
+    $dedEnt->InsertDeductionEnt($eMplogName,$emp_code,$deduction_id,$period_cutoff,$effectivity_date,$end_date,$amount);
 
 }else{
 

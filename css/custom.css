@@ -22,6 +22,13 @@ table   {
     color: black;
 }
 
+.btnExcel{
+  height: 30px;
+}
+
+.btnExcel:hover{
+  opacity: 0.5;
+}
 
 .addNoteBut {
     width: 150;
@@ -701,7 +708,7 @@ color: #d64747;
 }
 
 
-.btn btn-primary btn-sm{
+.btn btn-warning btn-sm{
     width: 10; 
     background-color: #ffaa00;
     border-color: #ffaa00;
@@ -711,7 +718,7 @@ color: #d64747;
     border-radius:1rem;;
 }
 
-.btn btn-primary btn-sm:hover{
+.btn btn-warning btn-sm:hover{
     opacity: 0.5;
 }
 

@@ -134,6 +134,12 @@ function GenAttendance($eMplogName,$pyrollco_from,$pyrollco_to){
     $cmdot->bindValue(':pay_to',$pyrollco_to);
     $cmdot->execute();
 
+    //TOT WORK 
+    $cmdtot = $connL->prepare('EXEC GenerateTotWork :pay_from,:pay_to');
+    $cmdtot->bindValue(':pay_from',$pyrollco_from);
+    $cmdtot->bindValue(':pay_to',$pyrollco_to);
+    $cmdtot->execute();
+
 
     $queryot = "INSERT INTO logs_gen_script (pay_from,pay_to,remarks,audituser,auditdate) VALUES(:pay_from,:pay_to,:remarks,:audituser,:auditdate)";
 

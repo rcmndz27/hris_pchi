@@ -1,10 +1,10 @@
-                        <style type="text/css">      
+<style type="text/css">      
                           .footers{_
                                   left: 0;
                                   right: 0;
                                   z-index: 1;
                                   height: 25px;
-                                  background-color: #ba3f02;
+                                  background-color: #0b5ed7;
                                    color: #ffff; 
                                 }
                         </style>

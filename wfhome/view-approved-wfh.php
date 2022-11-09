@@ -51,14 +51,21 @@
 <script type="text/javascript">
     
 
-function viewWfhModal(wfhdate,wfhtask,wfhoutput,wfhpercentage,wfhstats){
+function viewWfhModal(wfhdate,wfhtask,wfhoutput,wfhpercentage,wfhstats,rjrson,attachment){
    
         $('#viewWfhModal').modal('toggle');
         document.getElementById('wfhdates').value =  wfhdate;   
         document.getElementById('wfhtask').value =  wfhtask;  
         document.getElementById('wfhoutput').value =  wfhoutput;  
         document.getElementById('wfhpercentage').value =  wfhpercentage;  
-        document.getElementById('wfhstats').value =  wfhstats;                          
+        document.getElementById('wfhstats').value =  wfhstats;   
+        document.getElementById('rejectreason').value =  rjrson;   
+        if(!attachment){
+            $('#viewattachment').hide();
+        }else{
+            $('#viewattachment').show();
+            document.getElementById('viewattachment').setAttribute('href','../uploads/'+attachment);
+        }                                
     }
 
     function viewWfhHistoryModal(lvlogid)
@@ -78,9 +85,17 @@ function viewWfhModal(wfhdate,wfhtask,wfhoutput,wfhpercentage,wfhstats){
     }
 
 </script>
-<script type='text/javascript' src='../leave/viewapp.js'></script>
 <link rel="stylesheet" type="text/css" href="../wfhome/wfh_view.css">
-<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+<script type='text/javascript' src='../leave/viewapp.js'></script>
 <div class="container">
     <div class="section-title">
           <h1>EMPLOYEES WORK FROM HOME APPLICATION</h1>
@@ -109,7 +124,7 @@ function viewWfhModal(wfhdate,wfhtask,wfhoutput,wfhpercentage,wfhstats){
                     <label for="status" class="col-form-label pad">NAME:</label><div class="col-md-3">';
                     $dd->GenerateSingleRepDropDown("empCode",$mf->GetAttEmployeeNamesRep("allemprepnames",$empCode));
                     echo '</div>
-                    <button type="submit" id="searchWfhRep" class="btn btn-primary"><i class="fas fa-search-plus"></i> Generate
+                    <button type="submit" id="searchWfhRep" class="btn btn-warning"><i class="fas fa-search-plus"></i> Generate
                     </button>';
                 }else{
                     echo '
@@ -122,7 +137,7 @@ function viewWfhModal(wfhdate,wfhtask,wfhoutput,wfhpercentage,wfhstats){
                             <option value="4">CANCELLED</option>
                         </select>
                     </div>
-                    <button type="submit" id="searchWfhApp" class="btn btn-primary"><i class="fas fa-search-plus"></i> Generate
+                    <button type="submit" id="searchWfhApp" class="btn btn-warning"><i class="fas fa-search-plus"></i> Generate
                     </button>';
                 }
             ?>                                                  
@@ -132,7 +147,7 @@ function viewWfhModal(wfhdate,wfhtask,wfhoutput,wfhpercentage,wfhstats){
     <div class="row">
         <div class="col-md-12">
             <div class="panel-body">
-                <div id="WfhListRepTab" class="table-responsive-sm table-body"></div>
+                <div id="WfhListRepTabs" class="table-responsive-sm table-body"></div>
             </div>
         </div>
     </div>    
@@ -141,7 +156,7 @@ function viewWfhModal(wfhdate,wfhtask,wfhoutput,wfhpercentage,wfhstats){
     <div class="row">
         <div class="col-md-12">
             <div class="panel-body">
-                <div id="WfhListTab" class="table-responsive-sm table-body"></div>
+                <div id="WfhListTabs" class="table-responsive-sm table-body"></div>
             </div>
         </div>
     </div>     
@@ -195,10 +210,18 @@ function viewWfhModal(wfhdate,wfhtask,wfhoutput,wfhpercentage,wfhstats){
                                         <label class="control-label" for="wfhstats">Status</label>
                                         <input type="text" id="wfhstats" name="wfhstats" class="form-control" readonly>
                                     </div>
-                                </div>         
+                                </div> 
+                                <div class="col-lg-10">
+                                    <div class="form-group">
+                                        <label class="control-label" for="rejectreason">Reject Reason</label>
+                                        <input type="text" id="rejectreason" name="rejectreason" class="form-control" readonly>
+                                    </div>
+                                </div>                                          
                             </div> <!-- form row closing -->
                     </fieldset> 
                                 <div class="modal-footer">
+                                <?php   echo"<a title='Attachment' id='viewattachment' class='font-weight-bold' href='' style='color:#ffff;'  
+                                target='popup'><button type='button' class='btn btn-primary'><i class='text-white fas fa-paperclip mr-1'></i>View Attachment</button></a>"; ?>                                  
                                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
                                 </div> 
                         </div> <!-- main body closing -->
@@ -274,192 +297,5 @@ if($('#dateFrom').val() > $('#dateTo').val()){
 }
 });
 
-function exportReportToExcel() {
-  let table = document.getElementsByTagName("table"); // you can use document.getElementById('tableId') as well by providing id to the table tag
-  TableToExcel.convert(table[0], { // html code may contain multiple tables so here we are refering to 1st table tag
-    name: `export_wfh.xlsx`, // fileName you could use any name
-    sheet: {
-      name: 'WFH' // sheetName
-    }
-  });
-} 
-
-
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("WfhListTab");
-  tr = table.getElementsByTagName("tr");
-for (i = 0; i < tr.length; i++) {
-   td = tr[i].getElementsByTagName("td");
-    if(td.length > 0){ // to avoid th
-       if (td[0].innerHTML.toUpperCase().indexOf(filter) > -1 || td[1].innerHTML.toUpperCase().indexOf(filter) > -1 
-        || td[2].innerHTML.toUpperCase().indexOf(filter) > -1  || td[3].innerHTML.toUpperCase().indexOf(filter) > -1
-        || td[4].innerHTML.toUpperCase().indexOf(filter) > -1  || td[5].innerHTML.toUpperCase().indexOf(filter) > -1
-        || td[6].innerHTML.toUpperCase().indexOf(filter) > -1  || td[7].innerHTML.toUpperCase().indexOf(filter) > -1
-        || td[8].innerHTML.toUpperCase().indexOf(filter) > -1) {
-         tr[i].style.display = "";
-       } else {
-         tr[i].style.display = "none";
-       }
-
-    }
- }
- }
-
-            
-function myFunctionRep() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("WfhListRepTab");
-  tr = table.getElementsByTagName("tr");
-for (i = 0; i < tr.length; i++) {
-   td = tr[i].getElementsByTagName("td");
-    if(td.length > 0){ // to avoid th
-       if (td[0].innerHTML.toUpperCase().indexOf(filter) > -1 || td[1].innerHTML.toUpperCase().indexOf(filter) > -1 
-        || td[2].innerHTML.toUpperCase().indexOf(filter) > -1  || td[3].innerHTML.toUpperCase().indexOf(filter) > -1
-        || td[4].innerHTML.toUpperCase().indexOf(filter) > -1  || td[5].innerHTML.toUpperCase().indexOf(filter) > -1
-        || td[6].innerHTML.toUpperCase().indexOf(filter) > -1  || td[7].innerHTML.toUpperCase().indexOf(filter) > -1
-        || td[8].innerHTML.toUpperCase().indexOf(filter) > -1 ) {
-         tr[i].style.display = "";
-       } else {
-         tr[i].style.display = "none";
-       }
-
-    }
- }
-
- }
-    
-getPagination('#WfhListTab');
-getPagination('#WfhListRepTab');
-
-function getPagination(table) {
-  var lastPage = 1;
-
-  $('#maxRows')
-    .on('change', function(evt) {
-      //$('.paginationprev').html('');  
-      // reset pagination
-
-     lastPage = 1;
-      $('.pagination')
-        .find('li')
-        .slice(1, -1)
-        .remove();
-      var trnum = 0; // reset tr counter
-      var maxRows = parseInt($(this).val()); // get Max Rows from select option
-
-      if (maxRows == 5000) {
-        $('.pagination').hide();
-      } else {
-        $('.pagination').show();
-      }
-
-      var totalRows = $(table + ' tbody tr').length; // numbers of rows
-      $(table + ' tr:gt(0)').each(function() {
-        // each TR in  table and not the header
-        trnum++; // Start Counter
-        if (trnum > maxRows) {
-          // if tr number gt maxRows
-
-          $(this).hide(); // fade it out
-        }
-        if (trnum <= maxRows) {
-          $(this).show();
-        } // else fade in Important in case if it ..
-      }); //  was fade out to fade it in
-      if (totalRows > maxRows) {
-        // if tr total rows gt max rows option
-        var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
-        //  numbers of pages
-        for (var i = 1; i <= pagenum; ) {
-          // for each page append pagination li
-          $('.pagination #prev')
-            .before(
-              '<li data-page="' +
-                i +
-                '">\
-                                  <span>' +
-                i++ +
-                '<span class="sr-only">(current)</span></span>\
-                                </li>'
-            )
-            .show();
-        } // end for i
-      } // end if row count > max rows
-      $('.pagination [data-page="1"]').addClass('active'); // add active class to the first li
-      $('.pagination li').on('click', function(evt) {
-        // on click each page
-        evt.stopImmediatePropagation();
-        evt.preventDefault();
-        var pageNum = $(this).attr('data-page'); // get it's number
-
-        var maxRows = parseInt($('#maxRows').val()); // get Max Rows from select option
-
-        if (pageNum == 'prev') {
-          if (lastPage == 1) {
-            return;
-          }
-          pageNum = --lastPage;
-        }
-        if (pageNum == 'next') {
-          if (lastPage == $('.pagination li').length - 2) {
-            return;
-          }
-          pageNum = ++lastPage;
-        }
-
-        lastPage = pageNum;
-        var trIndex = 0; // reset tr counter
-        $('.pagination li').removeClass('active'); // remove active class from all li
-        $('.pagination [data-page="' + lastPage + '"]').addClass('active'); // add active class to the clicked
-        // $(this).addClass('active');                  // add active class to the clicked
-        limitPagging();
-        $(table + ' tr:gt(0)').each(function() {
-          // each tr in table not the header
-          trIndex++; // tr index counter
-          // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
-          if (
-            trIndex > maxRows * pageNum ||
-            trIndex <= maxRows * pageNum - maxRows
-          ) {
-            $(this).hide();
-          } else {
-            $(this).show();
-          } //else fade in
-        }); // end of for each tr in table
-      }); // end of on click pagination list
-      limitPagging();
-    })
-    .val(5)
-    .change();
-
-  // end of on select change
-
-  // END OF PAGINATION
-}
-
-function limitPagging(){
-    // alert($('.pagination li').length)
-
-    if($('.pagination li').length > 7 ){
-            if( $('.pagination li.active').attr('data-page') <= 3 ){
-            $('.pagination li:gt(5)').hide();
-            $('.pagination li:lt(5)').show();
-            $('.pagination [data-page="next"]').show();
-        }if ($('.pagination li.active').attr('data-page') > 3){
-            $('.pagination li:gt(0)').hide();
-            $('.pagination [data-page="next"]').show();
-            for( let i = ( parseInt($('.pagination li.active').attr('data-page'))  -2 )  ; i <= ( parseInt($('.pagination li.active').attr('data-page'))  + 2 ) ; i++ ){
-                $('.pagination [data-page="'+i+'"]').show();
-
-            }
-
-        }
-    }
-}
 </script>
 <?php include("../_footer.php");?>

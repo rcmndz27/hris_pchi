@@ -44,13 +44,13 @@
 <script type='text/javascript' src='../js/validator.js'></script>
 <div class="container">
     <div class="section-title">
-          <h1>MY PROFILE</h1>
+          <h1>Change Password</h1>
     </div>
     <div class="main-body mbsda">
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-id-card fa-fw'></i>&nbsp;MY PROFILE</b></li>
+              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-id-card fa-fw mr-1'></i> Change Password</b></li>
             </ol>
           </nav>
           <?php  

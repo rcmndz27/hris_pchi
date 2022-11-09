@@ -101,7 +101,7 @@ else
         <button type="button" id="search" class="btn btn-success mr-2" onmousedown="javascript:generatePayrll()">
             <i class="fas fa-search-plus"></i> Generate                      
         </button>
-        <button type="button" class="btn btn-primary mr-2" id="usersEntry"><i class="fas fa-plus-circle mr-1 text-white"></i> Add Employee </button>
+        <button type="button" class="btn btn-warning mr-2" id="usersEntry"><i class="fas fa-plus-circle mr-1"></i> Add Employee </button>
 
         <?php 
         if($tkstat == 'READY EMP' || $tkstat == 'DELETED EMP') {
@@ -416,7 +416,7 @@ else
         <div class="modal-dialog modal-xs modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-plus-circle mr-1 text-white"></i>Users Entry</h5>
+                    <h5 class="modal-title bb" id="popUpModalTitle"><i class="fas fa-plus-circle mr-1"></i>Users Entry</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times; </span>
                     </button>

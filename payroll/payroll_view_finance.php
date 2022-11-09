@@ -100,7 +100,7 @@ else
             <i class="fas fa-search-plus"></i> GENERATE                      
         </button>
         &nbsp;&nbsp;
-        <button type="button" class="btn btn-primary" id="usersEntry"><i class="fas fa-plus-circle"></i> ADD USER </button>
+        <button type="button" class="btn btn-warning" id="usersEntry"><i class="fas fa-plus-circle"></i> ADD USER </button>
         &nbsp;&nbsp;
 
         <?php 

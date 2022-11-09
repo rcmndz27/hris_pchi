@@ -127,6 +127,8 @@ swal({
 
 </script>
 <link rel="stylesheet" type="text/css" href="../dtrcorrect/dtrc_view.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script type='text/javascript' src='../dtrcorrect/dtrcorrect_app.js'></script>
 <script type='text/javascript' src='../js/validator.js'></script>
 <script src="../dtrcorrect/moment2.min.js"></script>
@@ -147,7 +149,7 @@ swal({
 <div class="pt-3">
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-primary" id="applydtrcorrect"><i class="fas fa-plus-circle mr-1 text-white"></i> Apply DTR Correction</button>
+                <button type="button" class="btn btn-warning" id="applydtrcorrect"><i class="fas fa-plus-circle mr-1"></i> Apply DTR Correction</button>
             </div>
         </div>
 
@@ -388,6 +390,13 @@ swal({
 </div><!-- container closing -->
 
 <script type="text/javascript">
+
+$(document).ready( function () {
+    $('#dtrcorrectList').DataTable({
+        pageLength : 5,
+        lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']]
+    });
+} );    
 
 
     $('#dtrc_date').change(function(){

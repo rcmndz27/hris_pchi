@@ -53,7 +53,7 @@
                             "</tr>
                         </tfoot>";
                 }else { 
-                    echo '<tfoot><tr><td colspan="7" class="text-center">No Results Found</td></tr></tfoot>'; 
+                    echo '<tfoot></tfoot>'; 
                 }
     
             echo"
@@ -108,7 +108,7 @@
                             "</tr>
                         </tfoot>";
                 }else { 
-                    echo '<tfoot><tr><td colspan="7" class="text-center">No Results Found</td></tr></tfoot>'; 
+                    echo '<tfoot></tfoot>'; 
                 }
     
             echo"
@@ -162,7 +162,7 @@
                             "</tr>
                         </tfoot>";
                 }else { 
-                    echo '<tfoot><tr><td colspan="7" class="text-center">No Results Found</td></tr></tfoot>'; 
+                    echo '<tfoot></tfoot>'; 
                 }
     
             echo"
@@ -219,7 +219,7 @@
                             "</tr>
                         </tfoot>";
                 }else { 
-                    echo '<tfoot><tr><td colspan="7" class="text-center">No Results Found</td></tr></tfoot>'; 
+                    echo '<tfoot></tfoot>'; 
                 }
     
             echo"

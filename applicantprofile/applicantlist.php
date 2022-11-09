@@ -65,7 +65,7 @@ Class ApplicantList{
                             </button></td>';
                 }else if($result['status'] == 'Active'){
                     echo '<td id="upd'.$result['rowid'].'"><button type="button" class="uptv" onclick="updateEntryModal('.$result['rowid'].','.$fullname.')">
-                               <i class="fas fa-edit"></i> UPDATE 
+                               <i class="fas fa-edit"></i> Update 
                             </button></td>';                  
                 }else{
                     echo'<td id="upd'.$result['rowid'].'"><span>HIRED</span></td>';
@@ -78,22 +78,10 @@ Class ApplicantList{
             echo '</tr></tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="6" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
         echo '</table>
-<div class="pagination-container">
-        <nav>
-          <ul class="pagination">
-            
-            <li data-page="prev" >
-                <span> << <span class="sr-only">(current)</span></span></li>
-    
-          <li data-page="next" id="prev">
-                  <span> >> <span class="sr-only">(current)</span></span>
-            </li>
-          </ul>
-        </nav>
-      </div>        ';
+        ';
     }
 
 

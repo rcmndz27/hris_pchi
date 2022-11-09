@@ -250,9 +250,9 @@ rel="stylesheet">
            } 
              
 
-          echo"<li><a class='nav-link ".$dtr_view."' href='../pages/dtr_view.php' onclick='show()'><i class='fas fa-calendar fa-fw'></i>&nbsp;MY Attendance</a></li>
+          echo"<li><a class='nav-link ".$dtr_view."' href='../pages/dtr_view.php' onclick='show()'><i class='fas fa-calendar fa-fw'></i>&nbsp;My Attendance</a></li>
 
-             <li class='dropdown'><a href='#' class='".$leaveApplication_view."'><span><i class='fas fa-suitcase fa-fw'></i>FORMS</span> <i class='bi bi-chevron-down'></i></a>
+             <li class='dropdown'><a href='#' class='".$leaveApplication_view."'><span><i class='fas fa-suitcase fa-fw'></i>Forms</span> <i class='bi bi-chevron-down'></i></a>
                 <ul>
                   <li><a href='../leave/leaveApplication_view.php' onclick='show()'><i class='fas fa-suitcase fa-fw'></i>Leave</a></li>
                   <li><a href='../overtime/ot_app_view.php' onclick='show()'><i class='fas fa-hourglass fa-fw'></i>Overtime</a></li>
@@ -311,14 +311,12 @@ rel="stylesheet">
                     case "President":
                     case "Group Head":
                         echo "                      
-                        <li class='dropdown'><a href='#' class='".$admintools."'><i class='fas fa-toolbox fa-fw'></i>&nbsp;ADMIN TOOLS ".$apprm."<i class='bi bi-chevron-down'></i></a>
+                        <li class='dropdown'><a href='#' class='".$admintools."'><i class='fas fa-toolbox fa-fw'></i>&nbsp;Admin Tools ".$apprm."<i class='bi bi-chevron-down'></i></a>
                             <ul>
                               <li class='dropdown'><a href='#'><i class='fas fa-money-check fa-fw'></i><span>Payroll</span><i class='bi bi-chevron-right'></i></a>
                                 <ul>
                                   <li><a href='../payroll/payroll_view.php' onclick='show()'>Payroll Timekeeping View</a></li>
-                                  <li><a href='../payroll/payroll_viewemp.php' onclick='show()'>Payroll Timekeeping per Employee View</a></li>
                                   <li><a href='../payroll/payroll_view_register.php' onclick='show()'>Payroll Register View ".$apprf."</a></li>
-                                  <li><a href='../payroll/payroll_view_register_emp.php' onclick='show()'>Payroll Register per Employee View ".$apprf."</a></li>                                  
                                   <li><a href='../payslip/payslip_viewall.php' onclick='show()'>Payslip All Employee</a></li>
                                   <li><a href='../salaryadjustment/salaryadjustmentlist_view.php' onclick='show()'>Salary Adjustment Management</a></li> 
                                   <li><a href='../payroll/payroll_tklist_view.php' onclick='show()'>Payroll Timekeeping List</a></li> 
@@ -345,7 +343,6 @@ rel="stylesheet">
                                   <li><a href='../loans/loanslist_view.php' onclick='show()'>Loans Management</a></li>                                  
                                   <li><a href='../users/userslist_view.php' onclick='show()'>Users Management</a></li>                                                  
                                   <li><a href='../payroll_att/gen_att_view.php' onclick='show()'>Generate Scripts</a></li>
-                                  <li><a href='../payroll_att/gen_attemp_view.php' onclick='show()'>Generate Scripts per Employee</a></li>                                  
                                   <li><a href='../leavebalance/leavebalancelist_view.php' onclick='show()'>Employee Leave Balance</a></li>                                                                
                                 </ul>
                               </li>
@@ -374,16 +371,6 @@ rel="stylesheet">
                                 <li><a href='../mf_position/mfpositionlist_view.php' onclick='show()'>Job Position</a></li>
                                 </ul>
                               </li>                                              
-                             <li class='dropdown'><a href='#'><i class='fa fa-wrench fa-fw'></i></i><span>Recruitment Tools</span> 
-                                <i class='bi bi-chevron-right'></i></a>
-                                <ul> 
-                                  <li><a href='../applicantprofile/applicantlist_view.php' onclick='show()'>Applicant Module</a></li>
-                                  <li><a href='../applicantprofile/plantillalist_view.php' onclick='show()'>Plantilla Module</a></li>
-                                  <li><a href='../applicantprofile/manpowerlist_view.php' onclick='show()'>Manpower Module</a></li>
-                                  <li><a href='../newhireaccess/newemployee_entry.php' target='_blank'>Add New Employee</a></li>
-                                  <li><a href='../applicantprofile/applicant_entry.php' target='_blank'>Add New Applicant</a></li>                                                                    
-                                </ul>
-                              </li>
                             </ul>
                           </li>";  
                     break;
@@ -480,16 +467,6 @@ rel="stylesheet">
                                 <li><a href='../mf_position/mfpositionlist_view.php' onclick='show()'>Job Position</a></li>
                                 </ul>
                               </li>                                              
-                             <li class='dropdown'><a href='#'><i class='fa fa-wrench fa-fw'></i></i><span>Recruitment Tools</span> 
-                                <i class='bi bi-chevron-right'></i></a>
-                                <ul> 
-                                  <li><a href='../applicantprofile/applicantlist_view.php' onclick='show()'>Applicant Module</a></li>
-                                  <li><a href='../applicantprofile/plantillalist_view.php' onclick='show()'>Plantilla Module</a></li>
-                                  <li><a href='../applicantprofile/manpowerlist_view.php' onclick='show()'>Manpower Module</a></li>
-                                  <li><a href='../newhireaccess/newemployee_entry.php' target='_blank'>Add New Employee</a></li>
-                                  <li><a href='../applicantprofile/applicant_entry.php' target='_blank'>Add New Applicant</a></li>                                                                    
-                                </ul>
-                              </li>
                             </ul>
                           </li>";  
                     break;                    
@@ -523,7 +500,6 @@ rel="stylesheet">
                       break;                    
                                 }
                             ?> 
-                 <!-- MY PROFILE TOOLS -->
 
           <?php  
               $sex = $zresult['sex'];
@@ -553,54 +529,24 @@ rel="stylesheet">
                 <img class="rounded-circle" style="width:34px;height:34px;" src="../uploads/employees/<?php echo $avatar; ?>" >
                 </a>
             <ul>
-              <li><a href="../pages/myprofile_view.php" onclick="show()"><i class='fas fa-id-card fa-fw'></i>MY PROFILE</a></li>
-              <li><a href="../pages/changepass.php" onclick="show()"><i class="fas fa-cogs fa-fw"></i>CHANGE PASSWORD</a></li>
-              <li><a href="../controller/logout.php" onclick="show()"><i class="fas fa-sign-out-alt fa-fw"></i>LOG-OUT</a></li>
+              <li><a href="../pages/myprofile_view.php" onclick="show()"><i class='fas fa-id-card fa-fw'></i>My Profile</a></li>
+              <li><a href="../pages/changepass.php" onclick="show()"><i class="fas fa-cogs fa-fw"></i>Change Password</a></li>
+              <li><a href="../controller/logout.php" onclick="show()"><i class="fas fa-sign-out-alt fa-fw"></i>Log-out</a></li>
             </ul>
           </li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
     </div>
-  </header><!-- End Header -->
-  <br>
- <!-- <script src="../assets/js/main.js"></script> -->
+  </header><br><!-- End Header -->
 </body>
 
-<!--                              <li class='dropdown'><a href='#'><i class='fas fa-flag fa-fw'></i><span>Reports</span> 
-                                <i class='bi bi-chevron-right'></i></a>
-                                <ul> 
-                                  <li><a href='../pages/otApprovalReport_view.php' onclick='show()'>OT Approval Report</a></li>
-                                  <li><a href='../pages/dashboard_view.php' onclick='show()'>Demographic Report</a></li>
-                                  <li><a href='../att_report/att_rep_view.php' onclick='show()'>Attendance Report</a></li>
-                                </ul>
-                              </li> -->
 
   <script type="text/javascript">
 
          function show() {
             document.getElementById("myDiv").style.display="block";
         }
-
-    var urpath = window.location.pathname;
-
-    if(($('#lv').val() ==! 0 || $('#ot').val() ==! 0 || $('#wfh').val() ==! 0) && (urpath === '/webportal-beta/pages/admin.php')){
-
-    const el = document.createElement('div')
-    el.innerHTML = "<?php    echo "You have <a href='../leave/leaveApproval_view.php'>".$lv."</a> leave approval.<br>";
-                             echo "You have <a href='../overtime/overtime-approval-view.php'>".$ot."</a> overtime approval.<br>";
-                             echo "You have <a href='../wfhome/wfh-approval-view.php'>".$wfh."</a> work from home approval.";
-                    ?>"
-
-    swal({
-      title: "Pending Approval:",
-      content: el ,
-      icon: "warning"
-    })
-
-    }else{
-      // swal ('error');
-    }
     
     
 </script>

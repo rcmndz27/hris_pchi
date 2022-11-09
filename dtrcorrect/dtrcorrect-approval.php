@@ -73,6 +73,7 @@ require '../vendor/autoload.php';
                             <th>Time-In</th>
                             <th>Time-Out </th>
                             <th>Reason</th>
+                            <th hidden>Reporting</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -106,7 +107,7 @@ require '../vendor/autoload.php';
                             if($result['reporting_to'] == 'PCH20000205') {
 
                             }else{
-                            echo '<button class="btn btn-primary btn-sm btnFwd" id="'.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-arrow-right"></i><button id="empcode" value="'.$result['emp_code'].'" hidden></button>';
+                            echo '<button class="btn btn-warning btn-sm btnFwd" id="'.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-arrow-right"></i><button id="empcode" value="'.$result['emp_code'].'" hidden></button>';
                             }
 
 
@@ -114,7 +115,7 @@ require '../vendor/autoload.php';
                 } while($result = $stmt->fetch());
                 echo "</tbody>";
             }else{
-                echo '<tfoot><tr><td colspan="6" class="text-center">No Results Found</td></tr></tfoot>'; 
+                echo '<tfoot></tfoot>'; 
             }
 
             echo "</table>";
@@ -278,7 +279,7 @@ require '../vendor/autoload.php';
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 
@@ -378,7 +379,7 @@ require '../vendor/autoload.php';
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 
@@ -415,7 +416,7 @@ function FwdDtrCorrect($empReportingTo,$empId,$approver,$rowid){
         global $connL;
 
         $cmd = $connL->prepare("UPDATE dbo.tr_dtrcorrect SET reporting_to = :approval where rowid = :rowid");
-        $cmd->bindValue('approval','PCH20000205');         
+        $cmd->bindValue('approval','OBN20000205');         
         $cmd->bindValue('rowid',$rowid);                           
         $cmd->execute();
     
@@ -463,7 +464,7 @@ function FwdDtrCorrect($empReportingTo,$empId,$approver,$rowid){
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 

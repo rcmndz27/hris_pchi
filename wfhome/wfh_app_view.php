@@ -50,7 +50,7 @@
 <script type="text/javascript">
     
 
-        function viewWfhModal(wfhdate,wfhtask,wfhoutput,wfhoutput2,wfhpercentage,wfhstats,approver,attachment){
+        function viewWfhModal(wfhdate,wfhtask,wfhoutput,wfhoutput2,wfhpercentage,wfhstats,rjrson,approver,attachment){
    
         $('#viewWfhModal').modal('toggle');
         document.getElementById('wfhdates').value =  wfhdate;   
@@ -59,8 +59,9 @@
         document.getElementById('wfhoutput2').value =  wfhoutput2;  
         document.getElementById('wfhpercentage').value =  wfhpercentage;  
         document.getElementById('wfhstats').value =  wfhstats;  
+        document.getElementById('rejectreason').value =  rjrson;  
         document.getElementById('approver').value =  approver;   
-                if(!attachment){
+        if(!attachment){
             $('#viewattachment').hide();
         }else{
             $('#viewattachment').show();
@@ -253,6 +254,8 @@ function timeOutModal(lvid,empcd,attid){
 
 </script>
 <link rel="stylesheet" type="text/css" href="../wfhome/wfh_view.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script type='text/javascript' src='../wfhome/wfh_app.js'></script>
 <script type='text/javascript' src='../js/validator.js'></script>
 <script src="../overtime/moment2.min.js"></script>
@@ -272,7 +275,7 @@ function timeOutModal(lvid,empcd,attid){
 <div class="pt-3">
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-primary" id="applyWfh"><i class="fas fa-plus-circle mr-1 text-white"></i> Apply Work From Home </button>
+                <button type="button" class="btn btn-warning" id="applyWfh"><i class="fas fa-plus-circle mr-1"></i> Apply Work From Home </button>
             </div>
         </div>
 
@@ -527,12 +530,18 @@ function timeOutModal(lvid,empcd,attid){
                                         <input type="text" id="wfhoutput2" name="wfhoutput2" class="form-control" readonly>                                        
                                     </div>
                                 </div>  
-                                <div class="col-lg-4">
+                                <div class="col-lg-2">
                                     <div class="form-group">
                                         <label class="control-label" for="Approver">Approver</label>
                                         <input type="text" id="approver" name="approver" class="form-control" readonly>                                        
                                     </div>
                                 </div>                                                                        
+                                <div class="col-lg-10">
+                                    <div class="form-group">
+                                        <label class="control-label" for="rejectreason">Reject Reason</label>
+                                        <input type="text" id="rejectreason" name="rejectreason" class="form-control" readonly>
+                                    </div>
+                                </div>                                 
                             </div> <!-- form row closing -->
                     </fieldset> 
                                 <div class="modal-footer">
@@ -589,6 +598,14 @@ function timeOutModal(lvid,empcd,attid){
 </div><!-- container closing -->
 
 <script type="text/javascript">
+
+$(document).ready( function () {
+    $('#wfhList').DataTable({
+        pageLength : 5,
+        lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']]
+    });
+} );    
+
 
 
      $('#wfhdate').change(function(){

@@ -26,10 +26,16 @@ else
 ?>
 
 <link rel="stylesheet" type="text/css" href="../pages/dtr.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
 <script type="text/javascript" src="../dtr/dtr-viewing.js"></script>
-<script src="<?= constant('NODE'); ?>xlsx/dist/xlsx.core.min.js"></script>
-<script src="<?= constant('NODE'); ?>file-saverjs/FileSaver.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
 <div id = "myDiv" style="display:none;" class="loader"></div>
 <div class="container">
     <div class="section-title">
@@ -44,8 +50,8 @@ else
                         </i>&nbsp;ALL EMPLOYEE DAILY TIME RECORD VIEWING</b></li>
             </ol>
           </nav>
-<form method="post">
-        <div class="form-row pt-3">
+
+        <div class="form-row mb-3">
             <label for="employee" class="col-form-label pad">EMPLOYEE:</label>
         <div class="col-md-3">
             <?php 
@@ -67,29 +73,23 @@ else
             <input type="date" id="dateTo" class="form-control" name="dateTo" value="<?php echo date('Y-m-d'); ?>" onkeydown="return false" required>
         </div>
         <div class="col-md-2">
-            <button type="submit" id="search" class="btn btn-primary"><i class="fas fa-search-plus"></i> GENERATE
+            <button type="submit" id="search" class="btn btn-warning"><i class="fas fa-search-plus"></i> GENERATE
                 </button>
         </div>
     </div>
-</form>    
-
-    <div id="dtrViewList" class="form-row pt-3">
-    </div>
+      <div class="row">
+            <div class="col-md-12">
+                <div class="panel-body">
+                    <div id="dtrViewList" class="table-responsive-sm table-body"></div>
+                </div>
+            </div>
+        </div> 
  </div>
 </div>
 
 <script type="text/javascript">
        
-    function exportReportToExcel() {
-  let table = document.getElementsByTagName("table"); // you can use document.getElementById('tableId') as well by providing id to the table tag
-  TableToExcel.convert(table[0], { // html code may contain multiple tables so here we are refering to 1st table tag
-    name: `export_attendance.xlsx`, // fileName you could use any name
-    sheet: {
-      name: 'Attendance' // sheetName
-    }
-  });
-}
-       
+
        $('#dateTo').change(function(){
 
                 if($('#dateTo').val() < $('#dateFrom').val()){

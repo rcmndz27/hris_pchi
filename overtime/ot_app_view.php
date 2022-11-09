@@ -135,6 +135,8 @@
 
 </script>
 <link rel="stylesheet" type="text/css" href="../overtime/ot_view.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script type='text/javascript' src='../overtime/ot_app.js'></script>
 <script type='text/javascript' src='../js/validator.js'></script>
 <script src="../overtime/moment2.min.js"></script>
@@ -156,7 +158,7 @@
 
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-primary" id="applyOvertime"><i class="fas fa-plus-circle"></i> Apply Overtime</button>
+                <button type="button" class="btn btn-warning" id="applyOvertime"><i class="fas fa-plus-circle"></i> Apply Overtime</button>
             </div>
         </div>
 
@@ -381,6 +383,15 @@
 </div><!-- container closing -->
 
   <script type="text/javascript">
+
+
+$(document).ready( function () {
+    $('#otList').DataTable({
+        pageLength : 5,
+        lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']]
+    });
+} );    
+
 
              $('#otdate').change(function(){
 

@@ -161,7 +161,7 @@ function GetPayrollEmpList($action, $dtFrom, $dtTo,$location,$empCode,$emp_code)
             "<td id='vlh".$r['badge_no']."'>" . round($r['vacation_leave'],2) . "</td>".
             "<td id='slhnp".$r['badge_no']."'>" . round($r['sick_leave_nopay'],2) . "</td>".
             "<td id='vlhnp".$r['badge_no']."'>" . round($r['vacation_leave_nopay'],2) . "</td>";
-            echo'<td><button type="button"class="btn btn-primary btn-sm mr-1 mb-1" 
+            echo'<td><button type="button"class="btn btn-warning btn-sm mr-1 mb-1" 
             onclick="editAttModal('.$empn.','.$badgeno.','.$rwd.')" title="Edit Attendance"><i class="fas fa-edit"></i>
             </button>
             <button type="button" class="btn btn-info btn-sm btn-sm mr-1 mb-1" onclick="viewAllAttendanceEmp('.$badgeno.','.$pfrom.','.$pto.')" title="View Attendance Logs">

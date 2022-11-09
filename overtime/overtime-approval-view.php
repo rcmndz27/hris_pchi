@@ -23,7 +23,10 @@
 ?>
 
 <link rel="stylesheet" type="text/css" href="../overtime/otapp.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script type='text/javascript' src='../overtime/overtime-approval.js'></script>
+<script type='text/javascript' src='../js/validator.js'></script>
 <div class="container">
     <div class="section-title">
           <h1>OVERTIME APPROVAL</h1>
@@ -49,8 +52,8 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                        <label for="rejectReason">Reason for rejection:</label>
-                        <input type="text" name="rejectReason" id="rejectReason" class="form-control">
+                        <label for="rejectReason">Reason for Rejection:</label><span class="req">*</span>
+                        <input type="text" name="rejectReason" id="rejectReason" class="form-control inputtext">
                     </div>
                 </div>
 

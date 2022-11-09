@@ -65,7 +65,7 @@
 
 
                 <div class="col-md-2 d-flex">
-                        <button type="button" id="search" class="btn btn-primary" onclick="filterAtt()">
+                        <button type="button" id="search" class="btn btn-warning" onclick="filterAtt()">
                             <i class="fas fa-search-plus mr-1"></i>Generate                       
                         </button>
                         <a href='javascript:generatePDF()'><img src="../img/expdf.png" height="40" class="pdfimg" id='expdf'></a>                        

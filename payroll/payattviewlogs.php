@@ -39,13 +39,13 @@
                 </tr>
                 <tr>
                     <th>Date</th>
+                    <th>Day</th>
                     <th>Time In</th>
                     <th>Time Out</th>
                     <th>Work (Hrs)</th>
                     <th>Lates (Hrs)</th>
                     <th>Undertime (Hrs)</th>
                     <th>Overtime (Hrs)</th>
-                    <th>Day</th>
                     <th>Remarks</th>
                 </tr>
             </thead>
@@ -59,14 +59,14 @@
 
                     echo    "<tr>".
                                 "<td>" . date('F d, Y', strtotime($result['punch_date'])) . "</td>".
+                                "<td>" . $result['wday']. "</td>".
                                 "<td>" . $timeIn . "</td>".
                                 "<td>" . $timeOut . "</td>".
                                 "<td>" . round($result['workhours'],2) . "</td>".
                                 "<td>" . round($result['late'],2) . "</td>".
                                 "<td>" . round($result['undertime'],2) . "</td>".
                                 "<td>" . round($result['overtime'],2) . "</td>".
-                                "<td>" . $result['wday']. "</td>".
-                                "<td>" . $result['remarks']. "</td>".
+                                "<td>" . str_replace(';','<br>',$result['remarks']). "</td>".
                             "</tr>";
 
                     $totalWork += $result['workhours'];

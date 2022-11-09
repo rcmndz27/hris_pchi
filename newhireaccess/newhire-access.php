@@ -120,21 +120,9 @@ Class NewHireAccess{
          // console.log(nameD[i]);
               // console.log(nameD);
         }else { 
-            echo '<tfoot><tr><td colspan="8" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
-        echo '</table><div class="pagination-container">
-        <nav>
-          <ul class="pagination">
-            
-            <li data-page="prev" >
-                <span> << <span class="sr-only">(current)</span></span></li>
-    
-          <li data-page="next" id="prev">
-                  <span> >> <span class="sr-only">(current)</span></span>
-            </li>
-          </ul>
-        </nav>
-      </div>';
+        echo '</table>';
     }
 
 

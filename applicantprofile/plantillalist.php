@@ -73,7 +73,7 @@ Class PlantillaList{
             echo '</tr></tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="6" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
         echo '</table>
                 <div class="pagination-container">

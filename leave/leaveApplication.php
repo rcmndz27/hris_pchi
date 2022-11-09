@@ -34,14 +34,14 @@ Class LeaveApplication{
         $resultpf = $stmtpf->fetch();
 
         $queryps = "SELECT count(actl_cnt) as cnt_ps from tr_leave where approved = 1 and emp_code  = :empCode 
-        and leavetype in ('Sick Leave')";
+        and leavetype in ('Sick Leave','Sick Leave without Pay')";
         $stmtps =$connL->prepare($queryps);
         $paramps = array(":empCode" => $this->employeeCode);
         $stmtps->execute($paramps);
         $resultps = $stmtps->fetch();
 
         $querypv = "SELECT count(actl_cnt) as cnt_pv from tr_leave where approved = 1 and emp_code  = :empCode 
-        and leavetype in ('Vacation Leave','Emergency Leave')";
+        and leavetype in ('Vacation Leave','Emergency Leave','Vacation Leave without Pay','Bereavement Leave')";
         $stmtpv =$connL->prepare($querypv);
         $parampv = array(":empCode" => $this->employeeCode);
         $stmtpv->execute($parampv);
@@ -153,31 +153,7 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
         
         global $connL;
 
-        echo '
-        <div class="form-row mb-2">  
-                    <div class="col-lg-1">
-                        <select class="form-select" name="state" id="maxRows">
-                             <option value="5000">ALL</option>
-                             <option value="1">1</option>
-                             <option value="5">5</option>
-                             <option value="10">10</option>
-                             <option value="15">15</option>
-                             <option value="20">20</option>
-                             <option value="50">50</option>
-                             <option value="70">70</option>
-                             <option value="100">100</option>
-                        </select> 
-                </div>         
-                <div class="col-lg-8">
-                </div>                               
-                <div class="col-lg-3">        
-                    <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for leave.." title="Type in leave details"> 
-                </div>                     
-        </div>   ';
-                echo"    
-        <button id='btnExport' onclick='exportReportToExcel(this)' class='btn btn-primary'><i class='fas fa-file-export'></i>Export</button>  ";
-        echo'        
-        <table id="LeaveListTab" class="table table-striped table-sm">
+        echo '<table id="LeaveListTab" class="table table-striped table-sm">
         <thead>
             <tr>
                 <th>Leave Date</th>
@@ -226,10 +202,10 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                 <td id="lc'.$result['lv_rowid'].'">' . $result['actl_cnt'] . '</td>
                 <td id="st'.$result['lv_rowid'].'">' . $result['approved'] . '</td>';
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.')" title="View Leave">
+                <td><button type="button" class="btn btn-info btn-sm mb-1" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.')" title="View Leave">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
+                            <button type="button" class="btn btn-warning btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                        
                             </td>';
@@ -240,50 +216,17 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
             echo '</tr></tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="10" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
         echo '</table>
-        <div class="pagination-container">
-        <nav>
-          <ul class="pagination">
-            
-            <li data-page="prev" >
-                <span> << <span class="sr-only">(current)</span></span></li>
-    
-          <li data-page="next" id="prev">
-                  <span> >> <span class="sr-only">(current)</span></span>
-            </li>
-          </ul>
-        </nav>
-      </div>        ';
+                ';
     }    
 
     public function GetAllLeaveRepHistory($date_from,$date_to,$empCode){
         
         global $connL;
 
-        echo '
-        <div class="form-row mb-2">  
-                    <div class="col-lg-1">
-                        <select class="form-select" name="state" id="maxRows">
-                             <option value="5000">ALL</option>
-                             <option value="1">1</option>
-                             <option value="5">5</option>
-                             <option value="10">10</option>
-                             <option value="15">15</option>
-                             <option value="20">20</option>
-                             <option value="50">50</option>
-                             <option value="70">70</option>
-                             <option value="100">100</option>
-                        </select> 
-                </div>         
-                <div class="col-lg-8">
-                </div>                               
-                <div class="col-lg-3">        
-                    <input type="text" id="myInput" class="form-control" onkeyup="myFunctionRep()" placeholder="Search for leave.." title="Type in leave details"> 
-                </div>                     
-        </div>         
-        <table id="LeaveListRepTab" class="table table-striped table-sm">
+        echo '<table id="LeaveListRepTab" class="table table-striped table-sm">
         <thead>
             <tr>
                 <th>Leave Date</th>
@@ -332,10 +275,10 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                 <td id="lc'.$result['lv_rowid'].'">' . $result['actl_cnt'] . '</td>
                 <td id="st'.$result['lv_rowid'].'">' . $result['approved'] . '</td>';
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.')" title="View Leave">
+                <td><button type="button" class="btn btn-info btn-sm mb-1" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.')" title="View Leave">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
+                            <button type="button" class="btn btn-warning btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                        
                             </td>';
@@ -346,22 +289,10 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
             echo '</tr></tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="10" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
         echo '</table>
-        <div class="pagination-container">
-        <nav>
-          <ul class="pagination">
-            
-            <li data-page="prev" >
-                <span> << <span class="sr-only">(current)</span></span></li>
-    
-          <li data-page="next" id="prev">
-                  <span> >> <span class="sr-only">(current)</span></span>
-            </li>
-          </ul>
-        </nav>
-      </div>        ';
+                ';
     }    
 
 
@@ -369,30 +300,11 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
         
         global $connL;
 
-        echo '
-        <div class="form-row">  
-                    <div class="col-lg-1">
-                        <select class="form-select" name="state" id="maxRows">
-                             <option value="5000">ALL</option>
-                             <option value="1">1</option>
-                             <option value="5">5</option>
-                             <option value="10">10</option>
-                             <option value="15">15</option>
-                             <option value="20">20</option>
-                             <option value="50">50</option>
-                             <option value="70">70</option>
-                             <option value="100">100</option>
-                        </select> 
-                </div>         
-                <div class="col-lg-8">
-                </div>                               
-                <div class="col-lg-3">        
-                    <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for leave.." title="Type in leave details"> 
-                </div>                     
-        </div>         
+        echo '       
         <table id="leaveList" class="table table-sm">
         <thead>
             <tr>
+                <th hidden>Rowid</th>
                 <th>Leave Date</th>
                 <th>Leave Type</th>
                 <th>Description</th>
@@ -410,7 +322,7 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                     when   approved = 4 then 'CANCELLED' ELSE 'N/A' END) as approved,b.firstname+' '+b.lastname as approver,medicalfile 
                     FROM dbo.tr_leave a left join employee_profile b
                     on a.approval = b.emp_code
-                    where a.emp_code = :emp_code ORDER BY date_from DESC, leavetype";
+                    where a.emp_code = :emp_code";
         $param = array(':emp_code' => $this->employeeCode);
         $stmt =$connL->prepare($query);
         $stmt->execute($param);
@@ -420,11 +332,12 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
             do { 
 
                 $datefl = "'".date('m-d-Y', strtotime($result['datefiled']))."'";
-                $leavedesc = "'".$result['leave_desc']."'";
+                $remark = "'".$result['remarks']."'";
                 $leavetyp = "'".$result['leavetype']."'";
                 $datefr = "'".date('m-d-Y', strtotime($result['date_from']))."'";
                 $dateto = "'".date('m-d-Y', strtotime($result['date_to']))."'";
-                $remark = "'".(isset($result['remarks']) ? $result['remarks'] : 'n/a')."'";
+                $leavedescz = "'".(isset($result['leave_desc']) ?  trim(str_replace("'",'',$result['leave_desc'])) : 'n/a')."'";
+                $leavedesc = preg_replace( "/\r|\n/", "", $leavedescz );
                 $appdays = "'".$result['app_days']."'";
                 $appr_oved = "'".$result['approved']."'";
                 $appr_over = "'".$result['approver']."'";
@@ -435,18 +348,19 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                 $onclick = 'onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.','.$appr_over.','.$medicalfile.')"';
                 echo '
                 <tr class="csor-pointer" >
+                <td  id="rd'.$result['rowid'].'" hidden>' .$result['date_from']. '</td>
                 <td '.$onclick.'  id="ld'.$result['rowid'].'">' . date('F d, Y', strtotime($result['date_from'])) . '</td>
                 <td '.$onclick.' id="lt'.$result['rowid'].'">' . $result['leavetype'] . '</td>
-                <td '.$onclick.' id="ds'.$result['rowid'].'">' . $result['leave_desc'] . '</td>
+                <td '.$onclick.' id="ds'.$result['rowid'].'">' . $result['leave_desc']. '</td>
                 <td '.$onclick.' id="lc'.$result['rowid'].'">' . $result['actl_cnt'] . '</td>
                 <td '.$onclick.' id="st'.$result['rowid'].'">' . $result['approved'] . '</td>';
     
                 if($result['approved'] == 'PENDING' || $result['approved'] == 'APPROVED'){
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.','.$appr_over.','.$medicalfile.')" title="View Leave">
+                <td><button type="button" class="btn btn-info btn-sm mb-1" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.','.$appr_over.','.$medicalfile.')" title="View Leave">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
+                            <button type="button" class="btn btn-warning btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                           
                             <button type="button" id="clv'.$result['rowid'].'" class="btn btn-danger btn-sm" onclick="cancelLeave('.$leaveid.','.$empcode.')" title="Cancel Leave">
@@ -455,10 +369,10 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
                             </td>';
                 }else{
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.','.$appr_over.','.$medicalfile.')" title="View Leave">
+                <td><button type="button" class="btn btn-info btn-sm mb-1" onclick="viewLeaveModal('.$datefl.','.$leavedesc.','.$leavetyp.','.$datefr.','.$dateto.','.$remark.','.$appdays.','.$appr_oved.','.$actlcnt.','.$appr_over.','.$medicalfile.')" title="View Leave">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
+                            <button type="button" class="btn btn-warning btn-sm" onclick="viewLeaveHistoryModal('.$leaveid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                        
                             </td>';
@@ -469,22 +383,9 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
             echo '</tr></tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="10" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
-        echo '</table>
-        <div class="pagination-container">
-        <nav>
-          <ul class="pagination">
-            
-            <li data-page="prev" >
-                <span> << <span class="sr-only">(current)</span></span></li>
-    
-          <li data-page="next" id="prev">
-                  <span> >> <span class="sr-only">(current)</span></span>
-            </li>
-          </ul>
-        </nav>
-      </div>        ';
+        echo '</table>';
     }
 
     public function GetNumberOfDays($dateFrom,$dateTo) {
@@ -845,7 +746,7 @@ public function GetAllLeaveHistory($date_from,$date_to,$status){
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 

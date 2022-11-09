@@ -52,6 +52,30 @@
         ApproveLeave($employee,$curApproved,$curDateFrom,$curDateTo,$curLeaveType,$rowid,$approver,$empcode);
 
 
+    }else if($leaveApproval->{"Action"} == "ApproveAllLeave") {
+
+        $empcode = $leaveApproval->{"empcode"};
+        $arr = $leaveApproval->{"rowid"} ;
+
+        foreach($arr as $value){
+            $rowid = $value;
+            ApproveAllLeave($rowid,$empcode);
+        }
+            ApproveAllEmail($rowid,$empcode);
+
+    }else if ($leaveApproval->{"Action"} == "RejectLeaveAll") {
+
+        $remarks = $leaveApproval->{"remarks"};
+        $empcode = $leaveApproval->{"empcode"};
+        $arr = $leaveApproval->{"rowid"};
+
+        foreach($arr as $value){
+            $rowid = $value;
+            RejectAllLeave($rowid,$empcode,$remarks);
+        }
+            RejectAllEmail($rowid,$empcode,$remarks);
+
+
     }else if ($leaveApproval->{"Action"} == "RejectLeave") {
 
         $curLeaveType = $leaveApproval->{"curLeaveType"};
@@ -65,6 +89,18 @@
         $empcode = $leaveApproval->{"empcode"};
 
         RejectLeave($employee,$curDateFrom,$curDateTo,$curLeaveType,$curRejected,$remarks,$rowid,$rejecter,$empcode);
+
+    }else if ($leaveApproval->{"Action"} == "FwdLeaveAll") {
+
+        $empcode = $leaveApproval->{"empcode"};
+        $arr = $leaveApproval->{"rowid"};
+
+        foreach($arr as $value){
+            $rowid = $value;
+            FwdAllLeave($rowid,$empcode);
+        }
+            FwdAllEmail($rowid,$empcode);        
+
 
     }else if ($leaveApproval->{"Action"} == "FwdLeave") {
 

@@ -56,7 +56,7 @@ $(function(){
 
 
 
-    $(document).on('click','.btn btn-primary btn-sm',function(e){
+    $(document).on('click','.btnFwd',function(e){
 
         var prid = this.id;
         var apvdDtrc = 1;
@@ -131,9 +131,14 @@ $(function(){
             data: {data:param} ,
             success: function (data){
                 // console.log("success: "+ data);
-                $("#employeedtrcDetailList").remove();
-                $("#dtrcDetails").append(data);
-                // location.reload();
+                $('#employeedtrcDetailList').remove();
+                $('#employeedtrcDetailList_wrapper').remove();
+                $('#dtrcDetails').append(data);
+                $('#employeedtrcDetailList').DataTable({
+                    pageLength : 5,
+                    lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']]
+                });                
+                                
             },
             error: function (data){
                 // console.log("error: "+ data);	
@@ -141,6 +146,21 @@ $(function(){
         });//ajax
 
     });
+
+    
+    function CheckInput() {
+
+        var inputValues = [];
+
+        inputValues = [
+            
+            $('#rejectReason')
+            
+        ];
+
+        var result = (CheckInputValue(inputValues) === '0') ? true : false;
+        return result;
+    }
     
     $('#submit').click(function(e){
 
@@ -152,7 +172,7 @@ $(function(){
 
         param = JSON.stringify(param);
 
-
+        if (CheckInput() === true) {
                     swal({
                           title: "Are you sure?",
                           text: "You want to reject this dtr correction?",
@@ -194,6 +214,12 @@ $(function(){
                             swal({text:"You cancel the approval of dtr correction!",icon:"error"});
                           }
                 });
+
+
+                
+            } else{
+                swal({text:"Kindly fill up blank fields!",icon:"error"});
+            }
 
     });
 

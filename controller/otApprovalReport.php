@@ -42,7 +42,7 @@
 
                 echo "</tbody>";
             }else{
-                echo '<tfoot><tr><td colspan="6" class="text-center">No Results Found</td></tr></tfoot>'; 
+                echo '<tfoot></tfoot>'; 
             }
 
             echo "</table>";

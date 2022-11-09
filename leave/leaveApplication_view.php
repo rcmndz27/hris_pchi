@@ -124,26 +124,6 @@
         );
     }
 
-        function myFunction() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("leaveList");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td");
-        if(td.length > 0){ // to avoid th
-        if (td[0].innerHTML.toUpperCase().indexOf(filter) > -1 || td[1].innerHTML.toUpperCase().indexOf(filter) > -1 
-        || td[2].innerHTML.toUpperCase().indexOf(filter) > -1  || td[3].innerHTML.toUpperCase().indexOf(filter) > -1 
-        || td[4].innerHTML.toUpperCase().indexOf(filter) > -1 ) {
-        tr[i].style.display = "";
-        } else {
-        tr[i].style.display = "none";
-            }
-        }
-        }
-    }
-
 function cancelLeave(lvid,empcd)
 {
 
@@ -190,6 +170,8 @@ function cancelLeave(lvid,empcd)
 
 </script>
 <link rel="stylesheet" type="text/css" href="../leave/leave_view.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script type='text/javascript' src='../leave/leaveApplication.js'></script>
 <script type='text/javascript' src='../js/validator.js'></script>
 <script src="../leave/moment2.min.js"></script>
@@ -218,7 +200,7 @@ function cancelLeave(lvid,empcd)
         </div>
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-primary" id="applyLeave"><i class="fas fa-plus-circle mr-1 text-white"></i> Apply Leave</button>
+                <button type="button" class="btn btn-warning" id="applyLeave"><i class="fas fa-plus-circle mr-1"></i> Apply Leave</button>
             </div>
         </div>
 
@@ -654,8 +636,15 @@ function cancelLeave(lvid,empcd)
 
 <script type="text/javascript">
 
-   var allhaftday = 1;
+$(document).ready( function () {
+    $('#leaveList').DataTable({
+        pageLength : 5,
+        lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']],
+        sorting : [ [0,'DESC'] ]
+    });
+} );    
 
+   var allhaftday = 1;
 
     function CheckInput() {
 

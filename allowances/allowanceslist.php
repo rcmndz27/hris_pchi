@@ -12,7 +12,9 @@ Class AllowancesList{
                 <th>Employee Code</th>
                 <th>Employee Name</th>
                 <th>Allowances Name</th>
+                <th hidden>Period Name</th>
                 <th>Period Cutoff</th>
+                <th hidden>Amount Name</th>
                 <th>Allowances Amount</th>
                 <th>Effectivity Date</th>
                 <th>Status</th>
@@ -21,7 +23,8 @@ Class AllowancesList{
         </thead>
         <tbody>';
 
-        $query = "SELECT a.benefits_emp_id,c.firstname+' '+c.lastname as [fullname],a.emp_code,b.benefit_name,b.rowid,a.period_cutoff,a.amount,a.effectivity_date,a.status from dbo.employee_allowances_management a left join dbo.mf_benefits b on a.benefit_id = b.rowid left join employee_profile c  on a.emp_code = c.emp_code where c.emp_status = :empStatus  ORDER by a.benefits_emp_id DESC";
+        $query = "SELECT a.benefits_emp_id,c.lastname+' '+c.firstname as [fullname],a.emp_code,b.benefit_name,b.rowid,a.period_cutoff,a.amount,a.effectivity_date,a.status from dbo.employee_allowances_management a left join dbo.mf_benefits b on a.benefit_id = b.rowid 
+        left join employee_profile c  on a.emp_code = c.emp_code and a.status = 'Active' where c.emp_status = :empStatus  ORDER by c.lastname ASC";
         $param = array(":empStatus" => $empStatus);
         $stmt =$connL->prepare($query);
         $stmt->execute($param);
@@ -59,22 +62,9 @@ Class AllowancesList{
             echo '</tr></tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="6" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
-        echo '</table>
-        <div class="pagination-container">
-        <nav>
-          <ul class="pagination">
-            
-            <li data-page="prev" >
-                <span> << <span class="sr-only">(current)</span></span></li>
-    
-          <li data-page="next" id="prev">
-                  <span> >> <span class="sr-only">(current)</span></span>
-            </li>
-          </ul>
-        </nav>
-      </div>        ';
+        echo '</table>';
     }
 
 

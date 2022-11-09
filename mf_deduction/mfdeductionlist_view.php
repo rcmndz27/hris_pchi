@@ -28,6 +28,15 @@
     }    
 ?>
 <link rel="stylesheet" href="../mf_deduction/mfdeduction.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
 <script type="text/javascript" src="../mf_deduction/mfdeduction_ent.js"></script>
 <script type='text/javascript' src='../js/validator.js'></script>
 <div class="container">
@@ -38,14 +47,14 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active bb" aria-current="page"><b><i class='fas fa-money-bill-wave'>
-                        </i>&nbsp;DEDUCTION LIST</b></li>
+              <li class="breadcrumb-item active font-weight-bold" aria-current="page"><b><i class='fas fa-money-bill-wave mr-1'>
+                    </i>Deduction List</b></li>
             </ol>
           </nav>
     <div class="pt-3">
         <div class="row align-items-end justify-content-end">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-primary" id="mfdeductionEntry"><i class="fas fa-plus-circle"></i> ADD NEW DEDUCTION </button>
+                <button type="button" class="btn btn-warning" id="mfdeductionEntry"><i class="fas fa-plus-circle"></i> Add New Deduction </button>
             </div>
         </div>
         <div class="row">
@@ -180,11 +189,46 @@
 
 <script>
 
+$(document).ready( function () {
+$('#allMfdeductionList').DataTable({
+      pageLength : 12,
+      lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+      dom: 'Bfrtip',
+      buttons: [
+          'pageLength',
+          {
+              extend: 'excel',
+              title: 'Bank List', 
+              text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+              init: function(api, node, config) {
+                  $(node).removeClass('dt-button')
+                  },
+                  className: 'btn bg-transparent btn-sm'
+          },
+          {
+              extend: 'pdf',
+              title: 'Bank List', 
+              text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+              init: function(api, node, config) {
+                  $(node).removeClass('dt-button')
+                  },
+                  className: 'btn bg-transparent'
+          }
+      ] ,
+      "bPaginate": true,
+      "bLengthChange": false,
+      "bFilter": true,
+      "bInfo": true,
+      "bAutoWidth": false                       
+  }); 
+});    
+
+
                 $('#deduction_code').change(function(){
                 var totalVal = <?php echo json_encode($totalVal) ;?>;
                 var cd = $('#deduction_code').val();
                 var res = cd.toUpperCase();
-;
+
 
                 if(totalVal.includes(res)){
                     swal({text:"Duplicate Deduction Code!",icon:"error"});

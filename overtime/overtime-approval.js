@@ -155,8 +155,13 @@ $(function(){
             data: {data:param} ,
             success: function (data){
                 // console.log("success: "+ data);
-                $("#employeeOTDetailList").remove();
-                $("#otDetails").append(data);
+                $('#employeeOTDetailList').remove();
+                $('#employeeOTDetailList_wrapper').remove();
+                $('#otDetails').append(data);
+                $('#employeeOTDetailList').DataTable({
+                    pageLength : 5,
+                    lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'All']]
+                });                
                 // location.reload();
             },
             error: function (data){
@@ -165,6 +170,23 @@ $(function(){
         });//ajax
 
     });
+    
+    
+    function CheckInput() {
+
+        var inputValues = [];
+
+        inputValues = [
+            
+            $('#rejectReason')
+            
+        ];
+
+        var result = (CheckInputValue(inputValues) === '0') ? true : false;
+        return result;
+    }
+
+
     
     $('#submit').click(function(e){
         e.preventDefault();
@@ -176,7 +198,7 @@ $(function(){
         param = {"Action":"RejectOT",'rowid': rowid,'empId':empId, "rjctRsn": $('#rejectReason').val()};
         param = JSON.stringify(param);
 
-
+        if (CheckInput() === true) {
                         swal({
                           title: "Are you sure?",
                           text: "You want to reject this overtime?",
@@ -225,6 +247,10 @@ $(function(){
                           }
                         });
 
+
+                    } else{
+                        swal({text:"Kindly fill up blank fields!",icon:"error"});
+                    }                        
 
     });
 

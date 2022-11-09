@@ -19,19 +19,44 @@ $(function(){
         
         param = JSON.stringify(param);
 
-        // console.log(param);
-        // return false;
-
         $.ajax({
             type: "POST",
             url: "../leave/viewappleave_process.php",
             data: {data:param} ,
             success: function (data){
                 document.getElementById("myDiv").style.display="none"; 
-                $("#LeaveListTab").html(data);
-                // XLSXExport();
-                // $(".fa-file-export").remove();
-                // $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');
+                $("#LeaveListTabs").html(data);
+                $('#LeaveListTab').DataTable({
+                    pageLength : 12,
+                    lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'pageLength',
+                        {
+                            extend: 'excel',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent btn-sm'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent'
+                        }
+                    ] ,
+                    "bPaginate": true,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": true,
+                    "bAutoWidth": false                       
+                }); 
             },
             error: function (data){
                 
@@ -40,25 +65,6 @@ $(function(){
         });
 
     });  
-
-
-    function XLSXExportRep(){
-        $("#LeaveListRepTab").tableExport({
-            headers: true,
-            footers: true,
-            formats: ['xlsx'],
-            filename: 'id',
-            bootstrap: false,
-            exportButtons: true,
-            position: 'top',
-            ignoreRows: null,
-            ignoreCols: null,
-            trimWhitespace: true,
-            RTL: false,
-            sheetname: ' Leaves'
-        });
-    }
-
 
 
     $("#searchLeaveRep").click(function(e){
@@ -89,10 +95,38 @@ $(function(){
             data: {data:param} ,
             success: function (data){
                 document.getElementById("myDiv").style.display="none"; 
-                $("#LeaveListRepTab").html(data);
-                XLSXExportRep();
-                $(".fa-file-export").remove();
-                $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');
+                $("#LeaveListRepTabs").html(data);
+                $('#LeaveListRepTab').DataTable({
+                    pageLength : 12,
+                    lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'pageLength',
+                        {
+                            extend: 'excel',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent btn-sm'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent'
+                        }
+                    ] ,
+                    "bPaginate": true,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": true,
+                    "bAutoWidth": false                       
+                }); 
             },
             error: function (data){
                 
@@ -103,10 +137,7 @@ $(function(){
     });  
 
 
-
-
-
-    $("#searchOtApp").click(function(e){
+   $("#searchOtApp").click(function(e){
 
         e.preventDefault();
         document.getElementById("myDiv").style.display="block";
@@ -131,10 +162,38 @@ $(function(){
             success: function (data){
                 // console.log("success: "+ data);
                 document.getElementById("myDiv").style.display="none"; 
-                $("#OtListTab").html(data);
-                // XLSXExportOt();
-                // $(".fa-file-export").remove();
-                // $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');
+                $("#OtListTabs").html(data);
+                $('#OtListTab').DataTable({
+                    pageLength : 12,
+                    lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'pageLength',
+                        {
+                            extend: 'excel',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent btn-sm'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent'
+                        }
+                    ] ,
+                    "bPaginate": true,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": true,
+                    "bAutoWidth": false                       
+                }); 
             },
             error: function (data){
                 
@@ -143,23 +202,6 @@ $(function(){
         });
 
     });   
-
- function XLSXExportOtRep(){
-        $("#OtListRepTab").tableExport({
-            headers: true,
-            footers: true,
-            formats: ['xlsx'],
-            filename: 'id',
-            bootstrap: false,
-            exportButtons: true,
-            position: 'top',
-            ignoreRows: null,
-            ignoreCols: null,
-            trimWhitespace: true,
-            RTL: false,
-            sheetname: ' OT'
-        });
-    }
 
 
     $("#searchOtRep").click(function(e){
@@ -187,10 +229,38 @@ $(function(){
             success: function (data){
                 // console.log("success: "+ data);
                 document.getElementById("myDiv").style.display="none"; 
-                $("#OtListRepTab").html(data);
-                XLSXExportOtRep();
-                $(".fa-file-export").remove();
-                $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');
+                $("#OtListRepTabs").html(data);
+                $('#OtListRepTab').DataTable({
+                    pageLength : 12,
+                    lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'pageLength',
+                        {
+                            extend: 'excel',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent btn-sm'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent'
+                        }
+                    ] ,
+                    "bPaginate": true,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": true,
+                    "bAutoWidth": false                       
+                }); 
             },
             error: function (data){
                 
@@ -199,24 +269,6 @@ $(function(){
         });
 
     });       
-
- function XLSXExportWfh(){
-        $("#WfhListTab").tableExport({
-            headers: true,
-            footers: true,
-            formats: ['xlsx'],
-            filename: 'id',
-            bootstrap: false,
-            exportButtons: true,
-            position: 'top',
-            ignoreRows: null,
-            ignoreCols: null,
-            trimWhitespace: true,
-            RTL: false,
-            sheetname: ' Wfh'
-        });
-    }
-
 
     $("#searchWfhApp").click(function(e){
 
@@ -243,10 +295,38 @@ $(function(){
             success: function (data){
                 // console.log("success: "+ data);
                 document.getElementById("myDiv").style.display="none"; 
-                $("#WfhListTab").html(data);
-                // XLSXExportWfh();
-                // $(".fa-file-export").remove();
-                // $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');
+                $("#WfhListTabs").html(data);
+                $('#WfhListTab').DataTable({
+                    pageLength : 12,
+                    lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'pageLength',
+                        {
+                            extend: 'excel',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent btn-sm'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent'
+                        }
+                    ] ,
+                    "bPaginate": true,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": true,
+                    "bAutoWidth": false                       
+                }); 
             },
             error: function (data){
                 
@@ -255,23 +335,6 @@ $(function(){
         });
 
     });    
-
-function XLSXExportWfhRep(){
-        $("#WfhListRepTab").tableExport({
-            headers: true,
-            footers: true,
-            formats: ['xlsx'],
-            filename: 'id',
-            bootstrap: false,
-            exportButtons: true,
-            position: 'top',
-            ignoreRows: null,
-            ignoreCols: null,
-            trimWhitespace: true,
-            RTL: false,
-            sheetname: ' Wfh'
-        });
-    }
 
 
     $("#searchWfhRep").click(function(e){
@@ -299,10 +362,38 @@ function XLSXExportWfhRep(){
             success: function (data){
                 // console.log("success: "+ data);
                 document.getElementById("myDiv").style.display="none"; 
-                $("#WfhListRepTab").html(data);
-                XLSXExportWfhRep();
-                $(".fa-file-export").remove();
-                $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');
+                $("#WfhListRepTabs").html(data);
+                $('#WfhListRepTab').DataTable({
+                    pageLength : 12,
+                    lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'pageLength',
+                        {
+                            extend: 'excel',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent btn-sm'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent'
+                        }
+                    ] ,
+                    "bPaginate": true,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": true,
+                    "bAutoWidth": false                       
+                }); 
             },
             error: function (data){
                 
@@ -313,22 +404,6 @@ function XLSXExportWfhRep(){
     });    
 
 
-function XLSXExportOb(){
-        $("#ObListTab").tableExport({
-            headers: true,
-            footers: true,
-            formats: ['xlsx'],
-            filename: 'id',
-            bootstrap: false,
-            exportButtons: true,
-            position: 'top',
-            ignoreRows: null,
-            ignoreCols: null,
-            trimWhitespace: true,
-            RTL: false,
-            sheetname: ' Ob'
-        });
-    }
 
 
     $("#searchObApp").click(function(e){
@@ -356,10 +431,38 @@ function XLSXExportOb(){
             success: function (data){
                 // console.log("success: "+ data);
                 document.getElementById("myDiv").style.display="none"; 
-                $("#ObListTab").html(data);
-                // XLSXExportOb();
-                // $(".fa-file-export").remove();
-                // $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');
+                $("#ObListTabs").html(data);
+                $('#ObListTab').DataTable({
+                    pageLength : 12,
+                    lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'pageLength',
+                        {
+                            extend: 'excel',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent btn-sm'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent'
+                        }
+                    ] ,
+                    "bPaginate": true,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": true,
+                    "bAutoWidth": false                       
+                });
             },
             error: function (data){              
                 document.getElementById("myDiv").style.display="none"; 
@@ -367,23 +470,6 @@ function XLSXExportOb(){
         });
 
     });    
-
-function XLSXExportObRep(){
-        $("#ObListRepTab").tableExport({
-            headers: true,
-            footers: true,
-            formats: ['xlsx'],
-            filename: 'id',
-            bootstrap: false,
-            exportButtons: true,
-            position: 'top',
-            ignoreRows: null,
-            ignoreCols: null,
-            trimWhitespace: true,
-            RTL: false,
-            sheetname: ' Ob'
-        });
-    }
 
 
     $("#searchObRep").click(function(e){
@@ -411,10 +497,38 @@ function XLSXExportObRep(){
             success: function (data){
                 // console.log("success: "+ data);
                 document.getElementById("myDiv").style.display="none"; 
-                $("#ObListRepTab").html(data);
-                XLSXExportObRep();
-                $(".fa-file-export").remove();
-                $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');
+                $("#ObListRepTabs").html(data);
+                $('#ObListRepTab').DataTable({
+                    pageLength : 12,
+                    lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'pageLength',
+                        {
+                            extend: 'excel',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent btn-sm'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent'
+                        }
+                    ] ,
+                    "bPaginate": true,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": true,
+                    "bAutoWidth": false                       
+                });
             },
             error: function (data){              
                 document.getElementById("myDiv").style.display="none"; 
@@ -423,22 +537,6 @@ function XLSXExportObRep(){
 
     }); 
 
-function XLSXExportDtrc(){
-        $("#DtrcListTab").tableExport({
-            headers: true,
-            footers: true,
-            formats: ['xlsx'],
-            filename: 'id',
-            bootstrap: false,
-            exportButtons: true,
-            position: 'top',
-            ignoreRows: null,
-            ignoreCols: null,
-            trimWhitespace: true,
-            RTL: false,
-            sheetname: ' Dtrc'
-        });
-    }
 
 
     $("#searchDtrcApp").click(function(e){
@@ -466,10 +564,38 @@ function XLSXExportDtrc(){
             success: function (data){
                 // console.log("success: "+ data);
                 document.getElementById("myDiv").style.display="none"; 
-                $("#DtrcListTab").html(data);
-                // XLSXExportDtrc();
-                // $(".fa-file-export").remove();
-                // $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');
+                $("#DtrcListTabs").html(data);
+                $('#DtrcListTab').DataTable({
+                    pageLength : 12,
+                    lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'pageLength',
+                        {
+                            extend: 'excel',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent btn-sm'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent'
+                        }
+                    ] ,
+                    "bPaginate": true,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": true,
+                    "bAutoWidth": false                       
+                });
             },
             error: function (data){
                 
@@ -479,22 +605,6 @@ function XLSXExportDtrc(){
 
     });    
 
-function XLSXExportDtrcRep(){
-        $("#DtrcListRepTab").tableExport({
-            headers: true,
-            footers: true,
-            formats: ['xlsx'],
-            filename: 'id',
-            bootstrap: false,
-            exportButtons: true,
-            position: 'top',
-            ignoreRows: null,
-            ignoreCols: null,
-            trimWhitespace: true,
-            RTL: false,
-            sheetname: ' Dtrc'
-        });
-    }
 
 
     $("#searchDtrcRep").click(function(e){
@@ -522,10 +632,38 @@ function XLSXExportDtrcRep(){
             success: function (data){
                 // console.log("success: "+ data);
                 document.getElementById("myDiv").style.display="none"; 
-                $("#DtrcListRepTab").html(data);
-                XLSXExportDtrcRep();
-                $(".fa-file-export").remove();
-                $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');
+                $("#DtrcListRepTabs").html(data);
+                $('#DtrcListRepTab').DataTable({
+                    pageLength : 12,
+                    lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'pageLength',
+                        {
+                            extend: 'excel',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent btn-sm'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'Leave List', 
+                            text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+                            init: function(api, node, config) {
+                                $(node).removeClass('dt-button')
+                                },
+                                className: 'btn bg-transparent'
+                        }
+                    ] ,
+                    "bPaginate": true,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bInfo": true,
+                    "bAutoWidth": false                       
+                });
             },
             error: function (data){
                 

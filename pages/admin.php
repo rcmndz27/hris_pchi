@@ -121,7 +121,7 @@ $stmtu->execute();
 $resultu = $stmtu->fetch();
 
 //NO TIME-IN
-$queryl = "SELECT lastname+','+firstname as [fullname],emp_pic_loc from employee_profile where ranking = 1 and emp_status = 'Active' and badgeno not in (SELECT a.emp_code from employee_attendance a left join employee_profile b on a.emp_code = b.badgeno where a.punch_date = CONVERT(date, GETDATE()) and b.emp_status = 'Active')";
+$queryl = "SELECT lastname+','+firstname as [fullname],up_avatar from employee_profile where ranking = 1 and emp_status = 'Active' and badgeno not in (SELECT a.emp_code from employee_attendance a left join employee_profile b on a.emp_code = b.badgeno where a.punch_date = CONVERT(date, GETDATE()) and b.emp_status = 'Active')";
 $stmtl =$connL->prepare($queryl);
 $stmtl->execute();
 $resultl = $stmtl->fetch();    
@@ -356,7 +356,7 @@ when   status = 4 then 'CANCELLED' ELSE 'N/A' END) as stats,a.rowid  as wfhid,a.
 FROM dbo.tr_workfromhome a
 left join employee_attendance b
 on RIGHT(A.emp_code, LEN(A.emp_code) - 3) = b.emp_code
-and a.wfh_date = b.punch_date where a.emp_code = :emp_code and a.wfh_date = :wfh_date and status = 2 ORDER BY wfh_date DESC";
+and a.wfh_date = b.punch_date where a.emp_code = :emp_code and a.wfh_date = :wfh_date and status in (1,2) ORDER BY wfh_date DESC";
 $spparam = array(':emp_code' => $empCode,':wfh_date' => date('Y-m-d'));
 $spstmt =$connL->prepare($spquery);
 $spstmt->execute($spparam);
@@ -687,12 +687,12 @@ swal({text:"You cancel your time out!",icon:"warning"});
 
            <div class="row">  
     <!-- All Act Emp-->
-    <div class="col-xl-2 col-md-6 mb-4">
+    <div class="col-xl-2 col-md-6 mb-2">
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-capitalize mb-1">EMPLOYEE HANDBOOK
+                        <div class="text-xs font-weight-bold text-primary text-capitalize mb-1">Employee Handbook
                             <?php echo date("Y") ?> </div>
                             <div class="row no-gutters align-items-center">
                                 <a href="../uploads/COD_HANDBOOK.pdf" target="_blank">
@@ -711,7 +711,7 @@ swal({text:"You cancel your time out!",icon:"warning"});
         </div>                        
 
            <!--Total Work Days-->
-        <div class="col-xl-2 col-md-6 mb-4">
+        <div class="col-xl-2 col-md-6 mb-2">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -733,7 +733,7 @@ swal({text:"You cancel your time out!",icon:"warning"});
     </div>
 
               <!--Total OT-->
-            <div class="col-xl-2 col-md-6 mb-4">
+            <div class="col-xl-2 col-md-6 mb-2">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -755,7 +755,7 @@ swal({text:"You cancel your time out!",icon:"warning"});
     </div>
 
         <!--UNDERTIME-->
-        <div class="col-xl-2 col-md-6 mb-4">
+        <div class="col-xl-2 col-md-6 mb-2">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -777,7 +777,7 @@ swal({text:"You cancel your time out!",icon:"warning"});
     </div>
 
     <!--Male-->
-    <div class="col-xl-2 col-md-6 mb-4">
+    <div class="col-xl-2 col-md-6 mb-2">
         <div class="card border-left-info shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -799,7 +799,7 @@ swal({text:"You cancel your time out!",icon:"warning"});
 </div>
 
 <!-- time in -->
-<div class="col-xl-2 col-md-6 mb-4">
+<div class="col-xl-2 col-md-6 mb-2">
     <div class="card border-left-warning shadow h-100 py-2">
         <div class="card-body">
             <div class="row no-gutters align-items-center">
@@ -859,22 +859,22 @@ swal({text:"You cancel your time out!",icon:"warning"});
 <div class="row">
 
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card shadow mb-4">
+    <div class="col-xl-3 col-md-6 mb-2">
+        <div class="card shadow mb-2">
             <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">NO TIME-IN : <?php echo strtoupper(date("F d, Y")) ?> <i class="fas fa-clock"></i></h6>
+            <h6 class="m-0 font-weight-bold text-primary">No Time-In : <?php echo date("F d, Y") ?> <i class="fas fa-clock"></i></h6>
         </div>
         <!-- Card Body -->
 
         <div class="card-body cdbody">
               <?php  
-                if($resultl){
-                    $ppic = (isset($resultl['emp_pic_loc'])) ? $resultl['emp_pic_loc'] : 'nophoto.jpg' ;
+                if($resultl){            
                     do { 
+                        $ppic = (isset($resultl['up_avatar'])) ? $resultl['up_avatar'] : 'nophoto.jpg' ;                        
                 echo ' <div class="row">
                     <div class="col-sm-1">
-                      <h6 class="mb-0"><img class="rounded-circle" style="width:25px;height:25px;" src="../img/'.$ppic.'"></h6>
+                      <h6 class="mb-0"><img class="rounded-circle" style="width:25px;height:25px;" src="../uploads/employees/'.$ppic.'"></h6>
                     </div>
                     <div class="col-sm-9 text-secondary"><b>
                       '.$resultl['fullname'].'</b>  
@@ -888,11 +888,11 @@ swal({text:"You cancel your time out!",icon:"warning"});
         </div>
     </div>      
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card shadow mb-4">
+    <div class="col-xl-3 col-md-6 mb-2">
+        <div class="card shadow mb-2">
             <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">SCHEDULE TODAY: <?php echo strtoupper(date("F d, Y")) ?> <i class="fas fa-calendar"></i>  </h6>
+            <h6 class="m-0 font-weight-bold text-primary">Schedule Today: <?php echo date("F d, Y") ?> <i class="fas fa-calendar"></i>  </h6>
         </div>
         <!-- Card Body -->
 
@@ -900,11 +900,11 @@ swal({text:"You cancel your time out!",icon:"warning"});
               <?php  
                 if($resulty){
                     do { 
-                    $ppic = (isset($resulty['emp_pic_loc'])) ? $resulty['emp_pic_loc'] : 'nophoto.jpg' ;
+                    $ppic = (isset($resulty['up_avatar'])) ? $resulty['up_avatar'] : 'nophoto.jpg' ;
                     $fname =$resulty['fullname'] ;                        
                 echo ' <div class="row">
                     <div class="col-sm-1">
-                      <h6 class="mb-0"><img class="rounded-circle" style="width:25px;height:25px;" src="../img/'.$ppic.'"></h6>
+                      <h6 class="mb-0"><img class="rounded-circle" style="width:25px;height:25px;" src="../uploads/employees/'.$ppic.'"></h6>
                     </div>
                     <div class="col-sm-9 text-secondary"><b>
                      '.$fname.'</b><br>Schedule: '.$resulty['remarks'].'  
@@ -925,22 +925,21 @@ swal({text:"You cancel your time out!",icon:"warning"});
         </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card shadow mb-4">
+    <div class="col-xl-3 col-md-6 mb-2">
+        <div class="card shadow mb-2">
             <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">TOTAL LATES : <?php echo strtoupper(date("M Y")) ?> <i class="fas fa-calendar"></i>  </h6>
+            <h6 class="m-0 font-weight-bold text-primary">Total Lates : <?php echo date("F Y") ?> <i class="fas fa-calendar"></i>  </h6>
         </div>
         <!-- Card Body -->
         <div class="card-body cdbody">
               <?php  
                 if($resultp){
-                    $ppic = (isset($resultp['emppic'])) ? $resultp['emppic'] : 'nophoto.jpg' ;
-
                     do { 
+                        $ppic = (isset($resultp['emppic'])) ? $resultp['emppic'] : 'nophoto.jpg' ;                        
                 echo ' <div class="row">
                     <div class="col-sm-1">
-                      <h6 class="mb-0"><img class="rounded-circle" style="width:30px;height:30px;" src="../img/'.$ppic.'"></h6>
+                      <h6 class="mb-0"><img class="rounded-circle" style="width:30px;height:30px;" src="../uploads/employees/'.$ppic.'"></h6>
                     </div>
                     <div class="col-sm-9 text-secondary"><b>
                       '.$resultp['fullname'].'</b><br>Late: '.round($resultp['tot_late']*60).' Min/s 
@@ -964,23 +963,22 @@ swal({text:"You cancel your time out!",icon:"warning"});
     </div>
   
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card shadow mb-4">
+    <div class="col-xl-3 col-md-6 mb-2">
+        <div class="card shadow mb-2">
             <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">BIRTHDAY CELEBRANTS : <?php echo strtoupper(date("M Y")) ?>  <i class="fas fa-birthday-cake"></i>  </h6>
+            <h6 class="m-0 font-weight-bold text-primary">Birthday Celebrants : <?php echo date("M Y") ?>  <i class="fas fa-birthday-cake"></i>  </h6>
         </div>
         <!-- Card Body -->
 
         <div class="card-body cdbody">
               <?php  
                 if($resultu){
-                    $ppic = (isset($resultu['emp_pic_loc'])) ? $resultu['emp_pic_loc'] : 'nophoto.jpg' ;
-
                     do { 
+                        $ppic = (isset($resultu['up_avatar'])) ? $resultu['up_avatar'] : 'nophoto.jpg' ;
                 echo ' <div class="row">
                     <div class="col-sm-1">
-                      <h6 class="mb-0"><img class="rounded-circle" style="width:30px;height:30px;" src="../img/'.$ppic.'"></h6>
+                      <h6 class="mb-0"><img class="rounded-circle" style="width:30px;height:30px;" src="../uploads/employees/'.$ppic.'"></h6>
                     </div>
                     <div class="col-sm-9 text-secondary"><b>
                       '.$resultu['lastname'].', '.$resultu['firstname'].'</b><br>'.$resultu['department'].'<br>'.date('F d', strtotime($resultu['birthdate'])).'  
@@ -1027,10 +1025,10 @@ swal({text:"You cancel your time out!",icon:"warning"});
     </div>
 
 <div class="col-md-3">
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-2">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">ANNOUNCEMENTS <?php echo strtoupper(date("Y")) ?> <i class="fas fa-paste"></i></h6>
-            <button class="btn btn-primary btn-sm"  id="addAncmnt"><i class="fas fa-plus-circle"></i> Announcement</button>
+            <h6 class="m-0 font-weight-bold text-primary">Announcements <?php echo date("Y") ?> <i class="fas fa-paste"></i></h6>
+            <button class="btn btn-primary btn-sm"  id="addAncmnt"><i class="fas fa-plus-circle"></i> Add Memo</button>
         </div>
         <div class="card-body cdbody">
               <?php  
@@ -1061,9 +1059,9 @@ swal({text:"You cancel your time out!",icon:"warning"});
 </div>  
 
 <div class="col-md-3">
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-2">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">NO. OF EMPLOYEES PER LEVEL <i class="fas fa-users"></i></h6>
+            <h6 class="m-0 font-weight-bold text-primary">Number of Employees per Level <i class="fas fa-users"></i></h6>
         </div>
 <div class="table-responsive mb-3 mb-md-0 mt-3">
   <table class="table table-borderless report-table">
@@ -1109,9 +1107,9 @@ swal({text:"You cancel your time out!",icon:"warning"});
 </div>   
 
 <div class="col-md-3">
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-2">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">NO. OF EMPLOYEES PER STATUS <i class="fas fa-users"></i></h6>
+            <h6 class="m-0 font-weight-bold text-primary">Number of Employee per Status <i class="fas fa-users"></i></h6>
         </div>
 <div class="table-responsive mb-3 mb-md-0 mt-3">
   <table class="table table-borderless report-table">

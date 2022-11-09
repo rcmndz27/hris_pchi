@@ -1,10 +1,28 @@
 $(function(){
 
+    $('#temp_id').hide();
+
     $('#mfholidayEntry').click(function(e){
         e.preventDefault();
         $('#popUpModal').modal('toggle');
 
     });
+
+
+    $('#holidayterm').change(function(){
+
+        var ht = $('#holidayterm').val();
+
+        if(ht == 'Permanent'){
+            $('#temp_id').hide();
+            document.getElementById('expired_date').value = null;
+        }else{
+            $('#temp_id').show();
+        }
+
+    });
+
+
 
    
     function CheckInput(){
@@ -15,6 +33,7 @@ $(function(){
             $('#holidaydate'),
             $('#holidaytype'),
             $('#holidaydescs'),
+            $('#holidayterm'),
             $('#status')
         ];
 
@@ -37,6 +56,8 @@ $(function(){
                 'holidaydate': $('#holidaydate').val(),
                 'holidaytype': $('#holidaytype').children("option:selected").val(),
                 'holidaydescs': $('#holidaydescs').val(),
+                'holidayterm': $('#holidayterm').val(),
+                'expired_date': $('#expired_date').val(),
                 'eMplogName': $('#eMplogName').val(),
                 'status': $('#status').children("option:selected").val()                   
             }

@@ -94,7 +94,7 @@ else
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <button type="button" id="search" class="btn btn-primary" onclick="genAttPay();">
+                                        <button type="button" id="search" class="btn btn-warning" onclick="genAttPay();">
                                             <i class="fas fa-search-plus"></i>GENERATE                       
                                         </button> 
                                     </div>
@@ -123,7 +123,7 @@ else
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <button type="button" id="search" class="btn btn-primary" onclick="genWfhPay();">
+                                    <button type="button" id="search" class="btn btn-warning" onclick="genWfhPay();">
                                         <i class="fas fa-search-plus"></i>GENERATE                       
                                     </button> 
                                 </div>
@@ -153,7 +153,7 @@ else
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <button type="button" id="search" class="btn btn-primary" onclick="genObPay();">
+                                    <button type="button" id="search" class="btn btn-warning" onclick="genObPay();">
                                         <i class="fas fa-search-plus"></i>GENERATE                       
                                     </button> 
                                 </div>
@@ -183,7 +183,7 @@ else
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <button type="button" id="search" class="btn btn-primary" onclick="genLeavePay();">
+                                    <button type="button" id="search" class="btn btn-warning" onclick="genLeavePay();">
                                         <i class="fas fa-search-plus"></i>GENERATE                       
                                     </button> 
                                 </div>
@@ -213,7 +213,7 @@ else
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <button type="button" id="search" class="btn btn-primary" onclick="genOtPay();">
+                                        <button type="button" id="search" class="btn btn-warning" onclick="genOtPay();">
                                             <i class="fas fa-search-plus"></i>GENERATE                       
                                         </button> 
                                     </div>
@@ -234,7 +234,7 @@ else
                             <div class="form-row">
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <button type="button" id="search" class="btn btn-primary" onclick="genDTR();">
+                                            <button type="button" id="search" class="btn btn-warning" onclick="genDTR();">
                                                 <i class="fas fa-search-plus"></i>GENERATE                       
                                             </button> 
                                         </div>

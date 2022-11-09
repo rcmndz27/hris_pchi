@@ -53,10 +53,16 @@ require '../vendor/autoload.php';
 
         echo '<table id="employeeLeaveList" class="table table-striped table-sm">
             <thead>
-                <tr>
-                    <th colspan="8" class="text-center">List of Pending Leave Request</th>';
-        echo '</tr>
-                <tr>
+            <tr>
+                <th colspan="2" class="text-center">
+                    <button id="btnAppAll" class="btn btn-success btn-sm mr-2"><i class="fas fa-check"></i></button>
+                    <button id="btnRejectdAll" class="btn btn-danger btn-sm mr-2"><i class="fas fa-times"></i></button>
+                    <button class="btn btn-info btn-sm mr-2" ><i class="fas fa-arrow-right"></i></button>
+                </th>
+                <th colspan="5" class="text-center">List of Pending Leave Request</th>';
+    echo '</tr>
+            <tr>
+                <th><input type="checkbox" id="selectAll" name="selectAll" /></th>
                     <th>Date Filed</th>
                     <th>Leave Date</th>
                     <th>Leave Type</th>
@@ -72,17 +78,17 @@ require '../vendor/autoload.php';
           
 			do { 
                 $mf = $result['medicalfile'];
+                $df = date('Y-m-d',strtotime($result['date_from']));
                 echo "
             <tr>
-            <td>" . date('Y-m-d',strtotime($result['datefiled'])) . "</td>
-            <td>" . date('Y-m-d',strtotime($result['date_from'])) . "</td>
-            <td class='text-left text-info'>" . $result['leavetype'] . "</td>
-            <td>" . $result['leave_desc'] . "</td>
-            <td>" . $result['fullname'] . "
+            <td><input type='checkbox' class='checkboxAll' name='cba[]' id='cba' value='".$result['rowid']."' /></td>
+            <td>".date('Y-m-d',strtotime($result['datefiled']))."</td>
+            <td name='df[]' value='".$df."'>".date('Y-m-d',strtotime($result['date_from']))."</td>
+            <td class='text-left text-info' name='lt[]'>".$result['leavetype']."</td>
+            <td>".$result['leave_desc']."</td>
+            <td>".$result['fullname']."
             <button id='apr".$result['rowid']."' value=".$result['approval']." hidden></button></td>
-            <td hidden id='ap".$result['rowid']."'>"."<input type='text' id='apc".$result['rowid']."' class='form-control text-center' value='".$result['actl_cnt']."'>".$result['actl_cnt']."</td>";
-            
-
+            <td hidden id='ap".$result['rowid']."'>"."<input type='text' id='apc".$result['rowid']."' class='form-control text-center' value='".$result['actl_cnt']."'>".$result['actl_cnt']."</td>";            
                 echo "<td>";
                 if(empty($mf)){
                 }else {
@@ -98,7 +104,7 @@ require '../vendor/autoload.php';
                     echo'
                     <button class="btn btn-success btn-sm btnApproved" id="'.$result['emp_code'].' '.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-check"></i></button><button id="empcode" value="'.$result['emp_code'].'" hidden></button>
                     <button class="btn btn-danger btn-sm btnRejectd" id="'.$result['emp_code'].' '.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-times"></i></button><button id="empcode" value="'.$result['emp_code'].'" hidden></button>
-                    <button class="btn btn-primary btn-sm btnFwd" id="'.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-arrow-right"></i><button id="empcode" value="'.$result['emp_code'].'" hidden></button>
+                    <button class="btn btn-warning btn-sm btnFwd" id="'.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-arrow-right"></i><button id="empcode" value="'.$result['emp_code'].'" hidden></button>
                     </td>';
                 }else {
                     echo 'Waiting for other approver.';
@@ -110,7 +116,7 @@ require '../vendor/autoload.php';
             } while ($result = $stmt->fetch());
             echo "</tbody><tfoot>";
         }else{
-            echo '<tr><td colspan="8" class="text-center">No Results Found</td></tr>';
+            echo '';
         }
 
         echo "<tfoot></table>";
@@ -134,8 +140,8 @@ require '../vendor/autoload.php';
         echo '<table id="leaveSummaryList" class="table table-striped table-sm">
             <thead>
                 <tr>
-                    <th colspan="4"></th>
-                    <th colspan="3w" class="text-center">Balance</th>
+                    <th colspan="2"></th>
+                    <th colspan="3" class="text-center">Balance</th>
                 </tr>
                 <tr>
                     <th class="text-center">Employee</th>
@@ -169,7 +175,7 @@ require '../vendor/autoload.php';
                     '<td class="text-center">'. round($earned_sl,2) .'</td>'.
                     '<td class="text-center">'. round($earned_vl,2) .'</td>'.
                     '<td class="text-center">'. round($earned_fl,2) .'</td>'.
-                    '<td class="text-center"><button class="btn btn-primary btnViewing" id="'.$result['emp_code'].'" type="submit"><i class="fas fa-search"></button></td>'.
+                    '<td class="text-center"><button class="btn btn-warning btnViewing" id="'.$result['emp_code'].'" type="submit"><i class="fas fa-search"></button></td>'.
                 '</tr>';
                 
             } while ($result = $stmt->fetch());
@@ -177,7 +183,7 @@ require '../vendor/autoload.php';
             echo '</tbody><tfoot>';
 
         }else{
-            echo '<tr><td colspan="9" class="text-center">No Results Found</td></tr>';
+            echo '';
         }
 
         echo "</tfoot></table>";
@@ -192,10 +198,11 @@ require '../vendor/autoload.php';
         <table id="dtrList" class="table table-striped table-sm">
         <thead>
             <tr>
-                <th colspan="9" class ="text-center">History</th>
+                <th colspan="10" class ="text-center">History</th>
             </tr>
             <tr>
                 <th>Date Filed</th>
+                <th>Employee</th>
                 <th>Leave Type</th>
                 <th>Date From</th>
                 <th>Date To</th>
@@ -208,7 +215,7 @@ require '../vendor/autoload.php';
         </thead>
         <tbody>';
 
-        $query = 'SELECT datefiled, leave_desc, leavetype, date_from, date_to, actl_cnt, app_days, approved, emp_code, rowid, remarks FROM dbo.tr_leave where emp_code = :emp_code ORDER BY datefiled DESC, leavetype ';
+        $query = 'SELECT datefiled,employee,leave_desc, leavetype, date_from, date_to, actl_cnt, app_days, approved, emp_code, rowid, remarks FROM dbo.tr_leave where emp_code = :emp_code ORDER BY datefiled DESC, leavetype ';
         $stmt =$connL->prepare($query);
         $param = array(":emp_code" => $employee);
         $stmt->execute($param);
@@ -218,6 +225,7 @@ require '../vendor/autoload.php';
             do { 
                 echo '<tr>
                         <td>' . date('m-d-Y', strtotime($result['datefiled'])) . '</td>
+                        <td>' . $result['employee'] . '</td>
                         <td>' . $result['leavetype'] . '</td>
                         <td>' . date('m-d-Y', strtotime($result['date_from'])) . '</td>
                         <td>' . date('m-d-Y', strtotime($result['date_to'])) . '</td>
@@ -245,28 +253,11 @@ require '../vendor/autoload.php';
 
                 echo "<td>".$result['remarks']."</td>";
 
-                // switch((int)$result['approved'])
-                // {
-                //     case 1:
-                //         echo "<td colspan ='1'></td>";
-                //         break;
-                //     case 2:
-                //         echo '<td><button class="voidbtn btn-primary btnVoid" id="'.$result['emp_code'].' '.$result['rowid'].'" type="submit"><i class="fas fa-ban"></i></button></td>';
-                //         break;
-                //     case 3:
-                //         echo "<td colspan ='1'></td>";
-                //         break;
-                //     case 4:
-                //         echo "<td colspan ='1'></td>";
-                //         break;    
-                //     default:
-                //         break;
-                // }
                 
             } while ($result = $stmt->fetch());
             echo '</tr></tbody>';
         }else{
-            echo '<tfoot><tr><td colspan="9" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
         echo '</table>';
         
@@ -343,9 +334,9 @@ require '../vendor/autoload.php';
 
         if($leavetype === 'Vacation Leave without Pay' || $leavetype === 'Vacation Leave' || $leavetype === 'Bereavement Leave' || $leavetype === 'Emergency Leave'){
             $column = 'earned_vl = ';
-        }else if(leavetype === 'Sick Leave without Pay' || $leavetype === 'Sick Leave' ){
+        }else if($leavetype === 'Sick Leave without Pay' || $leavetype === 'Sick Leave' ){
             $column = 'earned_sl = ';
-        }else if(leavetype === 'Floating Leave'){
+        }else if($leavetype === 'Floating Leave'){
             $column = 'earned_fl = ';
         }
 
@@ -395,7 +386,7 @@ require '../vendor/autoload.php';
 
         global $connL;
 
-        $query = 'SELECT earned_vl, earned_sl FROM employee_leave WHERE emp_code = :emp_code';
+        $query = 'SELECT earned_vl,earned_sl,earned_fl FROM employee_leave WHERE emp_code = :emp_code';
         $param = array(":emp_code" => $empcode);
         $stmt =$connL->prepare($query);
         $stmt->execute($param);
@@ -404,6 +395,7 @@ require '../vendor/autoload.php';
         
         $earned_vl = (isset($result['earned_vl']) ? (float)$result['earned_vl'] : 0);
         $earned_sl = (isset($result['earned_sl']) ? (float)$result['earned_sl'] : 0);
+        $earned_fl = (isset($result['earned_fl']) ? (float)$result['earned_fl'] : 0);
 
         if($leavetype === 'Vacation Leave without Pay' || $leavetype === 'Vacation Leave' || $leavetype === 'Bereavement Leave' || $leavetype === 'Emergency Leave'){
             $balanceCount = $earned_vl;
@@ -427,6 +419,190 @@ require '../vendor/autoload.php';
         $result = $stmt->fetch();
 
         return $result['emp_code'];
+    }
+
+
+    function ApproveAllEmail($rowid,$empcode){
+
+
+        global $connL;
+
+        $rquery = "SELECT firstname+' '+lastname as [fullname],emailaddress FROM employee_profile 
+        WHERE emp_code = :empcode";
+        $rparam = array(':empcode' => $empcode);
+        $rstmt =$connL->prepare($rquery);
+        $rstmt->execute($rparam);
+        $rresult = $rstmt->fetch();
+        $e_req = $rresult['emailaddress'];
+        $n_req = $rresult['fullname'];
+
+        $qry = "SELECT * FROM tr_leave WHERE rowid = :rowid";
+        $pram = array(':rowid' => $rowid);
+        $stt =$connL->prepare($qry);
+        $stt->execute($pram);
+        $rs = $stt->fetch();
+        $approver = $rs['approval'];  
+        $curApproved = $rs['actl_cnt'];  
+        $curDateFrom = $rs['date_from'];  
+        $curDateTo = $rs['date_to'];       
+        $curLeaveType = $rs['leavetype'];
+
+        $query = "SELECT firstname+' '+lastname as [fullname],emailaddress FROM employee_profile WHERE emp_code = :approver";
+        $param = array(':approver' => $approver);
+        $stmt =$connL->prepare($query);
+        $stmt->execute($param);
+        $result = $stmt->fetch();
+        $e_appr = $result['emailaddress'];
+        $n_appr = $result['fullname'];
+        $apprv_name = $result['fullname'];
+
+
+        $erequester = $e_req;
+        $nrequester = $n_req;
+        $eapprover = $e_appr;
+        $napprover = $n_appr;
+
+        $mail = new PHPMailer(true);
+        try {
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;      
+        $mail->isSMTP();                                           
+        $mail->Host       = 'mail.obanana.com'; 
+        $mail->SMTPAuth   = true;                                   
+        $mail->Username   = 'hris-support@obanana.com';        
+        $mail->Password   = '@dmin2021@dmin2022';                              
+        $mail->SMTPSecure = 'tls';            
+        $mail->Port       = 587;                                   
+
+        $mail->setFrom('hris-support@obanana.com','HRIS-NOREPLY');
+        $mail->addAddress($erequester,'Requester');    
+
+        $mail->isHTML(true);                          
+        $mail->Subject = 'Approved Leave Request  ';
+        $mail->Body    = '<h1>Hi '.$nrequester.' </b>,</h1>Your leave requests has been approved.<br><br>
+                        <h2>From: '.$napprover.' <br><br></h2>
+                        <h2>Check the request in :
+                        <a href="http://124.6.185.87:6868/leave/leaveApplication_view.php">Leave Request List</a> 
+                        <br><br></h2>
+
+                        Thank you for using our application! <br>
+                        Regards, <br>
+                        Human Resource Information System <br> <br>
+
+                        <h6>If you are having trouble clicking the "Leave Request List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/leave/leaveApplication_view.php <h6>
+                       ';
+            $mail->send();
+            // echo 'Message has been sent';
+            } catch (Exception $e) {
+            // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+
+    }
+    
+    function ApproveAllLeave($rowid,$empcode){
+
+
+        global $connL;
+
+        $rquery = "SELECT firstname+' '+lastname as [fullname],emailaddress FROM employee_profile 
+        WHERE emp_code = :empcode";
+        $rparam = array(':empcode' => $empcode);
+        $rstmt =$connL->prepare($rquery);
+        $rstmt->execute($rparam);
+        $rresult = $rstmt->fetch();
+        $e_req = $rresult['emailaddress'];
+        $n_req = $rresult['fullname'];
+
+        $qry = "SELECT * FROM tr_leave WHERE rowid = :rowid";
+        $pram = array(':rowid' => $rowid);
+        $stt =$connL->prepare($qry);
+        $stt->execute($pram);
+        $rs = $stt->fetch();
+        $approver = $rs['approval'];  
+        $curApproved = $rs['actl_cnt'];  
+        $curDateFrom = $rs['date_from'];  
+        $curDateTo = $rs['date_to'];       
+        $curLeaveType = $rs['leavetype'];
+
+        $query = "SELECT firstname+' '+lastname as [fullname],emailaddress FROM employee_profile WHERE emp_code = :approver";
+        $param = array(':approver' => $approver);
+        $stmt =$connL->prepare($query);
+        $stmt->execute($param);
+        $result = $stmt->fetch();
+        $e_appr = $result['emailaddress'];
+        $n_appr = $result['fullname'];
+        $apprv_name = $result['fullname'];
+
+
+        $querys = "INSERT INTO logs_leave (leave_id,emp_code,emp_name,remarks,audituser,auditdate) 
+                VALUES(:leave_id,:emp_code,:emp_name,:remarks,:audituser,:auditdate) ";
+    
+                $stmts =$connL->prepare($querys);
+    
+                $params = array(
+                    ":leave_id" => $rowid,
+                    ":emp_code"=> $empcode,
+                    ":emp_name"=> $apprv_name,
+                    ":remarks" => 'Approved by '.$apprv_name,
+                    ":audituser" => $approver,
+                    ":auditdate"=>date('m-d-Y H:i:s')
+                );
+
+            $results = $stmts->execute($params);
+
+            echo $results;
+
+        $balanceCount = GetBalanceCount($empcode,$curLeaveType);
+        $leaveCount = GetActualCount($rowid, $empcode, $curDateFrom, $curDateTo);
+
+        if(floatval($leaveCount) === floatval($curApproved)){
+            UpdateLeaves($rowid, $curApproved, $curDateFrom, $curDateTo, 2,'');
+        }else{
+            $excess = $leaveCount - $curApproved;
+            UpdateLeaves($rowid, $curApproved, $curDateFrom, $curDateTo, 2,'');
+            UpdateLeaveCount($curLeaveType, $empcode, $balanceCount + $excess);
+        }
+
+        $erequester = $e_req;
+        $nrequester = $n_req;
+        $eapprover = $e_appr;
+        $napprover = $n_appr;
+
+        $mail = new PHPMailer(true);
+        try {
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;      
+        $mail->isSMTP();                                           
+        $mail->Host       = 'mail.obanana.com'; 
+        $mail->SMTPAuth   = true;                                   
+        $mail->Username   = 'hris-support@obanana.com';        
+        $mail->Password   = '@dmin2021@dmin2022';                              
+        $mail->SMTPSecure = 'tls';            
+        $mail->Port       = 587;                                   
+
+        $mail->setFrom('hris-support@obanana.com','HRIS-NOREPLY');
+        $mail->addAddress($erequester,'Requester');    
+
+        $mail->isHTML(true);                          
+        $mail->Subject = 'Approved Leave Request  ';
+        $mail->Body    = '<h1>Hi '.$nrequester.' </b>,</h1>Your leave request #'.$rowid.' has been approved.<br><br>
+                        <h2>From: '.$napprover.' <br><br></h2>
+                        <h2>Check the request in :
+                        <a href="http://124.6.185.87:6868/leave/leaveApplication_view.php">Leave Request List</a> 
+                        <br><br></h2>
+
+                        Thank you for using our application! <br>
+                        Regards, <br>
+                        Human Resource Information System <br> <br>
+
+                        <h6>If you are having trouble clicking the "Leave Request List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/leave/leaveApplication_view.php <h6>
+                       ';
+            $mail->send();
+            // echo 'Message has been sent';
+            } catch (Exception $e) {
+            // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+
+
+      
     }
 
     function ApproveLeave($employee,$curApproved,$curDateFrom,$curDateTo,$curLeaveType,$rowid,$approver,$empcode){
@@ -498,7 +674,7 @@ require '../vendor/autoload.php';
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 
@@ -527,6 +703,145 @@ require '../vendor/autoload.php';
 
 
       
+    }
+
+    
+    function RejectAllEmail($rowid,$empcode,$remarks){
+
+
+        global $connL;
+
+        $rquery = "SELECT firstname+' '+lastname as [fullname],emailaddress FROM employee_profile 
+        WHERE emp_code = :empcode";
+        $rparam = array(':empcode' => $empcode);
+        $rstmt =$connL->prepare($rquery);
+        $rstmt->execute($rparam);
+        $rresult = $rstmt->fetch();
+        $e_req = $rresult['emailaddress'];
+        $n_req = $rresult['fullname'];
+
+        $qry = "SELECT * FROM tr_leave WHERE rowid = :rowid";
+        $pram = array(':rowid' => $rowid);
+        $stt =$connL->prepare($qry);
+        $stt->execute($pram);
+        $rs = $stt->fetch();
+        $rejecter = $rs['approval'];  
+        $curRejected = $rs['actl_cnt'];  
+        $curDateFrom = $rs['date_from'];  
+        $curDateTo = $rs['date_to'];       
+        $curLeaveType = $rs['leavetype'];
+
+        $query = "SELECT firstname+' '+lastname as [fullname],emailaddress FROM employee_profile WHERE emp_code = :rejecter";
+        $param = array(':rejecter' => $rejecter);
+        $stmt =$connL->prepare($query);
+        $stmt->execute($param);
+        $result = $stmt->fetch();
+        $e_appr = $result['emailaddress'];
+        $n_appr = $result['fullname'];
+        $rjct_name = $result['fullname'];
+
+        $erequester = $e_req;
+        $nrequester = $n_req;
+        $eapprover = $e_appr;
+        $napprover = $n_appr;
+
+        $mail = new PHPMailer(true);
+        try {
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;      
+        $mail->isSMTP();                                           
+        $mail->Host       = 'mail.obanana.com'; 
+        $mail->SMTPAuth   = true;                                   
+        $mail->Username   = 'hris-support@obanana.com';        
+        $mail->Password   = '@dmin2021@dmin2022';                              
+        $mail->SMTPSecure = 'tls';            
+        $mail->Port       = 587;                                   
+
+        $mail->setFrom('hris-support@obanana.com','HRIS-NOREPLY');
+        $mail->addAddress($erequester,'Requester');    
+
+        $mail->isHTML(true);                          
+        $mail->Subject = 'Rejected Leave Request ';
+        $mail->Body    = '<h1>Hi '.$nrequester.' </b>,</h1>Your leave requests has been rejected.<br><br>
+                        <h2>From: '.$napprover.' <br></h2>
+                        <h2>Reject reason: '.$remarks.' <br><br></h2>
+                        <h2>Check the request in :
+                        <a href="http://124.6.185.87:6868/leave/leaveApplication_view.php">Leave Request List</a> 
+                        <br><br></h2>
+
+                        Thank you for using our application! <br><br>
+                        Regards, <br>
+                        Human Resource Information System <br> <br>
+
+                        <h6>If you are having trouble clicking the "Leave Request List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/leave/leaveApplication_view.php <h6>
+                       ';
+            $mail->send();
+            // echo 'Message has been sent';
+            } catch (Exception $e) {
+            // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }       
+
+    }
+    
+    function RejectAllLeave($rowid,$empcode,$remarks){
+        
+
+        global $connL;
+
+        $rquery = "SELECT firstname+' '+lastname as [fullname],emailaddress FROM employee_profile 
+        WHERE emp_code = :empcode";
+        $rparam = array(':empcode' => $empcode);
+        $rstmt =$connL->prepare($rquery);
+        $rstmt->execute($rparam);
+        $rresult = $rstmt->fetch();
+        $e_req = $rresult['emailaddress'];
+        $n_req = $rresult['fullname'];
+
+        $qry = "SELECT * FROM tr_leave WHERE rowid = :rowid";
+        $pram = array(':rowid' => $rowid);
+        $stt =$connL->prepare($qry);
+        $stt->execute($pram);
+        $rs = $stt->fetch();
+        $rejecter = $rs['approval'];  
+        $curRejected = $rs['actl_cnt'];  
+        $curDateFrom = $rs['date_from'];  
+        $curDateTo = $rs['date_to'];       
+        $curLeaveType = $rs['leavetype'];
+
+        $query = "SELECT firstname+' '+lastname as [fullname],emailaddress FROM employee_profile WHERE emp_code = :rejecter";
+        $param = array(':rejecter' => $rejecter);
+        $stmt =$connL->prepare($query);
+        $stmt->execute($param);
+        $result = $stmt->fetch();
+        $e_appr = $result['emailaddress'];
+        $n_appr = $result['fullname'];
+        $rjct_name = $result['fullname'];
+ 
+
+
+        $query = "INSERT INTO logs_leave (leave_id,emp_code,emp_name,remarks,audituser,auditdate) 
+                VALUES(:leave_id, :emp_code,:emp_name,:remarks,:audituser, :auditdate) ";
+    
+                $stmt =$connL->prepare($query);
+    
+                $param = array(
+                    ":leave_id" => $rowid,
+                    ":emp_code"=> $empcode,
+                    ":emp_name"=> $rjct_name,
+                    ":remarks" => 'Rejected by '.$rjct_name,
+                    ":audituser" => $rejecter,
+                    ":auditdate"=>date('m-d-Y H:i:s')
+                );
+
+            $result = $stmt->execute($param);
+
+            echo $result;
+
+        $balanceCount = GetBalanceCount($empcode,$curLeaveType);
+        UpdateLeaves($rowid, $curRejected, $curDateFrom, $curDateTo,3,$remarks);
+        UpdateLeaveCount($curLeaveType, $empcode, $balanceCount + $curRejected);
+
+ 
+
     }
 
     function RejectLeave($employee,$curDateFrom,$curDateTo,$curLeaveType,$curRejected,$remarks,$rowid,$rejecter,$empcode){
@@ -588,7 +903,7 @@ require '../vendor/autoload.php';
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 
@@ -616,6 +931,181 @@ require '../vendor/autoload.php';
             // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             }        
 
+    }
+
+    function FwdAllEmail($rowid,$empcode){
+        
+        global $connL;
+
+        $cmd = $connL->prepare("UPDATE dbo.tr_leave SET approval = :approval  where rowid = :rowid");
+        $cmd->bindValue('approval','PCH20000205');         
+        $cmd->bindValue('rowid',$rowid);                           
+        $cmd->execute();
+
+        $qry = "SELECT * FROM tr_leave WHERE rowid = :rowid";
+        $pram = array(':rowid' => $rowid);
+        $stt =$connL->prepare($qry);
+        $stt->execute($pram);
+        $rs = $stt->fetch();
+        $approver = $rs['approval'];        
+
+        $query = "SELECT firstname+' '+lastname as [fullname],emailaddress FROM employee_profile 
+        WHERE emp_code = :empcode";
+        $param = array(':empcode' => $approver);
+        $stmt =$connL->prepare($query);
+        $stmt->execute($param);
+        $result = $stmt->fetch();
+        $e_appr = $result['emailaddress'];
+        $n_appr = $result['fullname'];        
+        $aprvname = $result['fullname'];
+
+        $query = "INSERT INTO logs_leave (leave_id,emp_code,emp_name,remarks,audituser,auditdate) 
+                VALUES(:leave_id, :emp_code,:emp_name,:remarks,:audituser, :auditdate) ";
+    
+                $stmt =$connL->prepare($query);
+    
+                $param = array(
+                    ":leave_id" => $rowid,
+                    ":emp_code"=> $approver,
+                    ":emp_name"=> $aprvname,
+                    ":remarks" => 'Forwarded to Sir.Francis Calumba',
+                    ":audituser" => $approver,
+                    ":auditdate"=>date('m-d-Y H:i:s')
+                );
+
+            $result = $stmt->execute($param);
+
+            echo $result;
+
+        $erequester = 'fcalumba@premiummegastructures.com';
+        $nrequester = 'Francis Calumba';            
+        $eapprover = $e_appr;
+        $napprover = $n_appr;
+
+        $mail = new PHPMailer(true);
+        try {
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;      
+        $mail->isSMTP();                                           
+        $mail->Host       = 'mail.obanana.com'; 
+        $mail->SMTPAuth   = true;                                   
+        $mail->Username   = 'hris-support@obanana.com';        
+        $mail->Password   = '@dmin2021@dmin2022';                              
+        $mail->SMTPSecure = 'tls';            
+        $mail->Port       = 587;                                   
+
+        $mail->setFrom('hris-support@obanana.com','HRIS-NOREPLY');
+        $mail->addAddress($erequester,'President');    
+
+        $mail->isHTML(true);                          
+        $mail->Subject = 'Forward Request to the President: ';
+        $mail->Body    = '<h1>Hi '.$nrequester.' </b>,</h1>The leave requests has been forwarded to you for your approval.<br><br>
+                        <h2>From: '.$napprover.' <br><br></h2>
+    
+                        <h2>Check the request in :
+                        <a href="http://124.6.185.87:6868/leave/leaveApproval_view.php">Leave Approval List</a> 
+                        <br><br></h2>
+
+                        Thank you for using our application! <br><br>
+                        Regards, <br>
+                        Human Resource Information System <br> <br>
+
+                        <h6>If you are having trouble clicking the "Leave Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/leave/leaveApproval_view.php <h6>
+                       ';
+            $mail->send();
+            // echo 'Message has been sent';
+            } catch (Exception $e) {
+            // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }        
+
+ 
+    }
+    function FwdAllLeave($rowid,$empcode){
+        
+
+        global $connL;
+
+        $cmd = $connL->prepare("UPDATE dbo.tr_leave SET approval = :approval  where rowid = :rowid");
+        $cmd->bindValue('approval','PCH20000205');         
+        $cmd->bindValue('rowid',$rowid);                           
+        $cmd->execute();
+
+
+        $qry = "SELECT * FROM tr_leave WHERE rowid = :rowid";
+        $pram = array(':rowid' => $rowid);
+        $stt =$connL->prepare($qry);
+        $stt->execute($pram);
+        $rs = $stt->fetch();
+        $approver = $rs['approval'];        
+
+        $query = "SELECT firstname+' '+lastname as [fullname],emailaddress FROM employee_profile 
+        WHERE emp_code = :empcode";
+        $param = array(':empcode' => $approver);
+        $stmt =$connL->prepare($query);
+        $stmt->execute($param);
+        $result = $stmt->fetch();
+        $e_appr = $result['emailaddress'];
+        $n_appr = $result['fullname'];        
+        $aprvname = $result['fullname'];
+
+        $query = "INSERT INTO logs_leave (leave_id,emp_code,emp_name,remarks,audituser,auditdate) 
+                VALUES(:leave_id, :emp_code,:emp_name,:remarks,:audituser, :auditdate) ";
+    
+                $stmt =$connL->prepare($query);
+    
+                $param = array(
+                    ":leave_id" => $rowid,
+                    ":emp_code"=> $approver,
+                    ":emp_name"=> $aprvname,
+                    ":remarks" => 'Forwarded to Sir.Francis Calumba',
+                    ":audituser" => $approver,
+                    ":auditdate"=>date('m-d-Y H:i:s')
+                );
+
+            $result = $stmt->execute($param);
+
+            echo $result;
+
+        $erequester = 'fcalumba@premiummegastructures.com';
+        $nrequester = 'Francis Calumba';            
+        $eapprover = $e_appr;
+        $napprover = $n_appr;
+
+        $mail = new PHPMailer(true);
+        try {
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;      
+        $mail->isSMTP();                                           
+        $mail->Host       = 'mail.obanana.com'; 
+        $mail->SMTPAuth   = true;                                   
+        $mail->Username   = 'hris-support@obanana.com';        
+        $mail->Password   = '@dmin2021@dmin2022';                              
+        $mail->SMTPSecure = 'tls';            
+        $mail->Port       = 587;                                   
+
+        $mail->setFrom('hris-support@obanana.com','HRIS-NOREPLY');
+        $mail->addAddress($erequester,'President');    
+
+        $mail->isHTML(true);                          
+        $mail->Subject = 'Forward Request to the President: ';
+        $mail->Body    = '<h1>Hi '.$nrequester.' </b>,</h1>The leave request #'.$rowid.' has been forwarded to you for your approval.<br><br>
+                        <h2>From: '.$napprover.' <br><br></h2>
+    
+                        <h2>Check the request in :
+                        <a href="http://124.6.185.87:6868/leave/leaveApproval_view.php">Leave Approval List</a> 
+                        <br><br></h2>
+
+                        Thank you for using our application! <br><br>
+                        Regards, <br>
+                        Human Resource Information System <br> <br>
+
+                        <h6>If you are having trouble clicking the "Leave Approval List" button, copy and paste the URL below into your web browser: http://124.6.185.87:6868/leave/leaveApproval_view.php <h6>
+                       ';
+            $mail->send();
+            // echo 'Message has been sent';
+            } catch (Exception $e) {
+            // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }        
+
+ 
     }
 
         function FwdLeave($rowid,$approver,$empcode){
@@ -672,7 +1162,7 @@ require '../vendor/autoload.php';
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 
@@ -772,7 +1262,7 @@ require '../vendor/autoload.php';
             echo '</tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="8" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
         echo '</table>';
     } 

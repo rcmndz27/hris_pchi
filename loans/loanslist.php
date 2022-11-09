@@ -13,9 +13,14 @@ Class LoansList{
                 <th>Employee Code</th>
                 <th>Employee Name</th>
                 <th>Loan Name</th>
+                <th hidden>Loan Name</th>
+                <th hidden>Loan Amount</th>
                 <th>Loan Amount</th>
+                <th hidden>Loan Balance</th>
                 <th>Loan Balance</th>
+                <th hidden>Total Payment</th>
                 <th>Loan Total Payment</th>
+                <th hidden>Total Amortization</th>
                 <th>Loan Monthly Amortization</th>
                 <th>Loan Date</th>
                 <th>Status</th>
@@ -24,7 +29,8 @@ Class LoansList{
         </thead>
         <tbody>';
 
-        $query = "SELECT a.loan_id,c.firstname+' '+c.lastname as [fullname],a.emp_code,b.deduction_name as loan_name,b.rowid,a.loan_amount,a.loan_balance,a.loan_totpymt,a.loan_amort,a.loan_date,a.status from dbo.employee_loans_management a left join dbo.mf_deductions b on a.loandec_id = b.rowid left join employee_profile c  on a.emp_code = c.emp_code where c.emp_status = :empStatus ORDER by a.loan_id DESC";
+        $query = "SELECT a.loan_id,c.lastname+' '+c.firstname as [fullname],a.emp_code,b.deduction_name as loan_name,b.rowid,a.loan_amount,a.loan_balance,a.loan_totpymt,a.loan_amort,a.loan_date,a.status from dbo.employee_loans_management a left join dbo.mf_deductions b on a.loandec_id = b.rowid 
+        left join employee_profile c  on a.emp_code = c.emp_code where c.emp_status = :empStatus and a.status = 'Active' ORDER by c.lastname asC";
         $param = array(":empStatus" => $empStatus);
         $stmt =$connL->prepare($query);
         $stmt->execute($param);
@@ -54,7 +60,7 @@ Class LoansList{
     <td '.$onclick.' id="lam'.$result['loan_id'].'">₱ '. number_format($result['loan_amort'],2,'.',',').'</td>            
     <td '.$onclick.' id="ldt'.$result['loan_id'].'">' . date('Y-m-d', strtotime($result['loan_date'])) . '</td>
     <td '.$onclick.' id="st'.$result['loan_id'].'">' . $result['status']. '</td>';
-    echo'<td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="editLnModal('.$empcd.','.$lnid.','.$flname.')"><i class="fas fa-edit"></i>
+    echo'<td><button type="button" class="btn btn-info btn-sm btn-sm mb-1" onclick="editLnModal('.$empcd.','.$lnid.','.$flname.')"><i class="fas fa-edit"></i>
                 </button>
                 <button type="button" class="btn btn-danger btn-sm" onclick="viewLnLogs('.$empcd.','.$lnid.')" title="Loans Logs">
                     <i class="fas fa-history"></i>
@@ -69,19 +75,7 @@ Class LoansList{
             echo '<tfoot><tr><td colspan="10" class="text-center">No Results Found</td></tr></tfoot>'; 
         }
         echo '</table>
-        <div class="pagination-container">
-        <nav>
-          <ul class="pagination">
-            
-            <li data-page="prev" >
-                <span> << <span class="sr-only">(current)</span></span></li>
-    
-          <li data-page="next" id="prev">
-                  <span> >> <span class="sr-only">(current)</span></span>
-            </li>
-          </ul>
-        </nav>
-      </div>        ';
+                ';
     }
 
 

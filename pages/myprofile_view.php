@@ -50,7 +50,7 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-id-card fa-fw'></i>&nbsp;MY PROFILE</b></li>
+              <li class="breadcrumb-item active" aria-current="page"><b><i class='fas fa-id-card fa-fw mr-1'></i>My Profile</b></li>
             </ol>
           </nav>
           <?php  

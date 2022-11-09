@@ -63,7 +63,7 @@ Class AllowancesAdjList{
                 <td>' . substr(hash('sha256', $result['amount']),50). '</td>                
                 <td>' . $result['remarks']. '</td>';
                 echo'<td><button type="button" class="btn btn-info btn-sm" onclick="editAllAdjModal('.$empcd.','.$aladjdate.','.$descript.','.$amnt.','.$remark.','.$incdecr.')">
-                                <i class="fas fa-edit"></i> UPDATE
+                                <i class="fas fa-edit"></i> Update
                             </button></td>';
                 
             } while ($result = $stmt->fetch());
@@ -71,7 +71,7 @@ Class AllowancesAdjList{
             echo '</tr></tbody>';
 
         }else { 
-            echo '<tfoall><tr><td colspan="6" class="text-center">No Results Found</td></tr></tfoall>'; 
+            echo '<tfoall></tfoall>'; 
         }
         echo '</table>
                 <div class="pagination-container">

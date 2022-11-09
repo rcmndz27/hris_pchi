@@ -61,10 +61,7 @@ function GetPayrollList($action, $dtFrom, $dtTo,$location,$empCode){
     $r = $stmt->fetch();
 
 
-    echo "
-
-    <input type='text' id='myInput' onkeyup='myFunction()' placeholder='Search for names..' title='Type in a name'>
-    <table id='payrollList' class='table table-sm table3'> 
+    echo "<table id='payrollList' class='table table-sm table3'> 
     <thead>
     <tr>
     <th >Last Name</th>
@@ -162,19 +159,19 @@ echo "<tr class='csor-pointer'>".
 "<td ".$onclick." id='vlh".$r['badge_no']."'>" . round($r['vacation_leave'],2) . "</td>".
 "<td ".$onclick." id='slhnp".$r['badge_no']."'>" . round($r['sick_leave_nopay'],2) . "</td>".
 "<td ".$onclick." id='vlhnp".$r['badge_no']."'>" . round($r['vacation_leave_nopay'],2) . "</td>";
-            echo'<td><button type="button"class="btn btn-primary btn-sm mr-1 mb-1" 
-            onclick="editAttModal('.$empn.','.$badgeno.','.$rwd.')" title="Edit Attendance"><i class="fas fa-edit"></i>
-            </button>
-            <button type="button" class="btn btn-info btn-sm btn-sm mr-1 mb-1" onclick="viewAllAttendanceEmp('.$badgeno.','.$pfrom.','.$pto.')" title="View Attendance Logs">
-            <i class="fas fa-clock"></i>
-            </button>
-            <button type="button" class="btn btn-danger btn-sm mr-1 mb-1" onclick="viewPayrollLogs('.$badgeno.','.$pfrom.','.$pto.')" title="View Attendance Audit Logs">
-            <i class="fas fa-history"></i>
-            </button>
-            <button type="button" class="btn btn-secondary btn-sm mr-1 mb-1" onclick="viewApprovedForms('.$eCode.','.$pfrom.','.$pto.')" title="View Approved Forms">
-            <i class="fas fa-suitcase fa-fw"></i>
-            </button>                                                    
-            </td></tr>';
+echo'<td><button type="button"class="btn btn-warning btn-sm mr-1 mb-1" 
+onclick="editAttModal('.$empn.','.$badgeno.','.$rwd.')" title="Edit Attendance"><i class="fas fa-edit"></i>
+</button>
+<button type="button" class="btn btn-info btn-sm btn-sm mr-1 mb-1" onclick="viewAllAttendanceEmp('.$badgeno.','.$pfrom.','.$pto.')" title="View Attendance Logs">
+<i class="fas fa-clock"></i>
+</button>
+<button type="button" class="btn btn-danger btn-sm mr-1 mb-1" onclick="viewPayrollLogs('.$badgeno.','.$pfrom.','.$pto.')" title="View Attendance Audit Logs">
+<i class="fas fa-history"></i>
+</button>
+<button type="button" class="btn btn-secondary btn-sm mr-1 mb-1" onclick="viewApprovedForms('.$eCode.','.$pfrom.','.$pto.')" title="View Approved Forms">
+<i class="fas fa-suitcase fa-fw"></i>
+</button>                                                    
+</td></tr>';
 
 
             $totalDaysAbsent += round($r['tot_days_absent'], 2);
@@ -254,7 +251,7 @@ echo "<tr class='csor-pointer'>".
 
 
     }else { 
-        echo '<tfoot><tr><td colspan="21" class="paytop">No Results Found</td></tr></tfoot>'; 
+        echo '<tfoot></tfoot>'; 
     }
 
     echo"</table>"; 
@@ -421,7 +418,7 @@ function GetPayrollEmpList($action, $dtFrom, $dtTo,$location,$empCode,$emp_code)
             "<td id='vlh".$r['badge_no']."'>" . round($r['vacation_leave'],2) . "</td>".
             "<td id='slhnp".$r['badge_no']."'>" . round($r['sick_leave_nopay'],2) . "</td>".
             "<td id='vlhnp".$r['badge_no']."'>" . round($r['vacation_leave_nopay'],2) . "</td>";
-            echo'<td><button type="button"class="btn btn-primary btn-sm mr-1 mb-1" 
+            echo'<td><button type="button"class="btn btn-warning btn-sm mr-1 mb-1" 
             onclick="editAttModal('.$empn.','.$badgeno.','.$rwd.')" title="Edit Attendance"><i class="fas fa-edit"></i>
             </button>
             <button type="button" class="btn btn-info btn-sm btn-sm mr-1 mb-1" onclick="viewAllAttendanceEmp('.$badgeno.','.$pfrom.','.$pto.')" title="View Attendance Logs">

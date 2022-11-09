@@ -53,8 +53,6 @@ function uploadFile() {
 
  $(function(){
 
-
-
  $('#applyOfBus').click(function(e){
         e.preventDefault();
         $('#popUpModal').modal('toggle');

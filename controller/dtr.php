@@ -35,7 +35,6 @@
         $nm = (isset($result['name'])) ? $result['name'] : '' ;
         // $name=str_replace('.',', ',$nm);
         echo "
-        <button id='btnExport' onclick='exportReportToExcel(this)' class='btn btn-primary'><i class='fas fa-file-export'></i> Export </button>
             <table id='dtrList' class='table table-striped table-sm'>
                 <thead>
                     <tr>
@@ -78,7 +77,7 @@
                                 "<td>" . $sundertime."</td>".
                                 "<td>" . $sovertime."</td>".
                                 "<td>" . $result['wday'] . "</td>".
-                                "<td>" . $result['remarks'] . "</td>".
+                                "<td>" . str_replace(';','<br>',$result['remarks']). "</td>".
                                 "</tr>";
     
                         $totalWork += $result['workhours'];
@@ -102,7 +101,7 @@
                             "</tr>
                         </tfoot>";
                 }else { 
-                    echo '<tfoot><tr><td colspan="7" class="text-center">No Results Found</td></tr></tfoot>'; 
+                    echo '<tfoot></tfoot>'; 
                 }
     
             echo"

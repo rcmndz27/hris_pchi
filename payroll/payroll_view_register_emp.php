@@ -59,8 +59,8 @@
         <div class='col-md-2'>
             <?php $dd->GenerateSingleGenDropDown("addempnames", $mf->GetAttEmployeeNamesCode("allempcode")); ?> 
         </div>        
-        <button type="button" id="search" class="btn btn-danger mr-1 mb-1" onmousedown="javascript:deletePayReg()">
-            <i class="fas fa-backspace mr-1"></i> Delete                      
+        <button type="button" id="search" class="btn btn-danger mr-1 mb-1 text-white" onmousedown="javascript:deletePayReg()">
+            <i class="fas fa-backspace mr-1 text-white"></i> Delete                      
         </button>
           <button class='btn btn-success mb-1' onclick='ConfirmPayRegView()'>
             <i class='fas fa-check-square'></i> 

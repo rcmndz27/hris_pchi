@@ -19,8 +19,11 @@
         }
     }
 ?>
-<script type='text/javascript' src='../leave/leaveApplication.js'></script>
 <link rel="stylesheet" type="text/css" href="../leave/leaveapp.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script type='text/javascript' src='../leave/leaveApplication.js'></script>
+<script type='text/javascript' src='../js/validator.js'></script>
 <div class="container">
     <div class="section-title">
           <h1>LEAVE APPROVAL</h1>
@@ -61,8 +64,8 @@
                     </div>
                     <div class="modal-body">
                         <div>
-                            <label for="rejectReason">Remarks</label>
-                            <input type="text" name="remarks" id="remarks" class="form-control">
+                        <label for="rejectReason">Reason for Rejection:</label><span class="req">*</span>
+                            <input type="text" name="remarks" id="remarks" class="form-control inputtext">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -75,12 +78,5 @@
     </div>
 </div>
 
-
-
 <?php  include('../_footer.php');?>
 
-<!-- <script type="text/javascript">
-    $(document).ready(function(){
-
-});
-</script> -->

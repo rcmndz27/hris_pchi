@@ -63,7 +63,7 @@ Class OvertimeAdjList{
                 <td>' . substr(hash('sha256', $result['amount']),50). '</td>                
                 <td>' . $result['remarks']. '</td>';
                 echo'<td><button type="button" class="btn btn-info btn-sm" onclick="editOtAdjModal('.$empcd.','.$otadjdate.','.$descript.','.$amnt.','.$remark.','.$incdecr.')">
-                                <i class="fas fa-edit"></i> UPDATE
+                                <i class="fas fa-edit"></i> Update
                             </button></td>';
                 
                 
@@ -73,7 +73,7 @@ Class OvertimeAdjList{
             echo '</tr></tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="6" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
         echo '</table>
                 <div class="pagination-container">

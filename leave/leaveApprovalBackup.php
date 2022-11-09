@@ -116,7 +116,7 @@ require '../vendor/autoload.php';
             } while ($result = $stmt->fetch());
             echo "</tbody><tfoot>";
         }else{
-            echo '<tr><td colspan="8" class="text-center">No Results Found</td></tr>';
+            echo '';
         }
 
         echo "<tfoot></table>";
@@ -175,7 +175,7 @@ require '../vendor/autoload.php';
                     '<td class="text-center">'. round($earned_sl,2) .'</td>'.
                     '<td class="text-center">'. round($earned_vl,2) .'</td>'.
                     '<td class="text-center">'. round($earned_fl,2) .'</td>'.
-                    '<td class="text-center"><button class="btn btn-primary btnViewing" id="'.$result['emp_code'].'" type="submit"><i class="fas fa-search"></button></td>'.
+                    '<td class="text-center"><button class="btn btn-warning btnViewing" id="'.$result['emp_code'].'" type="submit"><i class="fas fa-search"></button></td>'.
                 '</tr>';
                 
             } while ($result = $stmt->fetch());
@@ -183,7 +183,7 @@ require '../vendor/autoload.php';
             echo '</tbody><tfoot>';
 
         }else{
-            echo '<tr><td colspan="9" class="text-center">No Results Found</td></tr>';
+            echo '';
         }
 
         echo "</tfoot></table>";
@@ -257,7 +257,7 @@ require '../vendor/autoload.php';
                 //         echo "<td colspan ='1'></td>";
                 //         break;
                 //     case 2:
-                //         echo '<td><button class="voidbtn btn-primary btnVoid" id="'.$result['emp_code'].' '.$result['rowid'].'" type="submit"><i class="fas fa-ban"></i></button></td>';
+                //         echo '<td><button class="voidbtn btn-warning btnVoid" id="'.$result['emp_code'].' '.$result['rowid'].'" type="submit"><i class="fas fa-ban"></i></button></td>';
                 //         break;
                 //     case 3:
                 //         echo "<td colspan ='1'></td>";
@@ -272,7 +272,7 @@ require '../vendor/autoload.php';
             } while ($result = $stmt->fetch());
             echo '</tr></tbody>';
         }else{
-            echo '<tfoot><tr><td colspan="9" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
         echo '</table>';
         
@@ -349,9 +349,9 @@ require '../vendor/autoload.php';
 
         if($leavetype === 'Vacation Leave without Pay' || $leavetype === 'Vacation Leave' || $leavetype === 'Bereavement Leave' || $leavetype === 'Emergency Leave'){
             $column = 'earned_vl = ';
-        }else if(leavetype === 'Sick Leave without Pay' || $leavetype === 'Sick Leave' ){
+        }else if($leavetype === 'Sick Leave without Pay' || $leavetype === 'Sick Leave' ){
             $column = 'earned_sl = ';
-        }else if(leavetype === 'Floating Leave'){
+        }else if($leavetype === 'Floating Leave'){
             $column = 'earned_fl = ';
         }
 
@@ -504,7 +504,7 @@ require '../vendor/autoload.php';
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 
@@ -594,7 +594,7 @@ require '../vendor/autoload.php';
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 
@@ -678,7 +678,7 @@ require '../vendor/autoload.php';
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 
@@ -778,7 +778,7 @@ require '../vendor/autoload.php';
             echo '</tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="8" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
         echo '</table>';
     } 

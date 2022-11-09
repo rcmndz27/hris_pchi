@@ -20,29 +20,7 @@ Class WfhApp{
 
         global $connL;
 
-        echo '
-        <div class="form-row mb-2">  
-                    <div class="col-lg-1">
-                        <select class="form-select" name="state" id="maxRows">
-                             <option value="5000">ALL</option>
-                             <option value="5">5</option>
-                             <option value="10">10</option>
-                             <option value="15">15</option>
-                             <option value="20">20</option>
-                             <option value="50">50</option>
-                             <option value="70">70</option>
-                             <option value="100">100</option>
-                        </select> 
-                </div>         
-                <div class="col-lg-8">
-                </div>                               
-                <div class="col-lg-3">        
-                    <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for work from home.." title="Type in work from home details"> 
-                        </div>                     
-                </div>   ';
-                echo"    
-        <button id='btnExport' onclick='exportReportToExcel(this)' class='btn btn-primary'><i class='fas fa-file-export'></i>Export</button>  ";
-        echo'        
+        echo '        
         <table id="WfhListTab" class="table table-striped table-sm">
         <thead>
             <tr>
@@ -79,30 +57,38 @@ Class WfhApp{
         if($result){
             do { 
 
+
                 $wfhdate = "'".date('m-d-Y', strtotime($result['wfh_date']))."'";
-                $wfhtask = "'".$result['wfh_task']."'";
-                $wfhoutput = "'".$result['wfh_output']."'";
+                $wfhtaskz = "'".(isset($result['wfh_task']) ?  trim(str_replace("'",'',$result['wfh_task'])) : 'n/a')."'";
+                $wfhtask = preg_replace( "/\r|\n/", "", $wfhtaskz );                
+                $wfhoutputz = "'".(isset($result['wfh_output']) ?  trim(str_replace("'",'',$result['wfh_output'])) : 'n/a')."'";
+                $wfhoutput = preg_replace( "/\r|\n/", "", $wfhoutputz );  
+                $wfhoutput2z = "'".(isset($result['wfh_output2']) ?  trim(str_replace("'",'',$result['wfh_output2'])) : 'n/a')."'";
+                $wfhoutput2 = preg_replace( "/\r|\n/", "", $wfhoutput2z );  
                 $wfhpercentage = "'".$result['wfh_percentage']."'";
                 $wfhstats = "'".$result['stats']."'";
                 $wfhid = "'".$result['wfhid']."'";
                 $empcode = "'".$result['empcd']."'";
                 $attid = "'".$result['attid']."'";
+                $atch = "'".$result['attachment']."'";
+                $rjrson = "'".$result['reject_reason']."'";
+                $onclick = 'onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhpercentage.','.$wfhstats.','.$rjrson.','.$atch.')"';
                 echo "
-                <tr>
-                <td>" . date('F d,Y', strtotime($result['wfh_date']))."</td>
-                <td>" . $result['fullname']."</td>
-                <td>" . $result['wfh_task'] ."</td>
-                <td>" . (isset($result['wfh_output']) ? $result['wfh_output'] : 'n/a') ."</td>
-                <td>" . (isset($result['wfh_output2']) ? $result['wfh_output2'] : 'n/a') ."</td>
-                <td>" . $result['wfh_percentage']."</td>
-                <td id='ti".$result['wfhid']."'>".(isset($result['timein']) ? date('h:i A', strtotime($result['timein'])) : 'n/a') . "</td>
-                <td id='to".$result['wfhid']."'>".(isset($result['timeout']) ? date('h:i A', strtotime($result['timeout'])) : 'n/a') . "</td>
-                <td id='st".$result['wfhid']."'>" . $result['stats']."</td>";
+                <tr class='csor-pointer'>
+                <td ".$onclick.">" . date('F d, Y', strtotime($result['wfh_date']))."</td>
+                <td ".$onclick.">" . $result['fullname'] ."</td>
+                <td ".$onclick.">" . $result['wfh_task'] ."</td>
+                <td ".$onclick.">" . (isset($result['wfh_output']) ? $result['wfh_output'] : 'n/a') ."</td>
+                <td ".$onclick.">" . (isset($result['wfh_output2']) ? $result['wfh_output2'] : 'n/a') ."</td>
+                <td ".$onclick.">" . $result['wfh_percentage']."</td>
+                <td ".$onclick." id='ti".$result['wfhid']."'>".(isset($result['timein']) ? date('h:i A', strtotime($result['timein'])) : 'n/a') . "</td>
+                <td ".$onclick." id='to".$result['wfhid']."'>".(isset($result['timeout']) ? date('h:i A', strtotime($result['timeout'])) : 'n/a') . "</td>
+                <td ".$onclick." id='st".$result['wfhid']."'>" . $result['stats']."</td>";
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhpercentage.','.$wfhstats.')" title="View Work From Home">
+                <td><button type="button" class="btn btn-info btn-sm mb-1" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhpercentage.','.$wfhstats.','.$rjrson.','.$atch.')" title="View Work From Home">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
+                            <button type="button" class="btn btn-warning btn-sm mb-1" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                        
                             </td>';
@@ -114,48 +100,17 @@ Class WfhApp{
             echo '</tr></tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="8" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
         echo '</table>
-        <div class="pagination-container">
-        <nav>
-          <ul class="pagination">
-            
-            <li data-page="prev" >
-                <span> << <span class="sr-only">(current)</span></span></li>
-    
-          <li data-page="next" id="prev">
-                  <span> >> <span class="sr-only">(current)</span></span>
-            </li>
-          </ul>
-        </nav>
-      </div>';
+        ';
     }
 
 public function GetAllWfhRepHistory($date_from,$date_to,$empCode){
 
         global $connL;
 
-        echo '
-        <div class="form-row mb-2">  
-                    <div class="col-lg-1">
-                        <select class="form-select" name="state" id="maxRows">
-                             <option value="5000">ALL</option>
-                             <option value="5">5</option>
-                             <option value="10">10</option>
-                             <option value="15">15</option>
-                             <option value="20">20</option>
-                             <option value="50">50</option>
-                             <option value="70">70</option>
-                             <option value="100">100</option>
-                        </select> 
-                </div>         
-                <div class="col-lg-8">
-                </div>                               
-                <div class="col-lg-3">        
-                    <input type="text" id="myInput" class="form-control" onkeyup="myFunctionRep()" placeholder="Search for work from home.." title="Type in work from home details"> 
-                        </div>                     
-                </div>         
+        echo '        
         <table id="WfhListRepTab" class="table table-striped table-sm">
         <thead>
             <tr>
@@ -193,29 +148,37 @@ public function GetAllWfhRepHistory($date_from,$date_to,$empCode){
             do { 
 
                 $wfhdate = "'".date('m-d-Y', strtotime($result['wfh_date']))."'";
-                $wfhtask = "'".$result['wfh_task']."'";
-                $wfhoutput = "'".$result['wfh_output']."'";
+                $wfhtaskz = "'".(isset($result['wfh_task']) ?  trim(str_replace("'",'',$result['wfh_task'])) : 'n/a')."'";
+                $wfhtask = preg_replace( "/\r|\n/", "", $wfhtaskz );                
+                $wfhoutputz = "'".(isset($result['wfh_output']) ?  trim(str_replace("'",'',$result['wfh_output'])) : 'n/a')."'";
+                $wfhoutput = preg_replace( "/\r|\n/", "", $wfhoutputz );  
+                $wfhoutput2z = "'".(isset($result['wfh_output2']) ?  trim(str_replace("'",'',$result['wfh_output2'])) : 'n/a')."'";
+                $wfhoutput2 = preg_replace( "/\r|\n/", "", $wfhoutput2z );  
                 $wfhpercentage = "'".$result['wfh_percentage']."'";
                 $wfhstats = "'".$result['stats']."'";
                 $wfhid = "'".$result['wfhid']."'";
+                $appr_over = "'".$result['approver']."'";
                 $empcode = "'".$result['empcd']."'";
                 $attid = "'".$result['attid']."'";
+                $atch = "'".$result['attachment']."'";
+                $rjrson = "'".$result['reject_reason']."'";
+                $onclick = 'onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhpercentage.','.$wfhstats.','.$rjrson.','.$atch.')"';
                 echo "
-                <tr>
-                <td>" . date('F d,Y', strtotime($result['wfh_date']))."</td>
-                <td>" . $result['fullname']."</td>
-                <td>" . $result['wfh_task'] ."</td>
-                <td>" . (isset($result['wfh_output']) ? $result['wfh_output'] : 'n/a') ."</td>
-                <td>" . (isset($result['wfh_output2']) ? $result['wfh_output2'] : 'n/a') ."</td>
-                <td>" . $result['wfh_percentage']."</td>
-                <td id='ti".$result['wfhid']."'>".(isset($result['timein']) ? date('h:i A', strtotime($result['timein'])) : 'n/a') . "</td>
-                <td id='to".$result['wfhid']."'>".(isset($result['timeout']) ? date('h:i A', strtotime($result['timeout'])) : 'n/a') . "</td>
-                <td id='st".$result['wfhid']."'>" . $result['stats']."</td>";
+                <tr class='csor-pointer'>
+                <td ".$onclick.">" . date('F d, Y', strtotime($result['wfh_date']))."</td>
+                <td ".$onclick.">" . $result['fullname'] ."</td>
+                <td ".$onclick.">" . $result['wfh_task'] ."</td>
+                <td ".$onclick.">" . (isset($result['wfh_output']) ? $result['wfh_output'] : 'n/a') ."</td>
+                <td ".$onclick.">" . (isset($result['wfh_output2']) ? $result['wfh_output2'] : 'n/a') ."</td>
+                <td ".$onclick.">" . $result['wfh_percentage']."</td>
+                <td ".$onclick." id='ti".$result['wfhid']."'>".(isset($result['timein']) ? date('h:i A', strtotime($result['timein'])) : 'n/a') . "</td>
+                <td ".$onclick." id='to".$result['wfhid']."'>".(isset($result['timeout']) ? date('h:i A', strtotime($result['timeout'])) : 'n/a') . "</td>
+                <td ".$onclick." id='st".$result['wfhid']."'>" . $result['stats']."</td>";
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhpercentage.','.$wfhstats.')" title="View Work From Home">
+                <td><button type="button" class="btn btn-info btn-sm mb-1" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhpercentage.','.$wfhstats.','.$rjrson.','.$atch.')" title="View Work From Home">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
+                            <button type="button" class="btn btn-warning btn-sm mb-1" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                        
                             </td>';
@@ -227,48 +190,17 @@ public function GetAllWfhRepHistory($date_from,$date_to,$empCode){
             echo '</tr></tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="8" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
         echo '</table>
-        <div class="pagination-container">
-        <nav>
-          <ul class="pagination">
-            
-            <li data-page="prev" >
-                <span> << <span class="sr-only">(current)</span></span></li>
-    
-          <li data-page="next" id="prev">
-                  <span> >> <span class="sr-only">(current)</span></span>
-            </li>
-          </ul>
-        </nav>
-      </div>';
+        ';
     }
 
 
     public function GetWfhAppHistory(){
         global $connL;
 
-        echo '
-        <div class="form-row">  
-                    <div class="col-lg-1">
-                        <select class="form-select" name="state" id="maxRows">
-                             <option value="5000">ALL</option>
-                             <option value="5">5</option>
-                             <option value="10">10</option>
-                             <option value="15">15</option>
-                             <option value="20">20</option>
-                             <option value="50">50</option>
-                             <option value="70">70</option>
-                             <option value="100">100</option>
-                        </select> 
-                </div>         
-                <div class="col-lg-8">
-                </div>                               
-                <div class="col-lg-3">        
-                    <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for work from home.." title="Type in work from home details"> 
-                        </div>                     
-                </div>         
+        echo '      
         <table id="wfhList" class="table table-sm">
         <thead>
             <tr>
@@ -303,9 +235,12 @@ public function GetAllWfhRepHistory($date_from,$date_to,$empCode){
             do { 
 
                 $wfhdate = "'".date('m-d-Y', strtotime($result['wfh_date']))."'";
-                $wfhtask = "'".$result['wfh_task']."'";
-                $wfhoutput = "'".$result['wfh_output']."'";
-                $wfhoutput2 = "'".$result['wfh_output2']."'";
+                $wfhtaskz = "'".(isset($result['wfh_task']) ?  trim(str_replace('"',"",$result['wfh_task'])) : 'n/a')."'";
+                $wfhtask = preg_replace("/\r|\n/", "", $wfhtaskz );                
+                $wfhoutputz = "'".(isset($result['wfh_output']) ?  trim(str_replace("'",'',$result['wfh_output'])) : 'n/a')."'";
+                $wfhoutput = preg_replace( "/\r|\n/", "", $wfhoutputz );  
+                $wfhoutput2z = "'".(isset($result['wfh_output2']) ?  trim(str_replace("'",'',$result['wfh_output2'])) : 'n/a')."'";
+                $wfhoutput2 = preg_replace( "/\r|\n/", "", $wfhoutput2z );  
                 $wfhpercentage = "'".$result['wfh_percentage']."'";
                 $wfhstats = "'".$result['stats']."'";
                 $wfhid = "'".$result['wfhid']."'";
@@ -313,7 +248,8 @@ public function GetAllWfhRepHistory($date_from,$date_to,$empCode){
                 $empcode = "'".$result['empcd']."'";
                 $attid = "'".$result['attid']."'";
                 $atch = "'".$result['attachment']."'";
-                $onclick = 'onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$appr_over.','.$atch.')"';
+                $rjrson = "'".$result['reject_reason']."'";
+                $onclick = 'onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$rjrson.','.$appr_over.','.$atch.')"';
                 echo "
                 <tr class='csor-pointer'>
                 <td ".$onclick.">" . date('F d, Y', strtotime($result['wfh_date']))."</td>
@@ -326,10 +262,10 @@ public function GetAllWfhRepHistory($date_from,$date_to,$empCode){
                 <td ".$onclick." id='st".$result['wfhid']."'>" . $result['stats']."</td>";
                 if($result['stats'] == 'PENDING' and $result['wfh_date'] <> date('Y-m-d')){
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$appr_over.','.$atch.')" title="View Work From Home">
+                <td><button type="button" class="btn btn-info btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$rjrson.','.$appr_over.','.$atch.')" title="View Work From Home">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
+                            <button type="button" class="btn btn-warning btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                           
                             <button type="button" id="clv'.$result['wfhid'].'" class="btn btn-danger btn-sm" onclick="cancelWfh('.$wfhid.','.$empcode.')" title="Cancel Work From Home">
@@ -338,10 +274,10 @@ public function GetAllWfhRepHistory($date_from,$date_to,$empCode){
                             </td>';
                 }else if($result['stats'] == 'PENDING'and $result['wfh_date'] == date('Y-m-d')){
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$appr_over.','.$atch.')" title="View Work From Home">
+                <td><button type="button" class="btn btn-info btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$rjrson.','.$appr_over.','.$atch.')" title="View Work From Home">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
+                            <button type="button" class="btn btn-warning btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                           ';
 
@@ -369,10 +305,10 @@ public function GetAllWfhRepHistory($date_from,$date_to,$empCode){
 
                 }else if($result['stats'] == 'APPROVED'and $result['wfh_date'] == date('Y-m-d')){
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$appr_over.','.$atch.')" title="View Work From Home">
+                <td><button type="button" class="btn btn-info btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$rjrson.','.$appr_over.','.$atch.')" title="View Work From Home">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
+                            <button type="button" class="btn btn-warning btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                           ';
 
@@ -399,10 +335,10 @@ public function GetAllWfhRepHistory($date_from,$date_to,$empCode){
                             }
                 }else if($result['stats'] == 'APPROVED' and $result['wfh_date'] <> date('Y-m-d') and !isset($result['timein']) and !isset($result['timeout'])){
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$appr_over.','.$atch.')" title="View Work From Home">
+                <td><button type="button" class="btn btn-info btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$rjrson.','.$appr_over.','.$atch.')" title="View Work From Home">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
+                            <button type="button" class="btn btn-warning btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>
                             <button type="button" id="clv'.$result['wfhid'].'" class="btn btn-danger btn-sm" onclick="cancelWfh('.$wfhid.','.$empcode.')" title="Cancel Work From Home">
@@ -411,19 +347,19 @@ public function GetAllWfhRepHistory($date_from,$date_to,$empCode){
 
                 }else if($result['stats'] == 'CANCELLED'){
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$appr_over.','.$atch.')" title="View Work From Home">
+                <td><button type="button" class="btn btn-info btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$rjrson.','.$appr_over.','.$atch.')" title="View Work From Home">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
+                            <button type="button" class="btn btn-warning btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button>                                                   
                             </td>';
                 }else{
                 echo'
-                <td><button type="button" class="btn btn-info btn-sm btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$appr_over.','.$atch.')" title="View Work From Home">
+                <td><button type="button" class="btn btn-info btn-sm" onclick="viewWfhModal('.$wfhdate.','.$wfhtask.','.$wfhoutput.','.$wfhoutput2.','.$wfhpercentage.','.$wfhstats.','.$rjrson.','.$appr_over.','.$atch.')" title="View Work From Home">
                                 <i class="fas fa-binoculars"></i>
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
+                            <button type="button" class="btn btn-warning btn-sm" onclick="viewWfhHistoryModal('.$wfhid.')" title="View Logs">
                                 <i class="fas fa-history"></i>
                             </button> 
                             </td>';
@@ -435,22 +371,9 @@ public function GetAllWfhRepHistory($date_from,$date_to,$empCode){
             echo '</tr></tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="9" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
-        echo '</table>
-        <div class="pagination-container">
-        <nav>
-          <ul class="pagination">
-            
-            <li data-page="prev" >
-                <span> << <span class="sr-only">(current)</span></span></li>
-    
-          <li data-page="next" id="prev">
-                  <span> >> <span class="sr-only">(current)</span></span>
-            </li>
-          </ul>
-        </nav>
-      </div>';
+        echo '</table>';
     }
 
     public function InsertAppliedWfhApp($empCode,$empReportingTo,$wfhDate,$wfh_task,$wfh_output,$wfh_percentage,$e_req,$n_req,$e_appr,$n_appr,$attachment){
@@ -522,7 +445,7 @@ public function GetAllWfhRepHistory($date_from,$date_to,$empCode){
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 

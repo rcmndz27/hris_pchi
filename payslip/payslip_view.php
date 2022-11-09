@@ -55,7 +55,7 @@ else
                     <?php $dd->GenerateDropDown("ddcutoff", $mf->GetTKList("tkview")); ?>
             </div>
             <div class="col-md-2">
-                <button type="button" id="search" class="btn btn-primary" onclick="genePayrl()" ><i class="fas fa-search-plus mr-1"></i>Generate                    
+                <button type="button" id="search" class="btn btn-warning" onclick="genePayrl()" ><i class="fas fa-search-plus mr-1"></i>Generate                    
                 </button>
                 <a href='javascript:generatePDF()'><img src="../img/expdf.png" height="40" class="pdfimg" id='expdf'></a>
             </div>

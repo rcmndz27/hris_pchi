@@ -75,6 +75,7 @@ require '../vendor/autoload.php';
                             <th>Task</th>
                             <th>Expected Output</th>
                             <th>Percentage %</th>
+                            <th hidden>reporting</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -100,14 +101,14 @@ require '../vendor/autoload.php';
                           if($result['reporting_to'] == 'PCH20000205') {
 
                            }else{
-                            echo '<button class="btn btn-primary btn-sm btnFwd" id="'.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-arrow-right"></i><button id="empcode" value="'.$result['emp_code'].'" hidden></button>';
+                            echo '<button class="btn btn-warning btn-sm btnFwd" id="'.$result['rowid'].'" value="'.$result['rowid'].'"><i class="fas fa-arrow-right"></i><button id="empcode" value="'.$result['emp_code'].'" hidden></button>';
                          } 
                          
                         "</td></tr>";                                
                 } while($result = $stmt->fetch());
                 echo "</tbody>";
             }else{
-                echo '<tfoot><tr><td colspan="6" class="text-center">No Results Found</td></tr></tfoot>'; 
+                echo '<tfoot></tfoot>'; 
             }
 
             echo "</table>";
@@ -185,7 +186,7 @@ require '../vendor/autoload.php';
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 
@@ -284,7 +285,7 @@ require '../vendor/autoload.php';
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 
@@ -368,7 +369,7 @@ function FwdWfh($empReportingTo,$empId,$approver,$rowid){
         $mail->Host       = 'mail.obanana.com'; 
         $mail->SMTPAuth   = true;                                   
         $mail->Username   = 'hris-support@obanana.com';        
-        $mail->Password   = '@dmin123@dmin123';                              
+        $mail->Password   = '@dmin2021@dmin2022';                              
         $mail->SMTPSecure = 'tls';            
         $mail->Port       = 587;                                   
 

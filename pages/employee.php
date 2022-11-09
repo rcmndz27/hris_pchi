@@ -735,14 +735,14 @@ $attid = (isset($spresult['attid'])) ? "'".$spresult['attid']."'" : '' ;
     <div class="col-md-4">
     <div class="card">
         <div class="d-flex flex-row align-items-center justify-content-between">
-            <h5 class="m-0 font-weight-bold">Legend: 
+            <h6 class="m-0 font-weight-bold">Legend: 
                 <div class="onsite"></div><i class="ilgnd">Onsite</i>
                 <div class="wfhome"></div><i class="ilgnd">WFH</i>
                 <div class="obsched"></div><i class="ilgnd">OB</i>
                 <div class="leaveschd"></div><i class="ilgnd">Leave</i>
                 <div class="holisched"></div><i class="ilgnd">Holiday</i>
                 <div class="noinnout"></div><i class="ilgnd">No In/No Out</i>
-            </h5>
+            </h6>
               
         </div>
     </div>
@@ -806,11 +806,12 @@ $attid = (isset($spresult['attid'])) ? "'".$spresult['attid']."'" : '' ;
         <div class="card-body cdbody">
               <?php  
                 if($resultu){
-                    $ppic = (isset($resultu['emp_pic_loc'])) ? $resultu['emp_pic_loc'] : 'nophoto.jpg' ;
                     do { 
+                        $ppic = (isset($resultu['up_avatar'])) ? $resultu['up_avatar'] : 'nophoto.jpg' ;
+
                 echo ' <div class="row">
                     <div class="col-sm-1">
-                      <h6 class="mb-0"><img class="rounded-circle" style="width:30px;height:30px;" src="../img/'.$ppic.'"></h6>
+                      <h6 class="mb-0"><img class="rounded-circle" style="width:30px;height:30px;" src="../uploads/employees/'.$ppic.'"></h6>
                     </div>
                     <div class="col-sm-9 text-secondary"><b>
                       '.$resultu['lastname'].', '.$resultu['firstname'].'</b><br>'.$resultu['department'].'<br>'.date('F d', strtotime($resultu['birthdate'])).'  

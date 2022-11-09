@@ -58,7 +58,7 @@
             <button type="button" id="search" class="btn btn-primary text-white mr-1" onclick="generateEmpStatus();">
               <i class="fas fa-search-plus"></i> Generate                      
             </button>  
-        <button type="button" class="btn btn-primary" id="salaryAdjEntry"><i class="fas fa-plus-circle"></i> Add New Employee Salary </button>                                              
+        <button type="button" class="btn btn-warning" id="salaryAdjEntry"><i class="fas fa-plus-circle"></i> Add New Salary Adjustment </button>                                              
         </div>
       <div class="col-md-1">
             <select class="form-select" name="state" id="maxRows">

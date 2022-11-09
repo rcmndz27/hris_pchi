@@ -29,6 +29,15 @@
     }    
 ?>
 <link rel="stylesheet" type="text/css" href="../loans/all_view.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
 <script type="text/javascript" src="../loans/loans_ent.js"></script>
 <script type='text/javascript' src='../js/validator.js'></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -46,7 +55,7 @@
                         </i>Loans Management List</li>
             </ol>
           </nav>
-    <div class="form-row">
+    <div class="form-row mb-2">
         <div class='col-sm-1'>
             <label for="payroll_period" class="col-form-label pad">Status:</label>
         </div>
@@ -62,23 +71,8 @@
             <button type="button" id="search" class="btn btn-primary text-white mr-1" onclick="generateEmpStatus();">
               <i class="fas fa-search-plus"></i> Generate                      
             </button>  
-        <button type="button" class="btn btn-secondary" id="loansEntry"><i class="fas fa-plus-circle"></i> Add New Employee Loan </button>                                              
-        </div>
-      <div class="col-md-1">
-            <select class="form-select" name="state" id="maxRows">
-                <option value="5000">ALL</option>                
-                 <option value="5">5</option>
-                 <option value="10">10</option>
-                 <option value="15">15</option>
-                 <option value="20">20</option>
-                 <option value="50">50</option>
-                 <option value="70">70</option>
-                 <option value="100">100</option>
-            </select> 
-        </div>          
-        <div class='col-md-4' >     
-            <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for employee salary..." title="Type in employee name">
-        </div>                                              
+        <button type="button" class="btn btn-warning" id="loansEntry"><i class="fas fa-plus-circle"></i> Add New Employee Loan </button>                                              
+        </div>                                            
     </div>  
 
     <div class="pt-1">
@@ -311,25 +305,43 @@ function generateEmpStatus()
             },
             function(data) { 
                 $("#contents").html(data).show();
-                $("#allloansList").tableExport({
-                    headers: true,
-                    footers: true,
-                    formats: ['xlsx'],
-                    filename: 'id',
-                    bootstrap: false,
-                    exportButtons: true,
-                    position: 'top',
-                    ignoreRows: null,
-                    ignoreCols: null,
-                    trimWhitespace: true,
-                    RTL: false,
-                    sheetname: 'LoanEmployees'
-                });
-            $(".fa-file-export").remove();
-            $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');      
-                document.getElementById("myDiv").style.display="none"; 
-            }
-            );
+                $('#allloansList').DataTable({
+            pageLength : 12,
+            lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+            dom: 'Bfrtip',
+            buttons: [
+                'pageLength',
+                {
+                    extend: 'excel',
+                    title: empStatus+' Employees', 
+                    text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+                    init: function(api, node, config) {
+                        $(node).removeClass('dt-button')
+                        },
+                        className: 'btn bg-transparent btn-sm'
+                },
+                {
+                    extend: 'pdf',
+                    title: empStatus+' Employees', 
+                    text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+                    init: function(api, node, config) {
+                        $(node).removeClass('dt-button')
+                        },
+                        className: 'btn bg-transparent'
+                },
+                {
+                    extend: 'print',
+                    title: empStatus+' Employees', 
+                    text: '<img class="btnExcel" src="../img/print.png" title="Print Attendance">',
+                    init: function(api, node, config) {
+                        $(node).removeClass('dt-button')
+                        },
+                        className: 'btn bg-transparent'
+                }
+            ]                        
+        }); 
+        document.getElementById("myDiv").style.display="none"; 
+            });
     }   
 
 

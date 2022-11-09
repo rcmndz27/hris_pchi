@@ -30,6 +30,15 @@
     }    
 ?>
 <link rel="stylesheet" type="text/css" href="../deduction/ded_view.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script type="text/javascript"  src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
 <script type="text/javascript" src="../deduction/deduction_ent.js"></script>
 <script type='text/javascript' src='../js/validator.js'></script>
 <body onload="javascript:generateEmpStatus();">
@@ -62,23 +71,8 @@
             <button type="button" id="search" class="btn btn-primary text-white mr-1" onclick="generateEmpStatus();">
               <i class="fas fa-search-plus"></i> Generate                      
             </button>  
-        <button type="button" class="btn btn-secondary" id="deductionEntry"><i class="fas fa-plus-circle"></i> Add New Employee Deduction </button>                                              
-        </div>
-      <div class="col-md-1">
-            <select class="form-select" name="state" id="maxRows">
-                <option value="5000">ALL</option>                
-                 <option value="5">5</option>
-                 <option value="10">10</option>
-                 <option value="15">15</option>
-                 <option value="20">20</option>
-                 <option value="50">50</option>
-                 <option value="70">70</option>
-                 <option value="100">100</option>
-            </select> 
-        </div>          
-        <div class='col-md-4' >     
-            <input type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search for employee salary..." title="Type in employee name">
-        </div>                                              
+        <button type="button" class="btn btn-warning" id="deductionEntry"><i class="fas fa-plus-circle"></i> Add New Employee Deduction </button>                                              
+        </div>                                             
     </div>  
 
     <div class="pt-1">
@@ -132,14 +126,22 @@
                                         </select>
                                     </div>
                                 </div> 
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                     <label class="control-label" for="effectivity_date">Effectivity Date<span class="req">*</span>
                                     </label>                                        
                                         <input type="date" class="form-control inputtext" name="effectivity_date"
                                             id="effectivity_date" min="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>" onkeydown="return false">
                                     </div>
-                                </div> 
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                    <label class="control-label" for="effectivity_date">End Date
+                                    </label>                                        
+                                        <input type="date" class="form-control inputtext" name="end_date"
+                                            id="end_date" min="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>" onkeydown="return false">
+                                    </div>
+                                </div>  
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="control-label" for="amount">Deduction Amount<span class="req">*</span></label>
@@ -170,66 +172,71 @@
                         <span aria-hidden="true">&times; </span>
                     </button>
                 </div>
-        <div class="modal-body">
-            <div class="main-body">
-                <fieldset class="fieldset-border">
-                            <div class="d-flex justify-content-center">
-                                <legend class="fieldset-border pad">
-                                </legend>
-                             </div>
-                        <div class="form-row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="control-label" for="empcode">Employee Code<span class="req">*</span></label>
-                                        <input type="text" class="form-control" name="dedcid" id="dedcid" hidden>                                        
-                                        <input type="text" class="form-control" name="empcode" id="empcode" hidden>
-                                        <input type="text" class="form-control" name="empname" id="empname" readonly>                                        
-                                    </div>
-                                </div> 
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="deductionid">Deduction Name<span class="req">*</span>
-                                        </label>
-                                        <?php $dd->GenerateSingleDropDown("deductionid", $mf->GetAllEmployeeDeduction("dedlist")); ?> 
-                                    </div>
-                                </div> 
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="periodcutoff">Period Cutoff<span class="req">*</span>
-                                        </label>
-                                        <select type="select" class="form-select" id="periodcutoff" name="periodcutoff" >
-                                            <option value="Both">Both</option>
-                                            <option value="15th">15th</option>
-                                            <option value="30th">30th</option>
-                                        </select>
-                                    </div>
-                                </div> 
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                    <label class="control-label" for="effectivitydate">Effectivity Date<span class="req">*</span>
-                                    </label>                                        
-                                        <input type="date" class="form-control" name="effectivitydate"
-                                            id="effectivitydate" >
-                                            <!-- value="2022-02-07" -->
-                                    </div>
-                                </div> 
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="amnt">Deduction Amount<span class="req">*</span></label>
-                                        <input class="form-control" type="number"  id="amnt" name="amnt" min="0" step=".01">
-                                    </div>
-                                </div>  
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="stts">Status<span class="req">*</span></label>
-                                        <select type="select" class="form-select" id="stts" name="stts" >
-                                            <option value="Active">Active</option>
-                                            <option value="Inactive">Inactive</option>
-                                        </select>                                    
-                                    </div>
+    <div class="modal-body">
+        <div class="main-body">
+            <fieldset class="fieldset-border">
+                        <div class="d-flex justify-content-center">
+                            <legend class="fieldset-border pad">
+                            </legend>
+                            </div>
+                    <div class="form-row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="empcode">Employee Code<span class="req">*</span></label>
+                                    <input type="text" class="form-control" name="dedcid" id="dedcid" hidden>                                        
+                                    <input type="text" class="form-control" name="empcode" id="empcode" hidden>
+                                    <input type="text" class="form-control" name="empname" id="empname" readonly>                                        
                                 </div>
-                             </div> <!-- form row closing -->
-                    </fieldset> 
+                            </div> 
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="deductionid">Deduction Name<span class="req">*</span>
+                                    </label>
+                                    <?php $dd->GenerateSingleDropDown("deductionid", $mf->GetAllEmployeeDeduction("dedlist")); ?> 
+                                </div>
+                            </div> 
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="periodcutoff">Period Cutoff<span class="req">*</span>
+                                    </label>
+                                    <select type="select" class="form-select" id="periodcutoff" name="periodcutoff" >
+                                        <option value="Both">Both</option>
+                                        <option value="15th">15th</option>
+                                        <option value="30th">30th</option>
+                                    </select>
+                                </div>
+                            </div> 
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                <label class="control-label" for="effectivitydate">Effectivity Date<span class="req">*</span>
+                                </label>                                        
+                                    <input type="date" class="form-control" name="effectivitydate"
+                                        id="effectivitydate" >
+                                </div>
+                            </div> 
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                <label class="control-label" for="enddate">End Date</label>                                        
+                                    <input type="date" class="form-control" name="enddate" id="enddate" >
+                                </div>
+                            </div>                                 
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="amnt">Deduction Amount<span class="req">*</span></label>
+                                    <input class="form-control" type="number"  id="amnt" name="amnt" min="0" step=".01">
+                                </div>
+                            </div>  
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="stts">Status<span class="req">*</span></label>
+                                    <select type="select" class="form-select" id="stts" name="stts" >
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>                                    
+                                </div>
+                            </div>
+                            </div> <!-- form row closing -->
+                </fieldset> 
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Cancel</button>
@@ -280,45 +287,84 @@ aria-hidden="true">
 </div> <!-- modal dialog closing -->
 </div><!-- modal fade closing -->                
 
-    </div> <!-- main body mbt closing -->
+</div> <!-- main body mbt closing -->
 </div><!-- container closing -->
 </body>
 <script>
 
-    function generateEmpStatus()
-    {
-        document.getElementById("myDiv").style.display="block";
-        var url = "../deduction/deductionlist_process.php";
-        var empStatus = $('#empStatus').val();
+$('#end_date').change(function(){
 
-        $.post (
-            url,
-            {   
-                empStatus:empStatus
-                
-            },
-            function(data) { 
-                $("#contents").html(data).show();
-                $("#allDeductionList").tableExport({
-                    headers: true,
-                    footers: true,
-                    formats: ['xlsx'],
-                    filename: 'id',
-                    bootstrap: false,
-                    exportButtons: true,
-                    position: 'top',
-                    ignoreRows: null,
-                    ignoreCols: null,
-                    trimWhitespace: true,
-                    RTL: false,
-                    sheetname: 'SalaryEmployees'
-                });
-            $(".fa-file-export").remove();
-            $(".btn btn-primary").prepend('<i class="fas fa-file-export"></i>');      
-                document.getElementById("myDiv").style.display="none"; 
-            }
-            );
-    }    
+if($('#end_date').val() < $('#effectivity_date').val()){
+
+    swal({text:"End Date must be greater than effectivity date!",icon:"error"});
+
+    var input2 = document.getElementById('end_date');
+    input2.value = '';               
+}
+});
+
+
+$('#effectivity_date').change(function(){
+    if($('#effectivity_date').val() > $('#end_date').val()){
+        var input2 = document.getElementById('end_date');
+        document.getElementById("end_date").min = $('#effectivity_date').val();
+        input2.value = '';
+    }
+});
+
+
+function generateEmpStatus()
+{
+// document.getElementById("myDiv").style.display="block";
+var url = "../deduction/deductionlist_process.php";
+var empStatus = $('#empStatus').val();
+
+$.post (
+url,
+{   
+    empStatus:empStatus
+    
+},
+function(data) { 
+    $("#contents").html(data).show();
+    $('#allDeductionList').DataTable({
+            pageLength : 12,
+            lengthMenu: [[12, 24, 36, -1], [12, 24, 36, 'All']],
+            dom: 'Bfrtip',
+            buttons: [
+                'pageLength',
+                {
+                    extend: 'excel',
+                    title: empStatus+' Employees', 
+                    text: '<img class="btnExcel" src="../img/excel.png" title="Export to Excel">',
+                    init: function(api, node, config) {
+                        $(node).removeClass('dt-button')
+                        },
+                        className: 'btn bg-transparent btn-sm'
+                },
+                {
+                    extend: 'pdf',
+                    title: empStatus+' Employees', 
+                    text: '<img class="btnExcel" src="../img/expdf.png" title="Export to PDF">',
+                    init: function(api, node, config) {
+                        $(node).removeClass('dt-button')
+                        },
+                        className: 'btn bg-transparent'
+                },
+                {
+                    extend: 'print',
+                    title: empStatus+' Employees', 
+                    text: '<img class="btnExcel" src="../img/print.png" title="Print Attendance">',
+                    init: function(api, node, config) {
+                        $(node).removeClass('dt-button')
+                        },
+                        className: 'btn bg-transparent'
+                }
+            ]                        
+        }); 
+        document.getElementById("myDiv").style.display="none"; 
+});
+}    
 
     function onlyNumberKey(evt) {
           
@@ -352,6 +398,7 @@ function insertMfDedLogs(url2,emp_code,column_name,new_data,old_data) {
         document.getElementById('periodcutoff').value =  document.getElementById('pc'+dedcid).innerHTML;   
         document.getElementById('amnt').value =  document.getElementById('am'+dedcid).innerHTML;  
         document.getElementById('effectivitydate').value =  document.getElementById('ed'+dedcid).innerHTML;
+        document.getElementById('enddate').value =  document.getElementById('end'+dedcid).innerHTML;
         document.getElementById('stts').value =  document.getElementById('st'+dedcid).innerHTML;                                            
 
     }
@@ -371,12 +418,14 @@ function insertMfDedLogs(url2,emp_code,column_name,new_data,old_data) {
         var amount = document.getElementById("amnt").value;
         var amtn = '₱ '+amount.toString().replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         var effectivity_date = document.getElementById("effectivitydate").value; 
+        var end_date = document.getElementById("enddate").value; 
         var status = document.getElementById("stts").value; 
-        
+        // old  
         var old_deductionid =  document.getElementById('dn'+dedcid).innerHTML;   
         var old_period_cutoff =  document.getElementById('pc'+dedcid).innerHTML;   
         var old_amount =  document.getElementById('am'+dedcid).innerHTML;  
         var old_effectivity_date =  document.getElementById('ed'+dedcid).innerHTML;
+        var old_end_date =  document.getElementById('end'+dedcid).innerHTML;
         var old_status =  document.getElementById('st'+dedcid).innerHTML;        
 
             swal({
@@ -396,7 +445,8 @@ function insertMfDedLogs(url2,emp_code,column_name,new_data,old_data) {
                             deduction_id: deduction_id,
                             period_cutoff: period_cutoff,
                             amount: amount ,               
-                            effectivity_date: effectivity_date ,
+                            effectivity_date: effectivity_date,
+                            end_date: end_date,
                             dedcid: dedcid,
                             status: status 
 
@@ -416,6 +466,7 @@ function insertMfDedLogs(url2,emp_code,column_name,new_data,old_data) {
                                 document.getElementById('am'+dedcid).innerHTML = amount;
                                 document.getElementById('amtn'+dedcid).innerHTML = amtn;
                                 document.getElementById('ed'+dedcid).innerHTML = effectivity_date;
+                                document.getElementById('end'+dedcid).innerHTML = end_date;
                                 document.getElementById('st'+dedcid).innerHTML = status;
 
                                 if(deductionid !== old_deductionid){
@@ -432,6 +483,11 @@ function insertMfDedLogs(url2,emp_code,column_name,new_data,old_data) {
                                 new_data = effectivity_date;
                                 old_data =  old_effectivity_date;
                                 column_name =  'Effectivity Date';         
+                                insertMfDedLogs(url2,emp_code,column_name,new_data,old_data);
+                                }if(end_date !== old_end_date){
+                                new_data = end_date;
+                                old_data =  old_end_date;
+                                column_name =  'End Date';         
                                 insertMfDedLogs(url2,emp_code,column_name,new_data,old_data);
                                 }if(amount !== old_amount){
                                 new_data = amount;
