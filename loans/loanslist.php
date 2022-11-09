@@ -72,7 +72,7 @@ Class LoansList{
             echo '</tr></tbody>';
 
         }else { 
-            echo '<tfoot><tr><td colspan="10" class="text-center">No Results Found</td></tr></tfoot>'; 
+            echo '<tfoot></tfoot>'; 
         }
         echo '</table>
                 ';
