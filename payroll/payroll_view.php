@@ -583,47 +583,48 @@ aria-hidden="true">
 </body>
 <script type="text/javascript">
     
-    $("#s30th").hide();
-    $('#spay').change(function(){
-        if($('#spay').val() == '15th'){
-            $("#s30th").hide();
-        }else{
-            $("#s30th").show();
-        }
-    });
 
-    $('#ddcutoff').change(function(){
+$("#s30th").hide();
+$('#spay').change(function(){
+    if($('#spay').val() == '15th'){
+        $("#s30th").hide();
+    }else{
+        $("#s30th").show();
+    }
+});
 
-        var selectElem = document.getElementById('ddcutoff');
-        var index = selectElem.selectedIndex;
+$('#ddcutoff').change(function(){
 
-        var ddcutoff = $('#ddcutoff').val();
-        if(ddcutoff == 0){
-            var ddval = '15th';
-            $("#s30th").hide();
-        }else{
-            var ddval = '30th';
-            $("#s30th").show();
-            document.getElementById('ddcutoff30').selectedIndex = index+1;
-        }
-        document.getElementById('spay').value =  ddval;        
+    var selectElem = document.getElementById('ddcutoff');
+    var index = selectElem.selectedIndex;
 
-    });
+    var ddcutoff = $('#ddcutoff').val();
+    if(ddcutoff == 0){
+        var ddval = '15th';
+        $("#s30th").hide();
+    }else{
+        var ddval = '30th';
+        $("#s30th").show();
+        document.getElementById('ddcutoff30').selectedIndex = index+1;
+    }
+    document.getElementById('spay').value =  ddval;        
+
+});
 
 
-    $('#pendingEntry').click(function(e){
-        e.preventDefault();
-        $('#pendingModal').modal('toggle');
+$('#pendingEntry').click(function(e){
+    e.preventDefault();
+    $('#pendingModal').modal('toggle');
 
-    });
+});
 
-    $('#usersEntry').click(function(e){
-        e.preventDefault();
-        $('#popUpModal').modal('toggle');
+$('#usersEntry').click(function(e){
+    e.preventDefault();
+    $('#popUpModal').modal('toggle');
 
-    });
+});
 
-    $('#Submit').click(function(){
+$('#Submit').click(function(){
 
         var bdno = $('#allempnames').val();
         var cutoff = $('#ddcutoff').find(":selected").text();
